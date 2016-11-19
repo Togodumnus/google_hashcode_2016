@@ -18,6 +18,23 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\collection.hpp" />
+    <ClInclude Include="include\location.hpp" />
+    <ClInclude Include="include\photograph.hpp" />
+    <ClInclude Include="include\satellite.hpp" />
+    <ClInclude Include="include\simulation.hpp" />
+    <ClInclude Include="include\time_range.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\collection.cpp" />
+    <ClCompile Include="src\location.cpp" />
+    <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\photograph.cpp" />
+    <ClCompile Include="src\satellite.cpp" />
+    <ClCompile Include="src\simulation.cpp" />
+    <ClCompile Include="src\time_range.cpp" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{51D8D66E-6119-4F7B-A94B-8EEA9B7D8BFA}</ProjectGuid>
     <RootNamespace>hashcode</RootNamespace>
@@ -69,7 +86,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>C:\Program Files %28x86%29\Windows Kits\10\Lib\10.0.10150.0\ucrt\x64;C:\Program Files (x86)\Windows Kits\10\Include\10.0.10150.0\ucrt;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)\include;$(IncludePath)</IncludePath>
     <LibraryPath>$(UniversalCRT_LibraryPath_x86);$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -112,9 +129,6 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="main.cpp" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

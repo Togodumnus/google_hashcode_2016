@@ -1,0 +1,1 @@
+#include "photograph.hpp"

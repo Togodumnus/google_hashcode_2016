@@ -1,4 +1,9 @@
 
+Makefile
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+
 # From : https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
 # User-specific files
