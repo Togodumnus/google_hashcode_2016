@@ -1,5 +1,10 @@
 #pragma once
 
+#include "photograph.hpp"
+#include <vector>
+
+// necessary because of mutual inclusion
+class photograph;
 
 class collection{
 
@@ -8,9 +13,11 @@ class collection{
 		unsigned short m_number_of_locations;
 		unsigned short m_number_of_time_ranges;
 
+		std::vector<photograph*> m_photographs;
+
 	public:
 
 		collection(unsigned short, unsigned short, unsigned short);
-		void add_photograph();
+		void add_photograph(photograph*);
 
 };
