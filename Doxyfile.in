@@ -1,0 +1,3 @@
+OUTPUT_DIRECTORY = "${CMAKE_SOURCE_DIR}/../doc"
+INPUT            = "hashcode/hashcode/src" "hashcode/hashcode/include"
+PROJECT_NAME	 = "Google Hashcode 2016"
