@@ -3,6 +3,7 @@ Makefile
 CMakeCache.txt
 CMakeFiles/
 cmake_install.cmake
+doc/
 
 # From : https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
