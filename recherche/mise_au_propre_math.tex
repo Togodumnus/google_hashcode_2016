@@ -1,0 +1,62 @@
+\documentclass[11pt, oneside]{article}   	% use "amsart" instead of "article" for AMSLaTeX format
+\usepackage{geometry}                		% See geometry.pdf to learn the layout options. There are lots.
+\geometry{letterpaper}                   		% ... or a4paper or a5paper or ... 
+%\geometry{landscape}                		% Activate for rotated page geometry
+%\usepackage[parfill]{parskip}    		% Activate to begin paragraphs with an empty line rather than an indent
+\usepackage{graphicx}				% Use pdf, png, jpg, or epsÂ§ with pdflatex; use eps in DVI mode
+								% TeX will automatically convert eps --> pdf in pdflatex		
+\usepackage{amssymb}
+\usepackage{amsmath}
+
+%SetFonts
+
+%SetFonts
+
+
+\title{Brief Article}
+\author{The Author}
+%\date{}							% Activate to display a given date or no date
+
+\begin{document}
+%\maketitle
+%\section{}
+%\subsection{}
+
+
+On cherche \`a maximiser le score avec
+
+\begin{equation}
+	\mathit{score} = \sum_{c \; \in \; C_{\mathit{prises}}} \mathit{score}_c
+\end{equation}
+
+$score_c$ repr\'esente la valeur de la collection $c$.\\
+
+$C_{\mathit{prises}}$ repr\'esente les collections ``prises'', c'est \`a dire les collections dont on a photographi\'e tous les points.
+
+\begin{equation}
+	C_{\mathit{prises}} = \{ c \ | \ c  \in  C \; \mathit{et} \ \forall p \in P_{c} \ \exists (x, s, t) \in X \ \mathit{tq} \ x = p \}
+\end{equation}
+
+o\`u
+
+$C$ : l'ensemble des collections
+
+$P_{c}$ : les points de la collection $c$ 
+
+$X$ : les points captur\'es \\
+
+D\'efinissons $X$, l'ensemble des points captur\'es 
+
+\begin{equation}
+	X = \{ p \ | \ p \ \in \ \underset{c \ \in \ C}\cup P_{c} \ \mathit{et} \ p \;  \mathit{''a \; \acute{e}t\acute{e} \;  captur\acute{e}''} \}
+\end{equation}
+
+On dit que $p$ ``a \'et\'e captur\'e'' si :
+
+\begin{equation}
+	\exists s \in S, \ \exists t \in [0, \, t_{max}[ \ \mathit{tel \, que} \ p = (\varphi_{s, t} + \Delta\varphi_{s, t}, \, \lambda_{s, t} + \Delta\lambda_{s, t})
+\end{equation}
+
+\emph{ie.} il existe un satellite $s$ qui a prit $p$ en photo au temps $t$
+
+\end{document}  

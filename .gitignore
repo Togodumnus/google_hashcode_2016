@@ -5,6 +5,11 @@ CMakeFiles/
 cmake_install.cmake
 doc/
 
+recherche/*.aux
+recherche/*.log
+recherche/*.pdf
+recherche/*.gz
+
 # From : https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
 # User-specific files
