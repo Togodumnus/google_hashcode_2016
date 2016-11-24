@@ -5,6 +5,8 @@
 #include "satellite.hpp"
 #include "photograph.hpp"
 
+class satellite;
+
 class simulation{
 
 	private:
