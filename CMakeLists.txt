@@ -31,6 +31,13 @@ include_directories("hashcode/hashcode/include")
 
 file(GLOB SRC_FOLDER
     "hashcode/hashcode/src/*.cpp"
+	"hashcode/hashcode/src/main/main.cpp"
+
+)
+file(GLOB SRC_TEST_FOLDER
+	"hashcode/hashcode/src/*.cpp"
+    "hashcode/hashcode/src/test/main.cpp"
 )
 
 add_executable(hashcode ${SRC_FOLDER})
+add_executable(hashcode_test ${SRC_TEST_FOLDER})

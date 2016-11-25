@@ -15,6 +15,6 @@ class simulation{
 		unsigned int m_number_of_collections;
 		
 	public:
-		simulation(std::string);
+		simulation(const char*);
 		void took_photograph(satellite*, photograph*);
 };

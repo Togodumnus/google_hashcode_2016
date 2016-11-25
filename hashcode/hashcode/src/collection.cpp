@@ -8,5 +8,5 @@ void collection::add_photograph(photograph* photograph){
 	// optimized if array capacity is enough. Should be initialized correctly in the constructor
 	// otherwise, will result in poor performances
 	m_photographs.push_back(photograph);
-	photograph->belongs_to_collection(*this);
+	photograph->belongs_to_collection(this);
 };

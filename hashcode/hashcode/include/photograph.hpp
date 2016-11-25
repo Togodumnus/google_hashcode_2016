@@ -1,6 +1,8 @@
 #pragma once
 
 #include "collection.hpp"
+#include "location.hpp"
+#include "time_range.hpp"
 #include <vector>
 // necessary because of mutual inclusion
 class collection;
@@ -9,9 +11,10 @@ class photograph{
 
 	private:
 	std::vector<collection*> m_collections;
-
+	const location& m_location;
+	const time_range& m_time_range;
 	public:
-		photograph();
-		bool belongs_to_collection(collection&);
+		photograph(const location&, const time_range&);
+		bool belongs_to_collection(collection*);
 
 };

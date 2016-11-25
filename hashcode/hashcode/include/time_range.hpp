@@ -7,4 +7,5 @@ class time_range{
 		unsigned int m_start_time;
 		unsigned int m_end_time;
 	public:
+		time_range(unsigned int, unsigned int);
 };
