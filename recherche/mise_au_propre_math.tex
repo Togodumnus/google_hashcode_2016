@@ -7,6 +7,7 @@
 								% TeX will automatically convert eps --> pdf in pdflatex		
 \usepackage{amssymb}
 \usepackage{amsmath}
+\usepackage{gensymb}
 
 %SetFonts
 
@@ -18,18 +19,112 @@
 %\date{}							% Activate to display a given date or no date
 
 \begin{document}
-%\maketitle
-%\section{}
-%\subsection{}
 
+\section{Situation}
+
+\subsection{Simulation}
+
+La simulation se d\'eroule sur un temps $T$ ($t \in [0, T[$).
+La vitesse de rotation en longitude de la Terre est $v_{\mathit{Terre}}$.
+
+\subsection{Des satellites}
+
+On dispose de plusieurs satellites $S$ qui orbitent autour de la terre. \\*
+
+Chaque satellite $s \in S$ est d\'efini par :
+
+\begin{itemize}
+\item sa position (latitude, longitude) au temps $t$ : $P_{s, t} = (\varphi_{s, t}, \lambda_{s, t})$
+\item sa vitesse en latitude $v_s$ ($100 \leq |v_s| \leq 500$)
+\item l'orientation de la cam\'era au temps $t$ : $(\Delta\varphi_{s, t}\, \Delta\lambda_{s, t})$
+\item la vitesse maximale de rotation de la cam\'era sur les deux directions $w_s$
+\item l'orientation maximale de la cam\'era dans les deux directions $d_s$
+\end{itemize}
+
+On peut mettre par \'ecrit plusieurs \'equations qui d\'efinissent l'\'evolution de la cam\'era dans le temps, pour tout $t$ :
+
+\begin{equation}
+-d_s \leq \Delta\varphi_{s, t} \leq d_s
+\end{equation}
+
+\begin{equation}
+-d_s \leq \Delta\lambda{s, t} \leq d_s
+\end{equation}
+
+\begin{equation}
+\Delta\varphi_{s, t+1} \in [-w_s\Delta\varphi_{s, t}, w_s\Delta\varphi_{s, t}]
+\end{equation}
+
+\begin{equation}
+\Delta\lambda_{s, t+1} \in [-w_s\Delta\lambda_{s, t}, w_s\Delta\lambda_{s, t}]
+\end{equation}
+
+L'\'evolution de la position du satellite $s$ dans le temps, pour tout $t$ : 
+
+\begin{equation}
+\begin{displaystyle}
+\text{La latitude } \varphi_{s, t+1} =
+	\begin{cases}
+		\varphi_{s, t} + v_s & \mathit{si} -90\degree \leq \varphi_{s, t} + v_s \leq 90\degree \\
+		180\degree - (\varphi_{s, t} + v_s) & \mathit{si} \ \varphi_{s, t} + v_s > 90\degree \footnotemark \\
+		-180\degree - (\varphi_{s, t} + v_s) & \mathit{si} \ \varphi_{s, t} + v_s < -90\degree \footnotemark \\
+	\end{cases}
+\end{displaystyle}
+\end{equation}
+
+\addtocounter{footnote}{-1}
+\footnotetext{On passe par dessus le p\^ole Nord}
+\stepcounter{footnote}
+\footnotetext{On passe par dessus le p\^ole Sud}
+
+\begin{equation}
+\begin{displaystyle}
+\text{La longitude }\lambda_{s, t+1} =
+	\begin{cases}
+		\lambda_{s, t} + v_{Terre} & \mathit{si} -90\degree \leq \varphi_{s, t} + v_s \leq 90\degree \\
+		-180\degree - (\lambda_{s, t} + v_{Terre}) & \mathit{si} \ \varphi_{s, t} + v_s > 90\degree \\
+		-180\degree - (\lambda_{s, t} + v_{Terre}) & \mathit{si} \ \varphi_{s, t} + v_s < -90\degree 
+	\end{cases}
+\end{displaystyle}
+\end{equation}
+
+\begin{equation}
+\begin{displaystyle}
+\text{La vitesse } v_s =
+	\begin{cases}
+		v_s & \mathit{si} -90\degree \leq \varphi_{s, t} + v_s \leq 90\degree \\
+		-v_s & \mathit{si} \ \varphi_{s, t} + v_s > 90\degree \\
+		-v_s & \mathit{si} \ \varphi_{s, t} + v_s < -90\degree
+	\end{cases}
+\end{displaystyle}
+\end{equation}
+
+Les seules variables du probl\`emes sont donc l'orientation de la cam\'era du satellite au temps $t+1$.
+
+\subsection{Des collections}
+
+On dispose d'une liste de collections $C$. \\
+
+Chaque collection $c \in C$ est d\'efinie par :
+
+\begin{itemize}
+\item une valeur de score $score_c$ 
+\item une liste de points \`a capturer  $P_c = [(\varphi_1, \lambda_1), (\varphi_2, \lambda_2), ...]$ 
+\item une liste d'intervalles de temps dans lesquels il est possible de capturer les points
+$R_c = [[t_1, t_2], [t_3, t_4], ...]$
+\end{itemize}
+
+%-----------------
+
+\section{Le probl\`eme}
+
+Posons $X$ la listes des points captur\'es : $X = [(x, s, t), ...]$\footnote{Ici un point $x = (\varphi, \lambda)$ captur\'e par le satellite $s$ au temps $t$}
 
 On cherche \`a maximiser le score avec
 
 \begin{equation}
 	\mathit{score} = \sum_{c \; \in \; C_{\mathit{prises}}} \mathit{score}_c
 \end{equation}
-
-$score_c$ repr\'esente la valeur de la collection $c$.\\
 
 $C_{\mathit{prises}}$ repr\'esente les collections ``prises'', c'est \`a dire les collections dont on a photographi\'e tous les points.
 
@@ -45,10 +140,10 @@ $P_{c}$ : les points de la collection $c$
 
 $X$ : les points captur\'es \\
 
-D\'efinissons $X$, l'ensemble des points captur\'es 
+D\'efinissons $X$, l'ensemble des points captur\'es :
 
 \begin{equation}
-	X = \{ p \ | \ p \ \in \ \underset{c \ \in \ C}\cup P_{c} \ \mathit{et} \ p \;  \mathit{''a \; \acute{e}t\acute{e} \;  captur\acute{e}''} \}
+	X = \{ p \ | \ p \ \in \ \underset{c \ \in \ C}\cup P_{c} \ \mathit{et} \ p \;  \text{``a \'et\'e captur\'e''} \}
 \end{equation}
 
 On dit que $p$ ``a \'et\'e captur\'e'' si :
@@ -57,6 +152,6 @@ On dit que $p$ ``a \'et\'e captur\'e'' si :
 	\exists s \in S, \ \exists t \in [0, \, t_{max}[ \ \mathit{tel \, que} \ p = (\varphi_{s, t} + \Delta\varphi_{s, t}, \, \lambda_{s, t} + \Delta\lambda_{s, t})
 \end{equation}
 
-\emph{ie.} il existe un satellite $s$ qui a prit $p$ en photo au temps $t$
+\emph{ie.} il existe un satellite $s$ qui a prit $p$ en photo au temps $t$.
 
 \end{document}  
