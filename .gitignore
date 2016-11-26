@@ -9,6 +9,9 @@ recherche/*.aux
 recherche/*.log
 recherche/*.pdf
 recherche/*.gz
+recherche/*.dvi
+recherche/*.fdb_latexmk
+recherche/*.fls
 
 # From : https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
