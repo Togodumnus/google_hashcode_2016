@@ -1,4 +1,4 @@
-#include "simulation.hpp"
+#include "..\include\simulation.hpp"
 #include <fstream>
 
 simulation::simulation(const char* input_file){
