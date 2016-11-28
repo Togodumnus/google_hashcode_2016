@@ -15,5 +15,7 @@ class satellite{
 	public:
 		satellite(simulation&, double, double, float, float, float);
 		~satellite();
+		satellite(const satellite& satellite);
+		satellite& operator=(const satellite& satelltite);
 		bool take(photograph*);
 };

@@ -15,6 +15,9 @@ class photograph{
 	const time_range& m_time_range;
 	public:
 		photograph(const location&, const time_range&);
+		~photograph();
+		photograph& operator=(const photograph& photograph);
+		photograph(const photograph& photograph);
 		bool belongs_to_collection(collection*);
 
 };
