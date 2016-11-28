@@ -18,6 +18,9 @@ class collection{
 	public:
 
 		collection(unsigned short, unsigned short, unsigned short);
+		~collection();
+		collection(const collection &collection);
+		collection& operator=(const collection &collection);
 		void add_photograph(photograph*);
 
 };
