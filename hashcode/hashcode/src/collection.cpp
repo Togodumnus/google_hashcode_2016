@@ -14,7 +14,7 @@ collection::collection(const collection &collection)
 	m_value = collection.m_value;
 	m_number_of_locations = collection.m_number_of_locations;
 	m_number_of_time_ranges = collection.m_number_of_time_ranges;
-	m_photographs = collection.m_photographs;
+	m_photographs = collection.m_photographs; //normalement ok car on a juste besoin des pointeurs vers les photos
 }
 
 collection & collection::operator=(const collection & collection)

@@ -27,9 +27,9 @@
     <ClInclude Include="include\time_range.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="main.cpp" />
     <ClCompile Include="src\collection.cpp" />
     <ClCompile Include="src\location.cpp" />
-    <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\photograph.cpp" />
     <ClCompile Include="src\satellite.cpp" />
     <ClCompile Include="src\simulation.cpp" />
