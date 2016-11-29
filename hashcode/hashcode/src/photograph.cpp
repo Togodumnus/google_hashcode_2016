@@ -1,4 +1,4 @@
-#include "..\include\photograph.hpp"
+#include "photograph.hpp"
 
 photograph::photograph(const location* location, const time_range* time_range): m_location(location), m_time_range(time_range){
 
@@ -8,7 +8,7 @@ photograph::~photograph()
 {
 	while (!m_collections.empty()){
 		delete m_collections.back();
-		m_collections.pop_back;
+		m_collections.pop_back();
 	}
 }
 
