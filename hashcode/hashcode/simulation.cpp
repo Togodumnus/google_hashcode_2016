@@ -29,5 +29,6 @@ simulation::simulation(const simulation & simulation)
 }
 
 void simulation::took_photograph(satellite* satellite, photograph* photograph){
-	
+	m_photographs_taken.push_back(photograph);
+
 }

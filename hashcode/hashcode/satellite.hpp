@@ -17,5 +17,6 @@ class satellite{
 		~satellite();
 		satellite(const satellite& satellite);
 		satellite& operator=(const satellite& satelltite);
+		bool canTake(photograph*);
 		bool take(photograph*);
 };

@@ -28,6 +28,12 @@ satellite & satellite::operator=(const satellite & satellite)
 	return *this;
 }
 
+
+// TODO
+/*bool satellite::canTake(photograph* photograph) { 
+	if ((photograph->getLocation())->getLatitude 
+}*/ 
+
 bool satellite::take(photograph* photograph){
 	return false;	
 }

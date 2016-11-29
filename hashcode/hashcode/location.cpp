@@ -22,4 +22,12 @@ location & location::operator=(const location& location)
 	return *this;
 }
 
+double location::getLatitude() {
+	return this->m_latitude;
+}
+
+double location::getLongitude() {
+	return this->m_longitude;
+}
+
 

@@ -13,5 +13,7 @@ class location{
 		~location();
 		location(const location& location);
 		location& operator=(const location& location);
+		double getLatitude();
+		double getLongitude();
 
 };

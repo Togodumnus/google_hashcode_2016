@@ -20,5 +20,5 @@ class photograph{
 		photograph& operator=(const photograph& photograph);
 		photograph(const photograph& photograph);
 		bool belongs_to_collection(collection*);
-
+		const location* getLocation(); //important de le mettre en const cf http://stackoverflow.com/questions/28855894/return-value-type-does-not-match-function-type-when-returning-pointer-to-constan
 };

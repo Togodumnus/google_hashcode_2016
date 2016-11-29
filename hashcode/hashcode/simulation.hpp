@@ -13,6 +13,7 @@ class simulation{
 		unsigned int m_duration;
 		unsigned int m_number_of_satellites;
 		unsigned int m_number_of_collections;
+		std::vector<photograph*> m_photographs_taken;
 		
 	public:
 		simulation(const char*);
