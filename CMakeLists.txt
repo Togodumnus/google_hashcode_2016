@@ -27,16 +27,16 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
-include_directories("hashcode/hashcode/include")
+include_directories("hashcode/hashcode/")
 
 file(GLOB SRC_FOLDER
-    "hashcode/hashcode/src/*.cpp"
-	"hashcode/hashcode/src/main/main.cpp"
+    "hashcode/hashcode/*.cpp"
+	"hashcode/hashcode/main.cpp"
 
 )
 file(GLOB SRC_TEST_FOLDER
-	"hashcode/hashcode/src/*.cpp"
-    "hashcode/hashcode/src/test/main.cpp"
+	"hashcode/hashcode/*.cpp"
+    "hashcode/hashcode/main.cpp"
 )
 
 add_executable(hashcode ${SRC_FOLDER})
