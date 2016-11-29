@@ -4,6 +4,7 @@
 #include "location.hpp"
 #include "time_range.hpp"
 #include <vector>
+
 // necessary because of mutual inclusion
 class collection;
 

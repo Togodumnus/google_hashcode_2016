@@ -19,21 +19,21 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\collection.hpp" />
-    <ClInclude Include="include\location.hpp" />
-    <ClInclude Include="include\photograph.hpp" />
-    <ClInclude Include="include\satellite.hpp" />
-    <ClInclude Include="include\simulation.hpp" />
-    <ClInclude Include="include\time_range.hpp" />
+    <ClCompile Include="collection.cpp" />
+    <ClCompile Include="location.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="photograph.cpp" />
+    <ClCompile Include="satellite.cpp" />
+    <ClCompile Include="simulation.cpp" />
+    <ClCompile Include="time_range.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="src\collection.cpp" />
-    <ClCompile Include="src\location.cpp" />
-    <ClCompile Include="src\photograph.cpp" />
-    <ClCompile Include="src\satellite.cpp" />
-    <ClCompile Include="src\simulation.cpp" />
-    <ClCompile Include="src\time_range.cpp" />
+    <ClInclude Include="collection.hpp" />
+    <ClInclude Include="location.hpp" />
+    <ClInclude Include="photograph.hpp" />
+    <ClInclude Include="satellite.hpp" />
+    <ClInclude Include="simulation.hpp" />
+    <ClInclude Include="time_range.hpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{51D8D66E-6119-4F7B-A94B-8EEA9B7D8BFA}</ProjectGuid>
@@ -86,7 +86,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(ProjectDir)\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(IncludePath)</IncludePath>
     <LibraryPath>$(UniversalCRT_LibraryPath_x86);$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
