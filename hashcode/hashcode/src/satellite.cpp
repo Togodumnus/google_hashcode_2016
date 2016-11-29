@@ -10,13 +10,14 @@ satellite::~satellite(){
 }
 
 satellite::satellite(const satellite & satellite)
-{
+{ // ???
 	m_simulation = satellite.m_simulation;
 	m_location = satellite.m_location;
 	m_velocity = satellite.m_velocity;
 	m_orientation_max_change = satellite.m_orientation_max_change;
 	m_orientation_max_value = satellite.m_orientation_max_value;
 }
+
 
 satellite & satellite::operator=(const satellite & satellite)
 {
