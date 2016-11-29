@@ -34,10 +34,4 @@ file(GLOB SRC_FOLDER
 	"hashcode/hashcode/main.cpp"
 
 )
-file(GLOB SRC_TEST_FOLDER
-	"hashcode/hashcode/*.cpp"
-    "hashcode/hashcode/main.cpp"
-)
-
 add_executable(hashcode ${SRC_FOLDER})
-add_executable(hashcode_test ${SRC_TEST_FOLDER})
