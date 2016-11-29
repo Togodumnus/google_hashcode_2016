@@ -1,6 +1,6 @@
 #include "..\include\photograph.hpp"
 
-photograph::photograph(const location& location, const time_range& time_range): m_location(location), m_time_range(time_range){
+photograph::photograph(const location* location, const time_range* time_range): m_location(location), m_time_range(time_range){
 
 }
 
@@ -14,20 +14,18 @@ photograph::~photograph()
 
 photograph::photograph(const photograph& photograph)
 {
-	//m_location = photograph.m_location; pas possible si const
-	//m_time_range = photograph.m_time_range; pas possible si const
+	m_location = photograph.m_location; 
+	m_time_range = photograph.m_time_range;
 
 	m_collections = photograph.m_collections;
 }
 
 photograph& photograph::operator=(const photograph& photograph)
 {
-	//m_location = photograph.m_location; pas possible si const
-	//m_time_range = photograph.m_time_range; pas possible si const
-
+	m_location = photograph.m_location; 
+	m_time_range = photograph.m_time_range; 
 	m_collections = photograph.m_collections;
 	
-	// TODO: insert return statement here
 	return *this;
 }
 
