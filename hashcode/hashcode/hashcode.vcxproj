@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CameraOrientation.cpp" />
     <ClCompile Include="collection.cpp" />
     <ClCompile Include="location.cpp" />
     <ClCompile Include="main.cpp" />
@@ -28,6 +29,7 @@
     <ClCompile Include="time_range.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CameraOrientation.hpp" />
     <ClInclude Include="collection.hpp" />
     <ClInclude Include="location.hpp" />
     <ClInclude Include="photograph.hpp" />
