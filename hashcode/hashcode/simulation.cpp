@@ -33,6 +33,11 @@ void simulation::setDuration(unsigned int duration)
 	this->m_duration = duration;
 }
 
+unsigned int simulation::getDuration()
+{
+	return this->m_duration;
+}
+
 void simulation::took_photograph(satellite* satellite, photograph* photograph){
 	m_photographs_taken.push_back(photograph);
 

@@ -21,5 +21,6 @@ class simulation{
 		simulation& operator=(const simulation& simulation);
 		simulation(const simulation& simulation);
 		void setDuration(unsigned int duration);
+		unsigned int getDuration();
 		void took_photograph(satellite*, photograph*);
 };

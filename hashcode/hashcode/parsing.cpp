@@ -25,34 +25,27 @@ void parse(const char* input_file) {
 		std::string result;
 		if (std::getline(iss, result, '\n'))
 		{
-			std::string token;
 			switch (t) {
-			case type::simulation:
-				while (std::getline(iss, token, '\n'))
-				{
-					std::cout << token << std::endl;
-					simulation.setDuration(std::stoi(token));
+				case type::simulation:
+					std::cout << result << std::endl;
+					simulation.setDuration(std::stoi(result));
 					t = type::test;
+					std::cout << simulation.getDuration() << std::endl; // ok ça marche 
+					break;
+				case type::collection:
+					std::cout << result << std::endl;
+					cpt = std::stoi(result); // on sait qu'il y a 25 satellites
+					break;
+				case type::photograph:
+					break;
+				case type::time_range:
+					break;
+				case type::test:
+					std::cout << "lala" << std::endl;
+					return; 
+					break;
 				}
-				break;
-			case type::collection:
-				while (std::getline(iss, token, '\n'))
-				{
-					std::cout << token << std::endl;
-					cpt = std::stoi(token); // on sait qu'il y a 25 satellites
-				}
-				break;
-			case type::photograph:
-				break;
-			case type::time_range:
-				break;
-			case type::test:
-				int i = 0;
-				std::cin >> i;
-				break;
-			}
 		}
-		std::cout << "non" << std::endl;
-		input.close();
 	}
+	input.close();
 }
