@@ -16,9 +16,10 @@ class simulation{
 		std::vector<photograph*> m_photographs_taken;
 		
 	public:
-		simulation(const char*);
+		simulation();
 		~simulation();
 		simulation& operator=(const simulation& simulation);
 		simulation(const simulation& simulation);
+		void setDuration(unsigned int duration);
 		void took_photograph(satellite*, photograph*);
 };
