@@ -33,6 +33,11 @@ void simulation::setDuration(unsigned int duration)
 	this->m_duration = duration;
 }
 
+void simulation::setSatellites(unsigned int satellitesNumber)
+{
+	this->m_number_of_satellites = satellitesNumber;
+}
+
 unsigned int simulation::getDuration()
 {
 	return this->m_duration;
