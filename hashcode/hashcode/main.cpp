@@ -6,7 +6,11 @@
 int main(){
 	std::cout << "Hello World!" << std::endl;
 
+
 	parse("data/forever_alone.in");
+
+	int i = 0;
+	std::cin >> i;
 
 	/*simulation simu("data/forever_alone.in");
 	satellite s1(&simu, 47.0, 2.0, 0.5f, 0.5f, 0.5f);
@@ -34,4 +38,5 @@ int main(){
 	*/
 
 
+	return 0;
 }

@@ -8,9 +8,6 @@
 
 
 
-
-
-
 void parse(const char* input_file) {
 
 	int cpt = 0; // Compteur de ligne 
@@ -22,6 +19,7 @@ void parse(const char* input_file) {
 
 	while (std::getline(input, line))
 	{
+		std::cout << "oui " << std::endl;
 		std::istringstream iss(line); // buffer de string
 
 		std::string result;
@@ -54,6 +52,7 @@ void parse(const char* input_file) {
 				break;
 			}
 		}
+		std::cout << "non" << std::endl;
 		input.close();
 	}
 }
