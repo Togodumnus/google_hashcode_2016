@@ -1,6 +1,7 @@
 #include "satellite.hpp"
 #include "collection.hpp"
 #include "simulation.hpp"
+#include "parsing.h"
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -8,7 +9,6 @@
 
 
 
-enum class type {simulation, collection, satellite, photograph, time_range};
 
 
 void parse(const char* input_file) {
@@ -29,24 +29,31 @@ void parse(const char* input_file) {
 		{
 			std::string token;
 			switch (t) {
-				case type::simulation:
-					while (std::getline(iss, token, '\n'))
-					{
-						std::cout << token << std::endl;
-						simulation.setDuration(std::stoi(token));
-					}
-					break;
-				case type::collection:
-					while (std::getline(iss, token, '\n'))
-					{
-						std::cout << token << std::endl;
-						cpt = std::stoi(token); // on sait qu'il y a 25 satellites
-					}
-				case type::photograph:
-					break;
-				case type::time_range:
-					break;
+			case type::simulation:
+				while (std::getline(iss, token, '\n'))
+				{
+					std::cout << token << std::endl;
+					simulation.setDuration(std::stoi(token));
+					t = type::test;
 				}
+				break;
+			case type::collection:
+				while (std::getline(iss, token, '\n'))
+				{
+					std::cout << token << std::endl;
+					cpt = std::stoi(token); // on sait qu'il y a 25 satellites
+				}
+				break;
+			case type::photograph:
+				break;
+			case type::time_range:
+				break;
+			case type::test:
+				int i = 0;
+				std::cin >> i;
+				break;
+			}
 		}
-	input.close();
+		input.close();
+	}
 }
