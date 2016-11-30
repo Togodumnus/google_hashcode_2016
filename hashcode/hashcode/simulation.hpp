@@ -18,7 +18,7 @@ class simulation{
 	public:
 		simulation(const char*);
 		~simulation();
-		simulation& operator=(const simulation& simulatin);
+		simulation& operator=(const simulation& simulation);
 		simulation(const simulation& simulation);
 		void took_photograph(satellite*, photograph*);
 };
