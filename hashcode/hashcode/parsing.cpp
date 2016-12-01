@@ -2,16 +2,15 @@
 #include "collection.hpp"
 #include "simulation.hpp"
 #include "parsing.h"
+
 #include <iostream>
 #include <fstream>
 #include <sstream>
 
-
-
 void parse(const char* input_file) {
 
-	int cpt = 0; // Compteur de ligne 
-	std::ifstream input(input_file); // on créer un buffer de stream 
+	int cpt = 0; // Compteur de ligne
+	std::ifstream input(input_file); // on créer un buffer de stream
 	std::string line; // ligne actuelle
 	type t = type::numberOfTurns;
 
@@ -20,39 +19,39 @@ void parse(const char* input_file) {
 	while (std::getline(input, line))
 	{
 		std::istringstream iss(line); // buffer de string
+
 		std::string result;
 		std::string result2;
-		std::string x1;
-		std::string x2;
-		std::string x3;
 
 		if (std::getline(iss, result, '\n'))
 		{
+
+			std::stringstream lineStream(result);
+
+			std::cout << "in : " << result << std::endl;
+
 			switch (t) {
 				case type::numberOfTurns:
-					std::cout << result << std::endl;
+					// std::cout << result << std::endl;
 					simulation.setDuration(std::stoi(result));
-					t = type::satellites;
-					//std::cout << simulation.getDuration() << std::endl; // ok ça marche 
+					t = type::satellitesNumber;
+					//std::cout << simulation.getDuration() << std::endl; // ok ça marche
 					break;
 				case type::satellitesNumber:
 					std::cout << result << std::endl;
 					simulation.setSatellites(std::stoi(result));
-					t = type::satellites; 
+					t = type::satellites;
 					break;
 				case type::satellites:
-
-					x3 << (x2 << (x1 << line));
-					
-					/*if (std::getline(iss, result2, ' ')){ // condition jamais validée, pq ? 
+					while (std::getline(lineStream, result2, ' ')){
 						std::cout << " oui " << std::endl;
 						std::cout << result2 << std::endl;
-					}*/
+					}
 					t = type::test;
 					break;
 				case type::collection:
 					std::cout << result << std::endl;
-					cpt = std::stoi(result); 
+					cpt = std::stoi(result);
 					break;
 				case type::photograph:
 					break;
@@ -60,7 +59,7 @@ void parse(const char* input_file) {
 					break;
 				case type::test:
 					std::cout << "lala" << std::endl;
-					return; 
+					return;
 					break;
 				}
 		}
