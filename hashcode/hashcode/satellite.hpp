@@ -2,7 +2,6 @@
 
 #include "photograph.hpp"
 #include "simulation.hpp"
-#include "location.hpp"
 
 class simulation;
 
@@ -10,7 +9,8 @@ class satellite{
 
 	private:
 		simulation* m_simulation;
-		location m_location;
+		double m_latitude;
+		double m_longitude;
 		double m_cam_lat;
 		double m_cam_long;
 		float m_velocity, m_orientation_max_change, m_orientation_max_value;

@@ -5,15 +5,17 @@ satellite::satellite()
 {
 }
 
-satellite::satellite(simulation* simulation, double latitude, double longitude, float velocity, float orientation_max_change, float orientation_max_value) : m_simulation(simulation), m_location(latitude, longitude), m_velocity(velocity), m_orientation_max_change(orientation_max_change), m_orientation_max_value(orientation_max_value){
-	
+satellite::satellite(simulation* simulation, double latitude, double longitude, float velocity, float orientation_max_change, float orientation_max_value) : m_simulation(simulation), m_latitude(latitude), m_longitude(longitude), m_velocity(velocity), m_orientation_max_change(orientation_max_change), m_orientation_max_value(orientation_max_value){
+
 }
 
 satellite::~satellite(){
 
 }
 
-satellite::satellite(const satellite& satellite) : m_location(satellite.m_location){
+satellite::satellite(const satellite& satellite) {
+	m_latitude = satellite.m_latitude;
+	m_longitude = satellite.m_longitude;
 	m_simulation = satellite.m_simulation;
 	m_velocity = satellite.m_velocity;
 	m_orientation_max_change = satellite.m_orientation_max_change;
@@ -24,7 +26,8 @@ satellite::satellite(const satellite& satellite) : m_location(satellite.m_locati
 satellite & satellite::operator=(const satellite & satellite)
 {
 	m_simulation = satellite.m_simulation;
-	m_location = satellite.m_location;
+	m_latitude = satellite.m_latitude;
+	m_longitude = satellite.m_longitude;
 	m_velocity = satellite.m_velocity;
 	m_orientation_max_change = satellite.m_orientation_max_change;
 	m_orientation_max_value = satellite.m_orientation_max_value;
@@ -34,12 +37,11 @@ satellite & satellite::operator=(const satellite & satellite)
 
 
 // TODO
-/*bool satellite::canTake(photograph* photograph) { 
-	if ((photograph->getLocation())->getLatitude 
-}*/ 
+/*bool satellite::canTake(photograph* photograph) {
+}*/
 
 bool satellite::take(photograph* photograph){
-	return false;	
+	return false;
 }
 
 void satellite::moveCamera()
