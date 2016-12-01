@@ -11,6 +11,7 @@
 void parse(const char* input_file) {
 
 	int cpt = 0; // Compteur de ligne
+	int cptSatellites = 0; // compteur de satellites
 	std::ifstream input(input_file); // on créer un buffer de stream
 	std::string line; // ligne actuelle
 	type t = type::numberOfTurns;
@@ -51,8 +52,7 @@ void parse(const char* input_file) {
 						tab.at(cpt) = result2;
 						cpt++;
 					}
-
-					satellite satellite(simulation, std::stod(tab[0]), std::stod(tab[1]), std::stof(tab[2]), std::stof(tab[3]), std::stof(tab[4]));
+					listSatellites.at(cptSatellites) = new satellite(simulation , std::stod(tab[0]), std::stod(tab[1]), std::stof(tab[2]), std::stof(tab[3]), std::stof(tab[4]));
 					t = type::test;
 					break;
 				}
