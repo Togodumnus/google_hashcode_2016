@@ -9,7 +9,7 @@ class simulation;
 class satellite{
 
 	private:
-		simulation* m_simulation;	
+		simulation* m_simulation;
 		location m_location;
 		double m_cam_lat;
 		double m_cam_long;
@@ -19,7 +19,7 @@ class satellite{
 		satellite(simulation*, double, double, float, float, float);
 		~satellite();
 		satellite(const satellite& satellite);
-		satellite& operator=(const satellite& satelltite);
+		satellite& operator=(const satellite& satellite);
 		bool canTake(photograph*);
 		bool take(photograph*);
 		void moveCamera();

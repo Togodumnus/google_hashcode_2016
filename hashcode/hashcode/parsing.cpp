@@ -52,7 +52,8 @@ void parse(const char* input_file) {
 						tab.at(cpt) = result2;
 						cpt++;
 					}
-					listSatellites.at(cptSatellites) = new satellite(simulation , std::stod(tab[0]), std::stod(tab[1]), std::stof(tab[2]), std::stof(tab[3]), std::stof(tab[4]));
+					satellite* s = new satellite(&simulation, std::stod(tab[0]), std::stod(tab[1]), std::stof(tab[2]), std::stof(tab[3]), std::stof(tab[4]));
+					listSatellites.at(cptSatellites) = *s;
 					t = type::test;
 					break;
 				}
