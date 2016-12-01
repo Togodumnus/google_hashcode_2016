@@ -14,7 +14,8 @@ class simulation{
 		unsigned int m_number_of_satellites;
 		unsigned int m_number_of_collections;
 		std::vector<photograph*> m_photographs_taken;
-		
+		std::vector<satellite*> m_satellites;
+
 	public:
 		simulation();
 		~simulation();
@@ -24,4 +25,5 @@ class simulation{
 		void setSatellites(unsigned int satellitesNumber);
 		unsigned int getDuration();
 		void took_photograph(satellite*, photograph*);
+		void addSatellite(satellite *);
 };

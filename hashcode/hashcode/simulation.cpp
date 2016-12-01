@@ -10,6 +10,7 @@ simulation::~simulation()
 	m_number_of_satellites = 0;
 	m_number_of_collections = 0;
 	m_photographs_taken = *(new std::vector<photograph*>);
+	// TODO delete all satellites in m_satellites
 }
 
 simulation & simulation::operator=(const simulation & simulation)
@@ -17,7 +18,7 @@ simulation & simulation::operator=(const simulation & simulation)
 	m_duration = simulation.m_duration;
 	m_number_of_collections = simulation.m_number_of_collections;
 	m_number_of_satellites = simulation.m_number_of_satellites;
-	
+
 	return *this;
 }
 
@@ -46,4 +47,8 @@ unsigned int simulation::getDuration()
 void simulation::took_photograph(satellite* satellite, photograph* photograph){
 	m_photographs_taken.push_back(photograph);
 
+}
+
+void simulation::addSatellite(satellite* satellite) {
+	m_satellites.push_back(satellite);
 }

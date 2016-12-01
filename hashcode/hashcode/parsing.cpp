@@ -11,14 +11,14 @@
 void parse(const char* input_file) {
 
 	int cpt = 0; // Compteur de ligne
-	int cptSatellites = 0; // compteur de satellites
+
 	std::ifstream input(input_file); // on créer un buffer de stream
 	std::string line; // ligne actuelle
 	type t = type::numberOfTurns;
-	std::array<std::string, 5> tab;
-	std::array<satellite, 3> listSatellites;
-	simulation simulation;
 
+	std::array<std::string, 5> tab;
+
+	simulation simulation;
 
 	while (std::getline(input, line))
 	{
@@ -53,7 +53,7 @@ void parse(const char* input_file) {
 						cpt++;
 					}
 					satellite* s = new satellite(&simulation, std::stod(tab[0]), std::stod(tab[1]), std::stof(tab[2]), std::stof(tab[3]), std::stof(tab[4]));
-					listSatellites.at(cptSatellites) = *s;
+					simulation.addSatellite(s);
 					t = type::test;
 					break;
 				}
