@@ -35,6 +35,11 @@ satellite & satellite::operator=(const satellite & satellite)
 	return *this;
 }
 
+float satellite::getVelocity()
+{
+	return m_velocity;
+}
+
 
 // TODO
 /*bool satellite::canTake(photograph* photograph) {

@@ -7,7 +7,7 @@ int main(){
 	std::cout << "Hello World!" << std::endl;
 
 
-	parse("data/forever_alone.in");
+	parse("data/constellation.in");
 
 	int i = 0;
 	std::cin >> i;

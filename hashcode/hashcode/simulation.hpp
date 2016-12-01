@@ -23,6 +23,7 @@ class simulation{
 		simulation(const simulation& simulation);
 		void setDuration(unsigned int duration);
 		void setSatellites(unsigned int satellitesNumber);
+		std::vector<satellite*> getSatellites();
 		unsigned int getDuration();
 		void took_photograph(satellite*, photograph*);
 		void addSatellite(satellite *);

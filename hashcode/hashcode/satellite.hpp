@@ -20,6 +20,7 @@ class satellite{
 		~satellite();
 		satellite(const satellite& satellite);
 		satellite& operator=(const satellite& satellite);
+		float getVelocity();
 		bool canTake(photograph*);
 		bool take(photograph*);
 		void moveCamera();
