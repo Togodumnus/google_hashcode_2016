@@ -15,7 +15,8 @@ class satellite{
 		double m_cam_long;
 		float m_velocity, m_orientation_max_change, m_orientation_max_value;
 	public:
-		satellite(simulation*, double, double, double, double, float, float, float);
+		satellite();
+		satellite(simulation*, double, double, float, float, float);
 		~satellite();
 		satellite(const satellite& satellite);
 		satellite& operator=(const satellite& satelltite);

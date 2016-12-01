@@ -9,6 +9,7 @@ class location{
 		double m_latitude;
 		double m_longitude;
 	public:
+		location();
 		location(double, double);
 		~location();
 		location(const location& location);

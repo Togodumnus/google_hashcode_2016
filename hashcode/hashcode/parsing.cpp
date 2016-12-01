@@ -2,6 +2,7 @@
 #include "collection.hpp"
 #include "simulation.hpp"
 #include "parsing.h"
+#include <array>
 
 #include <iostream>
 #include <fstream>
@@ -13,8 +14,10 @@ void parse(const char* input_file) {
 	std::ifstream input(input_file); // on créer un buffer de stream
 	std::string line; // ligne actuelle
 	type t = type::numberOfTurns;
-
+	std::array<std::string, 5> tab;
+	std::array<satellite, 3> listSatellites;
 	simulation simulation;
+
 
 	while (std::getline(input, line))
 	{
@@ -26,9 +29,8 @@ void parse(const char* input_file) {
 		if (std::getline(iss, result, '\n'))
 		{
 
-			std::stringstream lineStream(result);
-
-			std::cout << "in : " << result << std::endl;
+			std::istringstream iss2(result); // deuxième buffer pour parser a l'intérieur des lignes
+			//std::cout << "in : " << result << std::endl;
 
 			switch (t) {
 				case type::numberOfTurns:
@@ -43,12 +45,17 @@ void parse(const char* input_file) {
 					t = type::satellites;
 					break;
 				case type::satellites:
-					while (std::getline(lineStream, result2, ' ')){
-						std::cout << " oui " << std::endl;
+				{
+					while (std::getline(iss2, result2, ' ')) {
 						std::cout << result2 << std::endl;
+						tab.at(cpt) = result2;
+						cpt++;
 					}
+
+					satellite satellite(simulation, std::stod(tab[0]), std::stod(tab[1]), std::stof(tab[2]), std::stof(tab[3]), std::stof(tab[4]));
 					t = type::test;
 					break;
+				}
 				case type::collection:
 					std::cout << result << std::endl;
 					cpt = std::stoi(result);
