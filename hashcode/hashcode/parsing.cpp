@@ -22,6 +22,10 @@ void parse(const char* input_file) {
 		std::istringstream iss(line); // buffer de string
 		std::string result;
 		std::string result2;
+		std::string x1;
+		std::string x2;
+		std::string x3;
+
 		if (std::getline(iss, result, '\n'))
 		{
 			switch (t) {
@@ -37,10 +41,13 @@ void parse(const char* input_file) {
 					t = type::satellites; 
 					break;
 				case type::satellites:
-					if (std::getline(iss, result2, ' ')){ // condition jamais validée, pq ? 
+
+					x3 << (x2 << (x1 << line));
+					
+					/*if (std::getline(iss, result2, ' ')){ // condition jamais validée, pq ? 
 						std::cout << " oui " << std::endl;
 						std::cout << result2 << std::endl;
-					}
+					}*/
 					t = type::test;
 					break;
 				case type::collection:
