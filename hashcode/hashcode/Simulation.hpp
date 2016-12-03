@@ -55,5 +55,4 @@ class Simulation {
 		inline unsigned int getNumberCollections() {
 			return this->m_number_of_collections;
 		}
-
 };
