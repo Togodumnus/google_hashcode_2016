@@ -1,26 +1,30 @@
 #pragma once
 
-#include "photograph.hpp"
 #include <vector>
+#include "photograph.hpp"
+#include "time_range.hpp"
 
 // necessary because of mutual inclusion
 class photograph;
 
 class collection{
-
 	private:
 		unsigned short m_value;
-		unsigned short m_number_of_locations;
-		unsigned short m_number_of_time_ranges;
 
+		// TODO : optimized with an array  by passing number of photograph to
+		// constructor
 		std::vector<photograph*> m_photographs;
 
-	public:
+		/**
+		 * time ranges during which the collection's photographs can be taken
+		 */
+		const std::vector<time_range*> m_time_ranges;
 
-		collection(unsigned short, unsigned short, unsigned short);
+	public:
+		collection(unsigned short);
 		~collection();
 		collection(const collection &collection);
 		collection& operator=(const collection &collection);
-		void add_photograph(photograph*);
 
+		void add_photograph(photograph*);
 };
