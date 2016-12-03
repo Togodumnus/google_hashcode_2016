@@ -13,7 +13,7 @@ class ReadException : std::exception {
 		inline ReadException(std::string f) {
 			file = f;
 		}
-		inline const char* what() const _NOEXCEPT {
+		inline const char* what() const noexcept {
 			std::string m = "Can't read file ";
 			m += file;
 			return m.c_str();
