@@ -32,6 +32,6 @@ class Satellite : Location {
 		Satellite(const Satellite&);
 		Satellite& operator=(const Satellite&);
 
-		// void getPosition(unsigned long int time); // TODO position au temps t
+		void getPosition(unsigned long int time); // TODO position au temps t
 		// void moveCamera(); // TODO not sure if belongs here
 };

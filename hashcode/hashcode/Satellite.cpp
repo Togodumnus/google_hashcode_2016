@@ -58,3 +58,9 @@ std::ostream& operator<<(std::ostream& o, const Satellite& s) {
 		<< "orientationMaxValue[" << s.m_orientation_max_value << "]"
 		<< ")";
 }
+
+void Satellite::getPosition(unsigned long int time) {
+	//longitude : via pos depart + time * vitesse rotation terre
+
+	//latitude : pos depart * time
+}
