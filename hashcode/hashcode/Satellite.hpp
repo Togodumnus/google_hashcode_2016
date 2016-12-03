@@ -1,17 +1,18 @@
 #pragma once
 
 #include <ostream>
-#include "photograph.hpp"
-#include "simulation.hpp"
+#include "Photograph.hpp"
+#include "Simulation.hpp"
+#include "Location.hpp"
 
 using SatelliteLine = std::array<std::string, 5>;
 
-class simulation;
+class Simulation;
 
-class satellite : location {
+class Satellite : Location {
 
 	private:
-		simulation* m_simulation;
+		Simulation* m_simulation;
 
 		// orientation of the camera
 		long int m_cam_lat  = 0;
@@ -21,15 +22,15 @@ class satellite : location {
 			m_orientation_max_change,
 			m_orientation_max_value;
 
-        friend std::ostream& operator<<(std::ostream&, const satellite&);
+        friend std::ostream& operator<<(std::ostream&, const Satellite&);
 
 	public:
-		satellite(simulation*, long int, long int, int, int, int);
-        satellite(simulation*, SatelliteLine);
+		Satellite(Simulation*, long int, long int, int, int, int);
+        Satellite(Simulation*, SatelliteLine);
 
-		~satellite();
-		satellite(const satellite& satellite);
-		satellite& operator=(const satellite& satellite);
+		~Satellite();
+		Satellite(const Satellite&);
+		Satellite& operator=(const Satellite&);
 
 		// void getPosition(unsigned long int time); // TODO position au temps t
 		// void moveCamera(); // TODO not sure if belongs here

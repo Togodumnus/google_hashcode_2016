@@ -19,23 +19,23 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="collection.cpp" />
-    <ClCompile Include="location.cpp" />
+    <ClCompile Include="Collection.cpp" />
+    <ClCompile Include="Location.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="parsing.cpp" />
-    <ClCompile Include="photograph.cpp" />
-    <ClCompile Include="satellite.cpp" />
-    <ClCompile Include="simulation.cpp" />
-    <ClCompile Include="time_range.cpp" />
+    <ClCompile Include="Photograph.cpp" />
+    <ClCompile Include="Satellite.cpp" />
+    <ClCompile Include="Simulation.cpp" />
+    <ClCompile Include="TimeRange.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="collection.hpp" />
-    <ClInclude Include="location.hpp" />
-    <ClInclude Include="parsing.h" />
-    <ClInclude Include="photograph.hpp" />
-    <ClInclude Include="satellite.hpp" />
-    <ClInclude Include="simulation.hpp" />
-    <ClInclude Include="time_range.hpp" />
+    <ClInclude Include="Collection.hpp" />
+    <ClInclude Include="Location.hpp" />
+    <ClInclude Include="parsing.hpp" />
+    <ClInclude Include="Photograph.hpp" />
+    <ClInclude Include="Satellite.hpp" />
+    <ClInclude Include="Simulation.hpp" />
+    <ClInclude Include="TimeRange.hpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{51D8D66E-6119-4F7B-A94B-8EEA9B7D8BFA}</ProjectGuid>

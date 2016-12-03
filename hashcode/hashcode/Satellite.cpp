@@ -1,33 +1,33 @@
 #include <ostream>
 #include <array>
-#include "satellite.hpp"
+#include "Satellite.hpp"
 
-satellite::satellite(
-		simulation* simulation,
+Satellite::Satellite(
+		Simulation* simulation,
 		long int latitude,
 		long int longitude,
 		int velocity,
 		int orientation_max_change,
 		int orientation_max_value) :
-		location(latitude, longitude),
+		Location(latitude, longitude),
 		m_simulation(simulation),
 		m_velocity(velocity),
 		m_orientation_max_change(orientation_max_change),
 		m_orientation_max_value(orientation_max_value) { }
 
-satellite::satellite(
-		simulation* simulation,
+Satellite::Satellite(
+		Simulation* simulation,
 		SatelliteLine line) :
 		m_simulation(simulation) {
-	location(std::stol(line[0]), std::stol(line[1]));
+	Location(std::stol(line[0]), std::stol(line[1]));
 	m_velocity               = std::stoi(line[2]);
 	m_orientation_max_change = std::stoi(line[3]);
 	m_orientation_max_value  = std::stoi(line[4]);
 }
 
-satellite::~satellite() { }
+Satellite::~Satellite() { }
 
-satellite::satellite(const satellite& satellite) {
+Satellite::Satellite(const Satellite& satellite) {
 	m_latitude	 = satellite.m_latitude;
 	m_longitude  = satellite.m_longitude;
 	m_simulation = satellite.m_simulation;
@@ -36,7 +36,7 @@ satellite::satellite(const satellite& satellite) {
 	m_orientation_max_value = satellite.m_orientation_max_value;
 }
 
-satellite & satellite::operator=(const satellite & satellite)
+Satellite& Satellite::operator=(const Satellite & satellite)
 {
 	m_latitude	 = satellite.m_latitude;
 	m_longitude  = satellite.m_longitude;
@@ -48,7 +48,7 @@ satellite & satellite::operator=(const satellite & satellite)
 	return *this;
 }
 
-std::ostream& operator<<(std::ostream& o, const satellite& s) {
+std::ostream& operator<<(std::ostream& o, const Satellite& s) {
 	return o << "Satellite("
 		<< "lat[" << s.m_latitude << "] "
 		<< "long[" << s.m_longitude << "] "

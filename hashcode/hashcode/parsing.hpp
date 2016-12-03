@@ -6,15 +6,15 @@
 /**
  * Different states of the reading of input file
  */
-enum class type {
-	test,			// TODO remove
-	simulation,
-	collection,
-	numberOfTurns,
-	satellites,
-	satellitesNumber,
-	photograph,
-	time_range
+enum class ReadState {
+	Test,			// TODO remove
+	Simulation,
+	Collection,
+	NumberOfTurns,
+	Satellites,
+	SatellitesNumber,
+	Photograph,
+	TimeRange
 };
 
 class ReadException: std::exception {

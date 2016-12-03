@@ -3,10 +3,10 @@
 #include <sstream>
 #include <array>
 
-#include "satellite.hpp"
-#include "collection.hpp"
-#include "simulation.hpp"
-#include "parsing.hpp"
+#include "Satellite.hpp"
+#include "Collection.hpp"
+#include "Simulation.hpp"
+#include "Parsing.hpp"
 
 void parseInput(const char* input_file) {
 
@@ -19,9 +19,9 @@ void parseInput(const char* input_file) {
 	}
 
 	std::string line; // ligne actuelle
-	type t = type::numberOfTurns; // état de l'automate de lecture
+	ReadState t = ReadState::NumberOfTurns; // état de l'automate de lecture
 
-	simulation simulation;
+	Simulation simulation;
 
 	while (std::getline(input, line))
 	{
@@ -39,20 +39,20 @@ void parseInput(const char* input_file) {
 
 			switch (t) {
 
-				case type::numberOfTurns:
+				case ReadState::NumberOfTurns:
 					std::cout << " nombre de tours : " << result << std::endl;
 					simulation.setDuration(std::stoi(result));
-					t = type::satellitesNumber;
+					t = ReadState::SatellitesNumber;
 					break;
 
-				case type::satellitesNumber:
+				case ReadState::SatellitesNumber:
 					std::cout << " nombre de satellites : " << result << std::endl;
 					cptSatellites = std::stoi(result);
 					simulation.setSatellitesNumber(cptSatellites);
-					t = type::satellites;
+					t = ReadState::Satellites;
 					break;
 
-				case type::satellites:
+				case ReadState::Satellites:
 				{
 					SatelliteLine satelliteLine;
 					std::cout << cptSatellites << std::endl;
@@ -65,7 +65,7 @@ void parseInput(const char* input_file) {
 						cpt++;
 					}
 
-					satellite* s = new satellite(&simulation, satelliteLine);
+					Satellite* s = new Satellite(&simulation, satelliteLine);
 					// on ajoute le satellite a la simulation
 					simulation.addSatellite(s);
 
@@ -73,28 +73,29 @@ void parseInput(const char* input_file) {
 					cptSatellites--; // next
 
 					if (cptSatellites == 0) { // une fois qu'on a ajouté tous les satellites
-						t = type::test; // TODO use real state
+						t = ReadState::Test; // TODO use real state
 					}
 				}
 					break;
 
-				case type::collection:
+				case ReadState::Collection:
 					std::cout << result << std::endl;
 					cpt = std::stoi(result);
 					break;
 
-				case type::photograph:
+				case ReadState::Photograph:
 					break;
 
-				case type::time_range:
+				case ReadState::TimeRange:
 					break;
 
-				case type::test:
+				case ReadState::Test:
 					std::cout << "lala" << std::endl;
 					return;
 					break;
 				}
 		}
 	}
+
 	input.close();
 }

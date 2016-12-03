@@ -2,12 +2,12 @@
 
 #include <string>
 
-#include "satellite.hpp"
-#include "photograph.hpp"
+#include "Satellite.hpp"
+#include "Photograph.hpp"
 
-class satellite;
+class Satellite;
 
-class simulation{
+class Simulation {
 
 	private:
 		unsigned long int m_duration;
@@ -16,16 +16,16 @@ class simulation{
 
 		// TODO missing info (class "shoot" instead ? or attributes on class
 		// photograph ?)
-		std::vector<photograph*> m_photographs_taken;
+		std::vector<Photograph*> m_photographs_taken;
 
-		std::vector<satellite*>  m_satellites;
-		std::vector<collection*> m_collections;
+		std::vector<Satellite*>  m_satellites;
+		std::vector<Collection*> m_collections;
 
 	public:
-		simulation();
-		~simulation();
-		simulation& operator=(const simulation& simulation);
-		simulation(const simulation& simulation);
+		Simulation();
+		~Simulation();
+		Simulation& operator=(const Simulation&);
+		Simulation(const Simulation&);
 
 		inline void setDuration(unsigned int duration) {
 			m_duration = duration;
@@ -39,7 +39,7 @@ class simulation{
 			return this->m_duration;
 		}
 
-		inline void addSatellite(satellite* satellite) {
+		inline void addSatellite(Satellite* satellite) {
 			m_satellites.push_back(satellite);
 		}
 };

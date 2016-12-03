@@ -1,9 +1,9 @@
-#include "simulation.hpp"
 #include <fstream>
+#include "Simulation.hpp"
 
-simulation::simulation() {}
+Simulation::Simulation() {}
 
-simulation::~simulation()
+Simulation::~Simulation()
 {
     for (auto it = m_satellites.begin(); it != m_satellites.end(); it++) {
         delete (*it);
@@ -18,7 +18,7 @@ simulation::~simulation()
     // TODO delete all photgraphs taken
 }
 
-simulation & simulation::operator=(const simulation & simulation)
+Simulation& Simulation::operator=(const Simulation& simulation)
 {
 	m_duration = simulation.m_duration;
 	m_number_of_collections = simulation.m_number_of_collections; // copy
@@ -27,7 +27,7 @@ simulation & simulation::operator=(const simulation & simulation)
 	return *this;
 }
 
-simulation::simulation(const simulation & simulation)
+Simulation::Simulation(const Simulation& simulation)
 {
 	m_duration = simulation.m_duration;
 	m_number_of_collections = simulation.m_number_of_collections; // copy

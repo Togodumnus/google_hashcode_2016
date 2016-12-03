@@ -3,18 +3,18 @@
 /**
  *	Location class
  **/
-class location {
+class Location {
 
 	protected:
 		long int m_latitude  = 0;
 		long int m_longitude = 0;
 
 	public:
-		location();
-		location(long int, long int);
-		~location();
-		location(const location& location);
-		location& operator=(const location& location);
+		Location();
+		Location(long int, long int);
+		~Location();
+		Location(const Location&);
+		Location& operator=(const Location&);
 
 		long int getLatitude() const;
 		long int getLongitude() const;
