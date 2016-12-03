@@ -1,4 +1,5 @@
 #include <ostream>
+#include <iostream>
 #include <array>
 #include "Satellite.hpp"
 
@@ -18,8 +19,9 @@ Satellite::Satellite(
 Satellite::Satellite(
 		Simulation* simulation,
 		SatelliteLine line) :
+		Location(std::stol(line[0]), std::stol(line[1])),
 		m_simulation(simulation) {
-	Location(std::stol(line[0]), std::stol(line[1]));
+	std::cout << std::stol(line[0]) << " " << std::stol(line[1]) << std::endl;
 	m_velocity               = std::stoi(line[2]);
 	m_orientation_max_change = std::stoi(line[3]);
 	m_orientation_max_value  = std::stoi(line[4]);
@@ -27,9 +29,8 @@ Satellite::Satellite(
 
 Satellite::~Satellite() { }
 
-Satellite::Satellite(const Satellite& satellite) {
-	m_latitude	 = satellite.m_latitude;
-	m_longitude  = satellite.m_longitude;
+Satellite::Satellite(const Satellite& satellite) :
+	Location(satellite.m_latitude, satellite.m_longitude) {
 	m_simulation = satellite.m_simulation;
 	m_velocity	 = satellite.m_velocity;
 	m_orientation_max_change = satellite.m_orientation_max_change;

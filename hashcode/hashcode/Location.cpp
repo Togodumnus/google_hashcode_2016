@@ -1,7 +1,5 @@
 #include "Location.hpp"
 
-Location::Location() { }
-
 Location::Location(long int latitude, long int longitude) :
 	m_latitude(latitude), m_longitude(longitude) { }
 

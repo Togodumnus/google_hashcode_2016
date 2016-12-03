@@ -6,6 +6,7 @@ Photograph::Photograph(long int latitude, long int longitude):
 Photograph::~Photograph() { }
 
 Photograph::Photograph(const Photograph& photograph)
+	: Location(photograph.m_latitude, photograph.m_longitude)
 {
 	m_collections = photograph.m_collections; // copy
 }

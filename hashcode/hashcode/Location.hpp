@@ -10,7 +10,6 @@ class Location {
 		long int m_longitude = 0;
 
 	public:
-		Location();
 		Location(long int, long int);
 		~Location();
 		Location(const Location&);
