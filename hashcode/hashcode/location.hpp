@@ -1,20 +1,21 @@
 #pragma once
 
 /**
-*	Location class
-**/
-class location{
+ *	Location class
+ **/
+class location {
 
-	private:
-		double m_latitude;
-		double m_longitude;
+	protected:
+		long int m_latitude  = 0;
+		long int m_longitude = 0;
+
 	public:
 		location();
-		location(double, double);
+		location(long int, long int);
 		~location();
 		location(const location& location);
 		location& operator=(const location& location);
-		double getLatitude();
-		double getLongitude();
 
+		long int getLatitude() const;
+		long int getLongitude() const;
 };
