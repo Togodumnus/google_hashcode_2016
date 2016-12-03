@@ -17,7 +17,7 @@ int main(){
 		std::cerr << "Error : " << e.what() << std::endl;
 	}
 
-	
+	std::cout << "Ceci est un test" << std::endl;
 
 	return 0;
 }
