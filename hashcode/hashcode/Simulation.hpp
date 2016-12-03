@@ -2,6 +2,7 @@
 
 #include <string>
 
+#include "Collection.hpp"
 #include "Satellite.hpp"
 #include "Photograph.hpp"
 

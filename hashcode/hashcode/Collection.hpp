@@ -1,9 +1,10 @@
 #pragma once
 
 #include <vector>
+#include <array>
+#include <ostream>
 #include "Photograph.hpp"
 #include "TimeRange.hpp"
-#include "Simulation.hpp"
 
 using CollectionLine = std::array<std::string, 3>;
 
@@ -12,7 +13,6 @@ class Photograph;
 
 class Collection{
 	private:
-		Simulation* simulation;
 		unsigned short m_value;
 		unsigned short m_number_of_locations;
 		unsigned short m_number_of_time_ranges;
@@ -25,12 +25,12 @@ class Collection{
 		 * time ranges during which the collection's photographs can be taken
 		 */
 		const std::vector<TimeRange*> m_time_ranges;
-		friend std::ostream& operator<<(std::ostream&, const Collection&);
 
+		friend std::ostream& operator<<(std::ostream&, const Collection&);
 
 	public:
 		Collection(unsigned short);
-		Collection(Simulation* simulation, CollectionLine);
+		Collection(CollectionLine);
 		~Collection();
 		Collection(const Collection &collection);
 		Collection& operator=(const Collection &collection);
