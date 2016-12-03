@@ -1,6 +1,8 @@
 #pragma once
 
 #include <ostream>
+#include <array>
+#include <string>
 #include "Photograph.hpp"
 #include "Simulation.hpp"
 #include "Location.hpp"
