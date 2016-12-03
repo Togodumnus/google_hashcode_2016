@@ -6,9 +6,24 @@
 #include "Satellite.hpp"
 #include "Collection.hpp"
 #include "Simulation.hpp"
-#include "Parsing.hpp"
 
-void parseInput(const char* input_file) {
+/**
+ * Different states of the reading of input file
+ */
+enum class ReadState {
+	Test,			// TODO remove
+	Simulation,
+	Collection,
+	NumberOfTurns,
+	Satellites,
+	SatellitesNumber,
+	Photograph,
+	TimeRange
+};
+
+void Simulation::parseInput(const char* input_file) {
+
+	Simulation* simulation = this;
 
 	int cptSatellites; // compteur décroissant de satellites
 
@@ -20,8 +35,6 @@ void parseInput(const char* input_file) {
 
 	std::string line; // ligne actuelle
 	ReadState t = ReadState::NumberOfTurns; // état de l'automate de lecture
-
-	Simulation simulation;
 
 	while (std::getline(input, line))
 	{
@@ -41,14 +54,14 @@ void parseInput(const char* input_file) {
 
 				case ReadState::NumberOfTurns:
 					std::cout << " nombre de tours : " << result << std::endl;
-					simulation.setDuration(std::stoi(result));
+					simulation->m_duration = std::stoi(result);
 					t = ReadState::SatellitesNumber;
 					break;
 
 				case ReadState::SatellitesNumber:
 					std::cout << " nombre de satellites : " << result << std::endl;
 					cptSatellites = std::stoi(result);
-					simulation.setSatellitesNumber(cptSatellites);
+					simulation->m_number_of_satellites = cptSatellites;
 					t = ReadState::Satellites;
 					break;
 
@@ -65,9 +78,9 @@ void parseInput(const char* input_file) {
 						cpt++;
 					}
 
-					Satellite* s = new Satellite(&simulation, satelliteLine);
+					Satellite* s = new Satellite(this, satelliteLine);
 					// on ajoute le satellite a la simulation
-					simulation.addSatellite(s);
+					this->m_satellites.push_back(s);
 
 					std::cout << *s << std::endl;
 					cptSatellites--; // next

@@ -7,6 +7,19 @@
 
 class Satellite;
 
+class ReadException : std::exception {
+	std::string file;
+	public:
+		inline ReadException(std::string f) {
+			file = f;
+		}
+		inline const char* what() const _NOEXCEPT {
+			std::string m = "Can't read file ";
+			m += file;
+			return m.c_str();
+		};
+};
+
 class Simulation {
 
 	private:
@@ -21,25 +34,16 @@ class Simulation {
 		std::vector<Satellite*>  m_satellites;
 		std::vector<Collection*> m_collections;
 
+		void parseInput(const char* input_file);
+
 	public:
-		Simulation();
+		Simulation(const char* input_file);
 		~Simulation();
 		Simulation& operator=(const Simulation&);
 		Simulation(const Simulation&);
-
-		inline void setDuration(unsigned int duration) {
-			m_duration = duration;
-		}
-
-		inline void setSatellitesNumber(unsigned int satellitesNumber) {
-			m_number_of_satellites = satellitesNumber;
-		}
 
 		inline unsigned int getDuration() {
 			return this->m_duration;
 		}
 
-		inline void addSatellite(Satellite* satellite) {
-			m_satellites.push_back(satellite);
-		}
 };

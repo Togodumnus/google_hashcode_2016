@@ -1,7 +1,9 @@
 #include <fstream>
 #include "Simulation.hpp"
 
-Simulation::Simulation() {}
+Simulation::Simulation(const char* input_file) {
+	parseInput(input_file);
+}
 
 Simulation::~Simulation()
 {
