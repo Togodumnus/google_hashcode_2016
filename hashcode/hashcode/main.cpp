@@ -11,7 +11,6 @@ int main(){
 	std::cout << "Reading file " << INPUT << std::endl;
 
 	try {
-		// Simulation s = Simulation(INPUT);
 		Simulation s = Simulation(INPUT);
 		int i = 0;
 		std::cin >> i;
