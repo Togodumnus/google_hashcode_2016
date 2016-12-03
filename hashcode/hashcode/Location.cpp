@@ -25,3 +25,11 @@ long int Location::getLongitude() const {
 	return this->m_longitude;
 }
 
+void Location::setLatitude(long int l){
+	this->m_latitude = l;
+}
+
+void Location::setLongitude(long int l){
+	this->m_longitude = l;
+}
+

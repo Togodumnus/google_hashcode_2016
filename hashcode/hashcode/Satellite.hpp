@@ -22,6 +22,9 @@ class Satellite : Location {
 			m_orientation_max_change,
 			m_orientation_max_value;
 
+		// earth goes 15" by turn
+		const static int earth_velocity = 15;
+
         friend std::ostream& operator<<(std::ostream&, const Satellite&);
 
 	public:
@@ -32,6 +35,7 @@ class Satellite : Location {
 		Satellite(const Satellite&);
 		Satellite& operator=(const Satellite&);
 
-		void getPosition(unsigned long int time); // TODO position au temps t
+		long int getLatitudeT(unsigned long int time);
+		long int getLongitudeT(unsigned long int time);
 		// void moveCamera(); // TODO not sure if belongs here
 };

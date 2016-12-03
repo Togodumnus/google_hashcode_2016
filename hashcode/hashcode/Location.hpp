@@ -17,4 +17,7 @@ class Location {
 
 		long int getLatitude() const;
 		long int getLongitude() const;
+
+		void setLatitude(long int);
+		void setLongitude(long int);
 };

@@ -59,8 +59,10 @@ std::ostream& operator<<(std::ostream& o, const Satellite& s) {
 		<< ")";
 }
 
-void Satellite::getPosition(unsigned long int time) {
-	//longitude : via pos depart + time * vitesse rotation terre
+long int Satellite::getLatitudeT(unsigned long int time) {
+	return this->getLatitude();
+}
 
-	//latitude : pos depart * time
+long int Satellite::getLongitudeT(unsigned long int time) {
+	return this->getLongitude();
 }
