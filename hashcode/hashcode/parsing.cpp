@@ -14,6 +14,7 @@ enum class ReadState {
 	Test,			// TODO remove
 	Simulation,
 	Collection,
+	CollectionsNumber,
 	NumberOfTurns,
 	Satellites,
 	SatellitesNumber,
@@ -26,6 +27,7 @@ void Simulation::parseInput(const char* input_file) {
 	Simulation* simulation = this;
 
 	int cptSatellites; // compteur décroissant de satellites
+	int cptCollections; // compteur décroissant de collections
 
 	std::ifstream input(input_file); // on crée un buffer de stream
 
@@ -91,11 +93,38 @@ void Simulation::parseInput(const char* input_file) {
 				}
 					break;
 
-				case ReadState::Collection:
-					std::cout << result << std::endl;
-					cpt = std::stoi(result);
+				case ReadState::CollectionsNumber:
+					std::cout << " Nombre de collections : " << result << std::endl;
+					cptCollections = stoi(result);
+					this->m_number_of_collections = cptCollections;
+					t = ReadState::Collection;
 					break;
 
+				case ReadState::Collection:
+				{
+					CollectionLine collectionLine;
+					std::cout << cptCollections << std::endl;
+
+					// lecture de la ligne à découper selon les espaces
+					while (std::getline(iss2, result2, ' ')) {
+						// on remplit un tableau intermediaire
+						collectionLine.at(cpt) = result2;
+						// on passe a l'arg suivant de la ligne
+						cpt++;
+					}
+
+					Collection* s = new Collection(this, collectionLine);
+					// on ajoute le satellite a la simulation
+					this->m_collections.push_back(s);
+
+					std::cout << *s << std::endl;
+					cptCollections--; // next
+
+					if (cptCollections == 0) { // une fois qu'on a ajouté tous les satellites
+						t = ReadState::Test; // TODO use real state
+					}
+					break;
+				}
 				case ReadState::Photograph:
 					break;
 
