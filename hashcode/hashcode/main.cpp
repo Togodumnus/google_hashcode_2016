@@ -4,12 +4,15 @@
 #include "Satellite.hpp"
 #include "Collection.hpp"
 
+// const char* INPUT = "data/toy.in"; // VS
+const char* INPUT = "hashcode/hashcode/data/toy.in";
+
 int main(){
-	std::cout << "Hello World!" << std::endl;
+	std::cout << "Reading file " << INPUT << std::endl;
 
 	try {
-		// Simulation s = Simulation("data/constellation.in");
-		Simulation s = Simulation("hashcode/hashcode/data/forever_alone.in");
+		// Simulation s = Simulation(INPUT);
+		Simulation s = Simulation(INPUT);
 	} catch (ReadException& e) {
 		std::cerr << "Error : " << e.what() << std::endl;
 	}
