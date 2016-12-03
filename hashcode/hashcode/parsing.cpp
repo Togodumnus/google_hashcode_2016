@@ -113,7 +113,7 @@ void Simulation::parseInput(const char* input_file) {
 						cpt++;
 					}
 
-					Collection* s = new Collection(this, collectionLine);
+					Collection* s = new Collection(collectionLine);
 					// on ajoute le satellite a la simulation
 					this->m_collections.push_back(s);
 

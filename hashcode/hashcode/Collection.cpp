@@ -2,7 +2,7 @@
 
 Collection::Collection(unsigned short value) : m_value(value) { }
 
-Collection::Collection(Simulation * simulation, CollectionLine line)
+Collection::Collection(CollectionLine line)
 {
 	m_value = std::stoi(line[0]);
 	m_number_of_locations = std::stoi(line[1]);
