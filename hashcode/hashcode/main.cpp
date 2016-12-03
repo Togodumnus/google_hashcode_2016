@@ -4,7 +4,7 @@
 #include "Satellite.hpp"
 #include "Collection.hpp"
 
-const char* INPUT = "data/toy.in"; // VS
+const char* INPUT = "data/constellation.in"; // VS
 // const char* INPUT = "hashcode/hashcode/data/toy.in";
 
 int main(){

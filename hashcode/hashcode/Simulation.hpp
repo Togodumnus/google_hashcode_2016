@@ -5,6 +5,7 @@
 #include "Satellite.hpp"
 #include "Photograph.hpp"
 
+
 class Satellite;
 
 class ReadException : std::exception {

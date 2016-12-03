@@ -70,8 +70,6 @@ void Simulation::parseInput(const char* input_file) {
 				case ReadState::Satellites:
 				{
 					SatelliteLine satelliteLine;
-					std::cout << cptSatellites << std::endl;
-
 					// lecture de la ligne à découper selon les espaces
 					while (std::getline(iss2, result2, ' ')) {
 						// on remplit un tableau intermediaire
@@ -79,7 +77,7 @@ void Simulation::parseInput(const char* input_file) {
 						// on passe a l'arg suivant de la ligne
 						cpt++;
 					}
-
+					cpt = 0;
 					Satellite* s = new Satellite(this, satelliteLine);
 					// on ajoute le satellite a la simulation
 					this->m_satellites.push_back(s);
@@ -88,7 +86,7 @@ void Simulation::parseInput(const char* input_file) {
 					cptSatellites--; // next
 
 					if (cptSatellites == 0) { // une fois qu'on a ajouté tous les satellites
-						t = ReadState::Test; // TODO use real state
+						t = ReadState::CollectionsNumber; // TODO use real state
 					}
 				}
 					break;

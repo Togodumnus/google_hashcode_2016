@@ -1,5 +1,6 @@
 #include "Photograph.hpp"
 
+
 Photograph::Photograph(long int latitude, long int longitude):
 	Location(latitude, longitude) { }
 
