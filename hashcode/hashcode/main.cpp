@@ -1,4 +1,5 @@
 #include <iostream>
+#include <exception>
 
 #include "satellite.hpp"
 #include "collection.hpp"
@@ -7,8 +8,12 @@
 int main(){
 	std::cout << "Hello World!" << std::endl;
 
-	parseInput("data/constellation.in");
-    // parseInput("hashcode/hashcode/data/forever_alone.in");
+	try {
+		parseInput("data/constellation.in");
+		// parseInput("hashcode/hashcode/data/forever_alone.in");
+	} catch (ReadException& e) {
+		std::cerr << "Error : " << e.what() << std::endl;
+	}
 
 	return 0;
 }

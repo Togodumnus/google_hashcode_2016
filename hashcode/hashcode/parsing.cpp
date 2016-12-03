@@ -13,6 +13,11 @@ void parseInput(const char* input_file) {
 	int cptSatellites; // compteur décroissant de satellites
 
 	std::ifstream input(input_file); // on crée un buffer de stream
+
+	if (input.fail() || input.bad()) {
+		throw ReadException(input_file);
+	}
+
 	std::string line; // ligne actuelle
 	type t = type::numberOfTurns; // état de l'automate de lecture
 
