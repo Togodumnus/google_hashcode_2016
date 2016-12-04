@@ -17,7 +17,10 @@ int main(){
 		std::unique_ptr<Algorithm> a(new BasicAlgo());
 		Simulation s = Simulation(INPUT, a);
 		s.solve();
-		std::cout << *s.getSatelliteN(0)<< std::endl;
+		Satellite sat = *s.getSatelliteN(0);
+		std::cout << sat<< std::endl;
+		std::cout <<"Latitude a t:0" << sat.getLatitudeT(0) << std::endl;
+		std::cout << "Longitude a t:0" << sat.getLongitudeT(0) << std::endl;
 	} catch (ReadException& e) {
 		std::cerr << "Error : " << e.what() << std::endl;
 	}
