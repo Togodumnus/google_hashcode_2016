@@ -4,7 +4,7 @@
 #include "Satellite.hpp"
 #include "Collection.hpp"
 
-const char* INPUT = "data/constellation.in"; // VS
+const char* INPUT = "data/forever_alone.in"; // VS
 // const char* INPUT = "hashcode/hashcode/data/toy.in";
 
 int main(){
@@ -12,6 +12,7 @@ int main(){
 
 	try {
 		Simulation s = Simulation(INPUT);
+		std::cout << " parsing terminé " << std::endl;
 		int i = 0;
 		std::cin >> i;
 	} catch (ReadException& e) {

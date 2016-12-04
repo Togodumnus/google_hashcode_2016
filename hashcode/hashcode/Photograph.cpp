@@ -1,6 +1,10 @@
 #include "Photograph.hpp"
 
 
+Photograph::Photograph(PhotographLine photographLine):Location(std::stol(photographLine[0]), std::stol(photographLine[1]))
+{
+}
+
 Photograph::Photograph(long int latitude, long int longitude):
 	Location(latitude, longitude) { }
 

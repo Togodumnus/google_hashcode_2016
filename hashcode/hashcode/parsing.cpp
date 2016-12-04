@@ -6,6 +6,7 @@
 #include "Satellite.hpp"
 #include "Collection.hpp"
 #include "Simulation.hpp"
+#include "TimeRange.hpp"
 
 /**
  * Different states of the reading of input file
@@ -28,6 +29,8 @@ void Simulation::parseInput(const char* input_file) {
 
 	int cptSatellites; // compteur décroissant de satellites
 	int cptCollections; // compteur décroissant de collections
+	int cptPhotos; // compteur décroissant de photos
+	int cptTimeRanges; // compteur décroissant des fenêtres de temps
 
 	std::ifstream input(input_file); // on crée un buffer de stream
 
@@ -82,7 +85,7 @@ void Simulation::parseInput(const char* input_file) {
 					// on ajoute le satellite a la simulation
 					this->m_satellites.push_back(s);
 
-					std::cout << *s << std::endl;
+					//std::cout << *s << std::endl;
 					cptSatellites--; // next
 
 					if (cptSatellites == 0) { // une fois qu'on a ajouté tous les satellites
@@ -92,6 +95,7 @@ void Simulation::parseInput(const char* input_file) {
 					break;
 
 				case ReadState::CollectionsNumber:
+
 					std::cout << " Nombre de collections : " << result << std::endl;
 					cptCollections = stoi(result);
 					this->m_number_of_collections = cptCollections;
@@ -100,35 +104,81 @@ void Simulation::parseInput(const char* input_file) {
 
 				case ReadState::Collection:
 				{
-					CollectionLine collectionLine;
-					std::cout << cptCollections << std::endl;
 
+
+					CollectionLine collectionLine;
 					// lecture de la ligne à découper selon les espaces
 					while (std::getline(iss2, result2, ' ')) {
 						// on remplit un tableau intermediaire
 						collectionLine.at(cpt) = result2;
+						//std::cout << result2 << std::endl;
 						// on passe a l'arg suivant de la ligne
 						cpt++;
 					}
-
+					cpt = 0;
 					Collection* s = new Collection(collectionLine);
 					// on ajoute le satellite a la simulation
 					this->m_collections.push_back(s);
 
-					std::cout << *s << std::endl;
+					//std::cout << *s << std::endl;
+					cptPhotos = std::stoi(collectionLine[1]); // compteur du nb de photos dans la collection
+					cptTimeRanges = std::stoi(collectionLine[2]);
 					cptCollections--; // next
 
-					if (cptCollections == 0) { // une fois qu'on a ajouté tous les satellites
-						t = ReadState::Test; // TODO use real state
-					}
+					t = ReadState::Photograph; // on passe aux photos de la collection
+
 					break;
 				}
 				case ReadState::Photograph:
+				{
+					PhotographLine PhotographLine;
+					// lecture de la ligne à découper selon les espaces
+					while (std::getline(iss2, result2, ' ')) {
+						//std::cout << " Coordonnées photo = :  "<< result2 << std::endl;
+						PhotographLine.at(cpt) = result2;// on remplit un tableau intermediaire
+						cpt++; // on passe a l'arg suivant de la ligne
+					}
+					cpt = 0;
+					Photograph* p = new Photograph(PhotographLine);
+
+					int z = this->m_number_of_collections - cptCollections;
+					//std::cout << " z = " << z << std::endl;
+					//this->m_collections.at(z)->add_photograph(p); // on ajoute la photo a la collection correspondante(ne marche pas) TODO
+						
+					cptPhotos--;
+
+
+					if (cptPhotos == 0) { // une fois qu'on a ajouté tous les satellites
+						t = ReadState::TimeRange; // TODO use real state
+					}
+					break;
+				}
 					break;
 
 				case ReadState::TimeRange:
-					break;
+				{
+					TimeRangeLine timeRangeLine;
+					// lecture de la ligne à découper selon les espaces
+					while (std::getline(iss2, result2, ' ')) {
+						//std::cout << " Time ranges = :  " << result2 << std::endl;
+						timeRangeLine.at(cpt) = result2; // on remplit un tableau intermediaire
+						cpt++;
+					}
+					cpt = 0;
 
+					//TODO
+					//this->m_collections.at() // on ajoute la timerange a la collection correspondante(ne marche pas) 
+
+					cptTimeRanges--;
+
+					if (cptTimeRanges == 0 && cptCollections == 0) {
+						t = ReadState::Test;
+					}
+					if (cptTimeRanges == 0) { // une fois qu'on a ajouté tous les satellites
+						t = ReadState::Collection; // TODO use real state
+					}
+					break;
+				}
 				case ReadState::Test:
 					std::cout << "lala" << std::endl;
 					return;

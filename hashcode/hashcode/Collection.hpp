@@ -5,6 +5,7 @@
 #include <ostream>
 #include "Photograph.hpp"
 #include "TimeRange.hpp"
+#include <string>
 
 using CollectionLine = std::array<std::string, 3>;
 
