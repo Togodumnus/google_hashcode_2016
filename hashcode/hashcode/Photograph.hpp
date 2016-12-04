@@ -1,13 +1,15 @@
 #pragma once
 
-#include "Location.hpp"
 #include <string>
 #include <vector>
 #include <array>
+#include <ostream>
 
+#include "Location.hpp"
+
+using PhotographLine = std::array<std::string, 2>;
 
 class Collection; // necessary because of mutual inclusion
-using PhotographLine = std::array<std::string, 2>;
 
 /**
  * Photograph
@@ -18,8 +20,8 @@ class Photograph : Location {
 		 * collections the photograph belongs to
 		 */
 		std::vector<Collection*> m_collections;
-		long int m_lat = 0;
-		long int m_long = 0;
+
+		friend std::ostream& operator<<(std::ostream&, const Photograph&);
 
 	public:
 		Photograph(PhotographLine);
