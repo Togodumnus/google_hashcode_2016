@@ -3,17 +3,17 @@
 #include <vector>
 #include <array>
 #include <ostream>
+#include <string>
+
 #include "Photograph.hpp"
 #include "TimeRange.hpp"
-#include <string>
 
 using CollectionLine = std::array<std::string, 3>;
 
-// necessary because of mutual inclusion
-class Photograph;
-
 class Collection{
 	private:
+		unsigned short m_id;
+
 		unsigned short m_value;
 		unsigned short m_number_of_locations;
 		unsigned short m_number_of_time_ranges;
@@ -31,10 +31,18 @@ class Collection{
 
 	public:
 		Collection(unsigned short);
-		Collection(CollectionLine);
+		Collection(unsigned short id, CollectionLine);
 		~Collection();
 		Collection(const Collection &collection);
 		Collection& operator=(const Collection &collection);
+
+		inline unsigned short getNumberOfPhotographs() {
+			return m_number_of_locations;
+		}
+
+		inline unsigned short getNumberOfTimeRanges() {
+			return m_number_of_time_ranges;
+		}
 
 		void add_photograph(Photograph*);
 };

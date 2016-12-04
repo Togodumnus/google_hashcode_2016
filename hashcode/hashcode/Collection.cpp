@@ -1,8 +1,6 @@
 #include "Collection.hpp"
 
-Collection::Collection(unsigned short value) : m_value(value) { }
-
-Collection::Collection(CollectionLine line)
+Collection::Collection(unsigned short id, CollectionLine line): m_id(id)
 {
 	m_value = std::stoi(line[0]);
 	m_number_of_locations = std::stoi(line[1]);
@@ -32,8 +30,9 @@ void Collection::add_photograph(Photograph* photograph){
 
 std::ostream& operator<<(std::ostream& o, const Collection& c) {
 	return o << "Collection("
+		<< "id[" << c.m_id << "] "
 		<< "value[" << c.m_value << "] "
-		<< "number of locations [" << c.m_number_of_locations << "] "
-		<< "number of time ranges[" << c.m_number_of_time_ranges << "] "
+		<< "numberLocations [" << c.m_number_of_locations << "] "
+		<< "numberTimeRanges[" << c.m_number_of_time_ranges << "]"
 		<< ")";
 }
