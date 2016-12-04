@@ -35,3 +35,19 @@ Simulation::Simulation(const Simulation& simulation)
 	m_number_of_collections = simulation.m_number_of_collections; // copy
 	m_number_of_satellites	= simulation.m_number_of_satellites;  // copy
 }
+
+int Simulation::write_results()
+{
+	std::ofstream file("results.txt", std::ios::out | std::ios::trunc);
+
+	if (file)
+	{
+		file << "test";
+		file.close();
+	}
+
+	else
+		std::cerr << "Erreur à l'ouverture !" << std::endl;
+
+	return 0;
+}

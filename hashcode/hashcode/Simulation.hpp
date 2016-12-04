@@ -2,6 +2,7 @@
 
 #include <string>
 #include <fstream>
+#include <iostream>
 
 #include "Collection.hpp"
 #include "Satellite.hpp"
@@ -60,4 +61,5 @@ class Simulation {
 			return this->m_number_of_collections;
 		}
 
+		int write_results();
 };
