@@ -2,6 +2,8 @@
 
 #include <string>
 #include <memory>
+#include <exception>
+#include <stdexcept>
 
 #include "Collection.hpp"
 #include "Satellite.hpp"
@@ -61,7 +63,13 @@ class Simulation {
 		}
 
 		inline Satellite* getSatelliteN(const unsigned int n) {
-			return this->m_satellites[n];
+			
+			if(this->getNumberSatellites() <= n){
+				throw std::out_of_range("N > nb satellites.");
+			}
+			else {
+				return this->m_satellites[n];
+			}		
 		}
 
 		void solve();
