@@ -4,24 +4,23 @@
 #include "Satellite.hpp"
 
 Satellite::Satellite(
-		Simulation* simulation,
+		unsigned short id,
 		long int latitude,
 		long int longitude,
 		int velocity,
 		int orientation_max_change,
 		int orientation_max_value) :
 		Location(latitude, longitude),
-		m_simulation(simulation),
+		m_id(id),
 		m_velocity(velocity),
 		m_orientation_max_change(orientation_max_change),
 		m_orientation_max_value(orientation_max_value) { }
 
 Satellite::Satellite(
-		Simulation* simulation,
+		unsigned short id,
 		SatelliteLine line) :
 		Location(std::stol(line[0]), std::stol(line[1])),
-		m_simulation(simulation) {
-	std::cout << std::stol(line[0]) << " " << std::stol(line[1]) << std::endl;
+		m_id(id) {
 	m_velocity               = std::stoi(line[2]);
 	m_orientation_max_change = std::stoi(line[3]);
 	m_orientation_max_value  = std::stoi(line[4]);
@@ -31,7 +30,6 @@ Satellite::~Satellite() { }
 
 Satellite::Satellite(const Satellite& satellite) :
 	Location(satellite.m_latitude, satellite.m_longitude) {
-	m_simulation = satellite.m_simulation;
 	m_velocity	 = satellite.m_velocity;
 	m_orientation_max_change = satellite.m_orientation_max_change;
 	m_orientation_max_value = satellite.m_orientation_max_value;
@@ -41,7 +39,6 @@ Satellite& Satellite::operator=(const Satellite & satellite)
 {
 	m_latitude	 = satellite.m_latitude;
 	m_longitude  = satellite.m_longitude;
-	m_simulation = satellite.m_simulation;
 	m_velocity	 = satellite.m_velocity;
 	m_orientation_max_change = satellite.m_orientation_max_change;
 	m_orientation_max_value = satellite.m_orientation_max_value;
@@ -51,6 +48,7 @@ Satellite& Satellite::operator=(const Satellite & satellite)
 
 std::ostream& operator<<(std::ostream& o, const Satellite& s) {
 	return o << "Satellite("
+		<< "id[" << s.m_id << "] "
 		<< "lat[" << s.m_latitude << "] "
 		<< "long[" << s.m_longitude << "] "
 		<< "cam_lat[" << s.m_cam_lat << "] "
