@@ -1,8 +1,5 @@
 #include "TimeRange.hpp"
 
-
-
-
 TimeRange::TimeRange(TimeRangeLine timeRangeLine)
 {
 	m_start_time = std::stoi(timeRangeLine[0]);
@@ -25,4 +22,11 @@ TimeRange::TimeRange(const TimeRange& timeRange)
 {
 	m_start_time = timeRange.m_start_time;
 	m_end_time = timeRange.m_end_time;
+}
+
+std::ostream& operator<<(std::ostream& o, const TimeRange& t) {
+	return o << "TimeRange("
+		<< "start[" << t.m_start_time << "] "
+		<< "end[" << t.m_end_time << "]"
+		<< ")";
 }
