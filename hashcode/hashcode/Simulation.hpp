@@ -5,6 +5,7 @@
 #include "Collection.hpp"
 #include "Satellite.hpp"
 #include "Photograph.hpp"
+#include "Algorithm.hpp"
 
 
 class Satellite;
@@ -36,10 +37,12 @@ class Simulation {
 		std::vector<Satellite*>  m_satellites;
 		std::vector<Collection*> m_collections;
 
+		std::unique_ptr<Algorithm>& m_algo;
+
 		void parseInput(const char* input_file, bool logging = false);
 
 	public:
-		Simulation(const char* input_file);
+		Simulation(const char* input_file, std::unique_ptr<Algorithm>&);
 		~Simulation();
 		Simulation& operator=(const Simulation&);
 		Simulation(const Simulation&);
@@ -55,4 +58,6 @@ class Simulation {
 		inline unsigned int getNumberCollections() {
 			return this->m_number_of_collections;
 		}
+
+		void solve();
 };

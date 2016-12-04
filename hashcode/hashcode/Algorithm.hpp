@@ -1,10 +1,9 @@
 #pragma once
 
-#include <ostream>
-#include <string>
+#include <iostream>
 
 class Algorithm
 {
 	public:
-		Algorithm();
-}
+		virtual void solve() = 0;
+};
