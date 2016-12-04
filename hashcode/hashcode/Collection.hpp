@@ -25,7 +25,7 @@ class Collection{
 		/**
 		 * time ranges during which the collection's photographs can be taken
 		 */
-		const std::vector<TimeRange*> m_time_ranges;
+		std::vector<TimeRange*> m_time_ranges;
 
 		friend std::ostream& operator<<(std::ostream&, const Collection&);
 
@@ -45,4 +45,5 @@ class Collection{
 		}
 
 		void add_photograph(Photograph*);
+		void add_timeRange(TimeRange*);
 };

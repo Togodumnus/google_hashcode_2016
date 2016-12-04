@@ -2,7 +2,7 @@
 #include "Simulation.hpp"
 
 Simulation::Simulation(const char* input_file) {
-	parseInput(input_file);
+	parseInput(input_file, true);
 }
 
 Simulation::~Simulation()

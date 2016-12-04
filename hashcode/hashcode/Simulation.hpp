@@ -36,7 +36,7 @@ class Simulation {
 		std::vector<Satellite*>  m_satellites;
 		std::vector<Collection*> m_collections;
 
-		void parseInput(const char* input_file);
+		void parseInput(const char* input_file, bool logging = false);
 
 	public:
 		Simulation(const char* input_file);

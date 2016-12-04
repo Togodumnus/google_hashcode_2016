@@ -27,6 +27,9 @@ void Collection::add_photograph(Photograph* photograph){
 	photograph->addToCollection(this);
 };
 
+void Collection::add_timeRange(TimeRange* t){
+	m_time_ranges.push_back(t);
+};
 
 std::ostream& operator<<(std::ostream& o, const Collection& c) {
 	return o << "Collection("
