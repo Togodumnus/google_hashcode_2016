@@ -3,18 +3,16 @@
 #include <ostream>
 #include <array>
 #include <string>
+
 #include "Photograph.hpp"
-#include "Simulation.hpp"
 #include "Location.hpp"
 
 using SatelliteLine = std::array<std::string, 5>;
 
-class Simulation;
-
 class Satellite : Location {
 
 	private:
-		Simulation* m_simulation;
+		unsigned short m_id = 0;
 
 		// orientation of the camera
 		long int m_cam_lat  = 0;
@@ -27,8 +25,8 @@ class Satellite : Location {
         friend std::ostream& operator<<(std::ostream&, const Satellite&);
 
 	public:
-		Satellite(Simulation*, long int, long int, int, int, int);
-        Satellite(Simulation*, SatelliteLine);
+		Satellite(unsigned short, long int, long int, int, int, int);
+        Satellite(unsigned short, SatelliteLine);
 
 		~Satellite();
 		Satellite(const Satellite&);

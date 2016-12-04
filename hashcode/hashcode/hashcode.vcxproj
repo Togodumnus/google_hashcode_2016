@@ -31,7 +31,6 @@
   <ItemGroup>
     <ClInclude Include="Collection.hpp" />
     <ClInclude Include="Location.hpp" />
-    <ClInclude Include="parsing.hpp" />
     <ClInclude Include="Photograph.hpp" />
     <ClInclude Include="Satellite.hpp" />
     <ClInclude Include="Simulation.hpp" />

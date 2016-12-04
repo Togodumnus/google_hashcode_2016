@@ -2,8 +2,10 @@
 
 #include <string>
 
+#include "Collection.hpp"
 #include "Satellite.hpp"
 #include "Photograph.hpp"
+
 
 class Satellite;
 
@@ -34,7 +36,7 @@ class Simulation {
 		std::vector<Satellite*>  m_satellites;
 		std::vector<Collection*> m_collections;
 
-		void parseInput(const char* input_file);
+		void parseInput(const char* input_file, bool logging = false);
 
 	public:
 		Simulation(const char* input_file);
@@ -44,6 +46,14 @@ class Simulation {
 
 		inline unsigned int getDuration() {
 			return this->m_duration;
+		}
+
+		inline unsigned int getNumberSatellites() {
+			return this->m_number_of_satellites;
+		}
+
+		inline unsigned int getNumberCollections() {
+			return this->m_number_of_collections;
 		}
 
 };
