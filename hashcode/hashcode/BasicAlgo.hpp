@@ -5,5 +5,5 @@
 class BasicAlgo : public Algorithm
 {
 	public:
-		void solve();
+		void solve(Simulation*);
 };

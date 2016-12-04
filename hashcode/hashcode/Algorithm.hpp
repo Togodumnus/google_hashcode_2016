@@ -2,8 +2,10 @@
 
 #include <iostream>
 
+class Simulation;
+
 class Algorithm
 {
 	public:
-		virtual void solve() = 0;
+		virtual void solve(Simulation*) = 0;
 };

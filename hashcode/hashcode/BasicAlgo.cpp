@@ -2,6 +2,6 @@
 
 #include <iostream>
 
-void BasicAlgo::solve() { // TODO
+void BasicAlgo::solve(Simulation* s) { // TODO
 	std::cout << "TODO" << std::endl;
 }

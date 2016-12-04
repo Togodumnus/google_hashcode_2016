@@ -41,5 +41,5 @@ Simulation::Simulation(const Simulation& simulation)
 }
 
 void Simulation::solve() {
-	m_algo->solve();
+	m_algo->solve(this);
 }
