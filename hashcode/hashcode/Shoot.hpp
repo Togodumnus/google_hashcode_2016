@@ -10,8 +10,8 @@ class Shoot {
 
     protected:
         long int m_moment  = 0;
-        Photograph * m_photo;
-        Satellite * m_sat;
+        Photograph* m_photo;
+        Satellite* m_sat;
 
 		friend std::ostream& operator<<(std::ostream&, const Shoot&);
 
