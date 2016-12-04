@@ -48,4 +48,12 @@ class Simulation {
 			return this->m_duration;
 		}
 
+		inline unsigned int getNumberSatellites() {
+			return this->m_number_of_satellites;
+		}
+
+		inline unsigned int getNumberCollections() {
+			return this->m_number_of_collections;
+		}
+
 };
