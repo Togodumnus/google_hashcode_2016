@@ -39,13 +39,11 @@ Simulation::Simulation(const Simulation& simulation)
 int Simulation::write_results()
 {
 	std::ofstream file("results.txt", std::ios::out | std::ios::trunc);
-
 	if (file)
 	{
 		file << "test";
 		file.close();
 	}
-
 	else
 		std::cerr << "Erreur à l'ouverture !" << std::endl;
 
