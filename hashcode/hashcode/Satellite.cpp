@@ -60,16 +60,26 @@ std::ostream& operator<<(std::ostream& o, const Satellite& s) {
 		<< ")";
 }
 
-long int Satellite::getLatitudeT(unsigned long int time) {
-	/*In degrees :
-	abs( ((pos + vitesse * (temps - 90 ) ) mod (vitesse *360)) -360) -180
-	*/
-	return abs(((this->getLatitude()+ this->m_velocity * (time - 324000 ) )%2592000) -1296000) -648000;
+long int Satellite::getLatitudeT(unsigned long int time) { // TODO test
+	/*
+	 * In degrees :
+		abs( ((pos + vitesse * (temps - 90 ) ) mod (vitesse *360)) -360) -180
+	 */
+	return std::abs(
+		(
+			(this->getLatitude() + this->m_velocity * (long(time) - 324000))
+			% 2592000
+		) - 1296000
+	) - 648000;
 }
 
-long int Satellite::getLongitudeT(unsigned long int time) {
-	/*In degrees :
-	(((pos + vitesse * temps + 180) mod 360) - 180) 
-	*/
-	return (((this->getLongitude() + this->m_velocity * time + 648000)%1296000) - 648000);
+long int Satellite::getLongitudeT(unsigned long int time) { // TODO test
+	/*
+	 * In degrees :
+		(((pos + vitesse * temps + 180) mod 360) - 180)
+	 */
+	return (
+		(this->getLongitude() + this->m_velocity * long(time) + 648000)
+		% 1296000
+	) - 648000;
 }
