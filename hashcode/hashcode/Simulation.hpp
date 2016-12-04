@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <memory>
 
 #include "Collection.hpp"
 #include "Satellite.hpp"
@@ -57,6 +58,10 @@ class Simulation {
 
 		inline unsigned int getNumberCollections() {
 			return this->m_number_of_collections;
+		}
+
+		inline Satellite* getSatelliteN(const unsigned int n) {
+			return this->m_satellites[n];
 		}
 
 		void solve();
