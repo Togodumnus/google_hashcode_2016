@@ -37,7 +37,7 @@ class Satellite : Location {
 
 		inline int getOrientationMaxValue() {
 			return this->m_orientation_max_value;
-		} const;
+		};
 
 		long int getLatitudeT(unsigned long int time);
 		long int getLongitudeT(unsigned long int time);

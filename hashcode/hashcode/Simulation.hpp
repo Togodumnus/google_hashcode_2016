@@ -77,7 +77,7 @@ class Simulation {
 			return this->m_collections;
 		}
 
-		inline std::vector<Collection*>& getSatellites() {
+		inline std::vector<Satellite*>& getSatellites() {
 			return this->m_satellites;
 		}
 
