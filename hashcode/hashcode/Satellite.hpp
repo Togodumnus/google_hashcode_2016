@@ -22,7 +22,7 @@ class Satellite : Location {
 			m_orientation_max_change,
 			m_orientation_max_value;
 
-		// earth goes 15" by turn
+		// earth goes -15" each turn
 		const static int earth_velocity = -15;
 
         friend std::ostream& operator<<(std::ostream&, const Satellite&);

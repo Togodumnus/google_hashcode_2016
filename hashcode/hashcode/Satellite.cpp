@@ -82,6 +82,8 @@ long int Satellite::getLongitudeT(unsigned long int time) { // TODO test
 	/*
 	 * In degrees :
 		(posInit + vitesse * temps - 180) %% 360 - 180
+	 * In arcseconds :
+	 	(posInit + vitesse * temps - 648000) %% 1296000 - 648000
 	 */
 	return (
 		modulo(this->getLongitude() + this->earth_velocity * long(time) - 648000,1296000)
