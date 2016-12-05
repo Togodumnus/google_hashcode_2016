@@ -4,6 +4,7 @@
 #include <memory>
 #include <exception>
 #include <stdexcept>
+#include <vector>
 
 #include "Collection.hpp"
 #include "Satellite.hpp"
@@ -50,26 +51,30 @@ class Simulation {
 		Simulation& operator=(const Simulation&);
 		Simulation(const Simulation&);
 
-		inline unsigned int getDuration() {
+		inline unsigned int getDuration() const {
 			return this->m_duration;
 		}
 
-		inline unsigned int getNumberSatellites() {
+		inline unsigned int getNumberSatellites() const {
 			return this->m_number_of_satellites;
 		}
 
-		inline unsigned int getNumberCollections() {
+		inline unsigned int getNumberCollections() const {
 			return this->m_number_of_collections;
 		}
 
 		inline Satellite* getSatelliteN(const unsigned int n) {
-			
+
 			if(this->getNumberSatellites() <= n){
 				throw std::out_of_range("N > nb satellites.");
 			}
 			else {
 				return this->m_satellites[n];
-			}		
+			}
+		}
+
+		inline std::vector<Collection*>& getCollections() {
+			return this->m_collections;
 		}
 
 		void solve();
