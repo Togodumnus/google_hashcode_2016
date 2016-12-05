@@ -44,6 +44,10 @@ class Collection{
 			return m_number_of_time_ranges;
 		}
 
+		inline std::vector<Photograph*>& getPhotographs() {
+			return m_photographs;
+		}
+
 		void add_photograph(Photograph*);
 		void add_timeRange(TimeRange*);
 };
