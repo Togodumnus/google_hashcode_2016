@@ -35,6 +35,10 @@ class Satellite : Location {
 		Satellite(const Satellite&);
 		Satellite& operator=(const Satellite&);
 
+		inline int getOrientationMaxValue() {
+			return this->m_orientation_max_value;
+		} const;
+
 		long int getLatitudeT(unsigned long int time);
 		long int getLongitudeT(unsigned long int time);
 		// void moveCamera(); // TODO not sure if belongs here

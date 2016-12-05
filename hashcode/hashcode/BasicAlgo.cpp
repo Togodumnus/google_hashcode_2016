@@ -6,11 +6,21 @@
 #include "Collection.hpp"
 #include "utils.hpp"
 
+struct Moment {
+	Satellite* s;
+	unsigned long int t;
+	long int latitude;
+	long int longitude;
+};
+
 void BasicAlgo::solve(Simulation* s) { // TODO
 
 	LogMachine log("basicAlgo");
 
 	std::vector<Collection*>& collections = s->getCollections();
+	std::vector<Satellite*>&  satellites  = s->getSatellites();
+
+	std::map<Photograph*, Moment> PhotoWeCanShoot;
 
 	log("Start building photographs index");
 
@@ -29,5 +39,19 @@ void BasicAlgo::solve(Simulation* s) { // TODO
 	}
 
 	log("End building photographs index");
+
+	log("Start looking for photo we can shoot");
+
+	for (unsigned int t = 0; t < s->getDuration(); t++) {
+		for (auto sat = satellites.begin(); sat != satellites.end(); sat++) {
+			long int longitude = sat.getLongitudeT(t);
+			long int latitude  = sat.getLatitudeT(t);
+			int d = sat.getOrientationMaxValue();
+
+			// TODO utiliser map::find_if
+		}
+	}
+
+	log("End looking for photo we can shoot");
 
 }
