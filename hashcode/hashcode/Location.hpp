@@ -1,23 +1,25 @@
 #pragma once
 
+using LocationUnit = long int;
+
 /**
  *	Location class
  **/
 class Location {
 
 	protected:
-		long int m_latitude  = 0;
-		long int m_longitude = 0;
+		LocationUnit m_latitude  = 0;
+		LocationUnit m_longitude = 0;
 
 	public:
-		Location(long int, long int);
+		Location(LocationUnit, LocationUnit);
 		~Location();
 		Location(const Location&);
 		Location& operator=(const Location&);
 
-		long int getLatitude() const;
-		long int getLongitude() const;
+		LocationUnit getLatitude() const;
+		LocationUnit getLongitude() const;
 
-		void setLatitude(long int);
-		void setLongitude(long int);
+		void setLatitude(LocationUnit);
+		void setLongitude(LocationUnit);
 };

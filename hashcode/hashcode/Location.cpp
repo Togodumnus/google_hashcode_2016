@@ -1,6 +1,6 @@
 #include "Location.hpp"
 
-Location::Location(long int latitude, long int longitude) :
+Location::Location(LocationUnit latitude, LocationUnit longitude) :
 	m_latitude(latitude), m_longitude(longitude) { }
 
 Location::~Location() { }
@@ -17,19 +17,19 @@ Location& Location::operator=(const Location& location) {
 	return *this;
 }
 
-long int Location::getLatitude() const {
+LocationUnit Location::getLatitude() const {
 	return this->m_latitude;
 }
 
-long int Location::getLongitude() const {
+LocationUnit Location::getLongitude() const {
 	return this->m_longitude;
 }
 
-void Location::setLatitude(long int l){
+void Location::setLatitude(LocationUnit l){
 	this->m_latitude = l;
 }
 
-void Location::setLongitude(long int l){
+void Location::setLongitude(LocationUnit l){
 	this->m_longitude = l;
 }
 
