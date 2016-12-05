@@ -1,8 +1,12 @@
 #include <ostream>
 #include <iostream>
 #include <array>
-#include "Satellite.hpp"
 #include <cmath>
+
+#include "utils.hpp"
+#include "Satellite.hpp"
+
+
 
 Satellite::Satellite(
 		unsigned short id,
@@ -64,13 +68,14 @@ long int Satellite::getLatitudeT(unsigned long int time) { // TODO test
 	/*
 	 * In degrees :
 		abs( ((posInit + vitesse * temps - 90) %% 360) - 180 ) - 90
+	 * In arcseconds :
+	 	abs( ((posInit + vitesse * temps - 324000) %% 1296000) - 648000 ) - 324000
 	 */
 	return std::abs(
 		(
-			(this->getLatitude() + this->m_velocity * (long(time) - 90))
-			% 360
-		) - 180
-	) - 90;
+			modulo(this->getLatitude() + this->m_velocity * long(time) - 324000,1296000)
+		) - 648000
+	) - 324000;
 }
 
 long int Satellite::getLongitudeT(unsigned long int time) { // TODO test
@@ -79,7 +84,6 @@ long int Satellite::getLongitudeT(unsigned long int time) { // TODO test
 		(posInit + vitesse * temps - 180) %% 360 - 180
 	 */
 	return (
-		(this->getLongitude() + this->earth_velocity * long(time) - 180)
-		% 360
-	) - 180;
+		modulo(this->getLongitude() + this->earth_velocity * long(time) - 648000,1296000)
+	) - 648000;
 }
