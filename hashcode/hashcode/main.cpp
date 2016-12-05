@@ -14,6 +14,7 @@ const char* INPUT = "hashcode/hashcode/data/toy.in";
 int main(){
 	std::cout << "Reading file " << INPUT << std::endl;
 
+	/*
 	try {
 		std::unique_ptr<Algorithm> a(new BasicAlgo());
 		Simulation s = Simulation(INPUT, a);
@@ -27,6 +28,14 @@ int main(){
 	} catch (ReadException& e) {
 		std::cerr << "Error : " << e.what() << std::endl;
 	}
+	*/
+
+	cout << abs(
+		(
+			(0 + 1 * (0 - 90))
+			% 360
+		) - 180
+	) - 90 << endl;
 
 
 
