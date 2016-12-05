@@ -7,6 +7,7 @@
 #include "Algorithm.hpp"
 #include "BasicAlgo.hpp"
 
+using namespace std;
 // const char* INPUT = "data/forever_alone.in"; // VS
 const char* INPUT = "hashcode/hashcode/data/toy.in";
 
@@ -19,8 +20,10 @@ int main(){
 		s.solve();
 		Satellite sat = *s.getSatelliteN(0);
 		std::cout << sat<< std::endl;
-		std::cout <<"Latitude a t:0" << sat.getLatitudeT(0) << std::endl;
-		std::cout << "Longitude a t:0" << sat.getLongitudeT(0) << std::endl;
+		for(int i=0;i<10;i++){
+			cout <<"Latitude a t : " << i << " ; " << sat.getLatitudeT(i) << endl;
+			cout << "Longitude a t : " << i << " ; " << sat.getLongitudeT(i) << endl;
+		}
 	} catch (ReadException& e) {
 		std::cerr << "Error : " << e.what() << std::endl;
 	}
