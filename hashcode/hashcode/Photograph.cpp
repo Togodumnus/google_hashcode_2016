@@ -28,6 +28,7 @@ bool Photograph::addToCollection(Collection* col){
 
 std::ostream& operator<<(std::ostream& o, const Photograph& p) {
 	return o << "Photograph("
+		<< &p << " "
 		<< "lat[" << p.m_latitude << "] "
 		<< "long[" << p.m_longitude << "]"
 		<< ")";

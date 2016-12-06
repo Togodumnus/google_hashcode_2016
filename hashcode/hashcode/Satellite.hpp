@@ -35,6 +35,10 @@ class Satellite : Location {
 		Satellite(const Satellite&);
 		Satellite& operator=(const Satellite&);
 
+		inline int getId() const {
+			return this->m_id;
+		};
+
 		inline int getOrientationMaxValue() {
 			return this->m_orientation_max_value;
 		};
