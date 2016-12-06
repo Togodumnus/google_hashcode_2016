@@ -14,6 +14,7 @@ struct Moment { // TODO move to own .hpp for result write
 	LocationUnit latitude;
 	LocationUnit longitude;
 
+	Moment(): s(nullptr), t(0), latitude(0), longitude(0) {};
 	Moment(
 		Satellite* s,
 		unsigned int t,
@@ -22,7 +23,7 @@ struct Moment { // TODO move to own .hpp for result write
 	) : s(s), t(t), latitude(latitude), longitude(longitude) {};
 };
 
-using PhotographToMoment = std::map<Photograph*, Moment*>;
+using PhotographToMoment = std::map<Photograph*, Moment>;
 
 struct PhotosSelector {
 	LocationUnit m_dim;
@@ -140,7 +141,7 @@ void BasicAlgo::solve(Simulation* s) { // TODO
 			}
 
 			for (auto p_it: windowsPhotos) {
-				photoWeCanShoot[&(*p_it)] = new Moment( //TODO delete somewhere
+				photoWeCanShoot[&(*p_it)] = Moment( //TODO delete somewhere
 														// or use shared_pointer
 					*sat,
 					t,
@@ -154,9 +155,9 @@ void BasicAlgo::solve(Simulation* s) { // TODO
 	std::cout << std::endl << "---- photos to take : " << std::endl;
 
 	for (auto photo_it: photoWeCanShoot) {
-		Moment* m = photo_it.second;
-		std::cout << "time " << m->t
-			<< " sat" << m->s->getId()
+		Moment& m = photo_it.second;
+		std::cout << "time " << m.t
+			<< " sat" << m.s->getId()
 			<< " -- " << *(photo_it.first) << std::endl;
 	};
 
