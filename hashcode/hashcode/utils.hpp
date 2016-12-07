@@ -37,8 +37,18 @@ class LogMachine {
 				std::cout << o << std::endl;
 			}
 		}
+
 		template<class O>
 		void operator()(std::string what, O& o) {
+			if (m_flag) {
+				out_prefix();
+				std::cout << what;
+				std::cout << " " << o << std::endl;
+			}
+		}
+
+		template<class O>
+		void operator()(std::string what, O&& o) {
 			if (m_flag) {
 				out_prefix();
 				std::cout << what;
