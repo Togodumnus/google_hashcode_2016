@@ -84,8 +84,10 @@ void BasicAlgo::solve(Simulation* s) { // TODO
 
 	log("Start looking for photo we can shoot");
 
+	// for each turn, for each satellite, find photographs it can reach
 	for (unsigned int t = 0; t < s->getDuration(); t++) {
 		for (auto sat = satellites.begin(); sat != satellites.end(); sat++) {
+
 
 			long int longitude = (*sat)->getLongitudeT(t);
 			long int latitude  = (*sat)->getLatitudeT(t);
@@ -98,30 +100,29 @@ void BasicAlgo::solve(Simulation* s) { // TODO
 				longitude, d, photoWeCanShoot
 			);
 
+			// photos we can reach in latitude and satifies the selector
+			std::set<Photograph*> latitudePhotos;
 			auto latitude_it = std::find_if(
 				latitudeIndex.begin(),
 				latitudeIndex.end(),
 				latitudeSelector
 			);
+			for (; latitude_it != latitudeIndex.end(); latitude_it++) {
+				latitudePhotos.insert(latitude_it->second);
+			}
 
+			// photos we can reach in longitude and satifies the selector
+			std::set<Photograph*> longitudePhotos;
 			auto longitude_it = std::find_if(
 				longitudeIndex.begin(),
 				longitudeIndex.end(),
 				longitudeSelector
 			);
-
-			// photos we can reach in latitude
-			std::set<Photograph*> latitudePhotos;
-			for (; latitude_it != latitudeIndex.end(); latitude_it++) {
-				latitudePhotos.insert(latitude_it->second);
-			}
-
-			// photos we can reach in longitude
-			std::set<Photograph*> longitudePhotos;
 			for (; longitude_it != longitudeIndex.end(); longitude_it++) {
 				longitudePhotos.insert(longitude_it->second);
 			}
 
+			// photos we can reach in both latitude and longitude
 			std::vector<Photograph*> windowsPhotos;
 			std::set_intersection(
 				latitudePhotos.begin(), latitudePhotos.end(),
@@ -129,20 +130,9 @@ void BasicAlgo::solve(Simulation* s) { // TODO
 				std::back_inserter(windowsPhotos)
 			);
 
-			// TODO remove log
-			if (windowsPhotos.size()) {
-				std::cout << "time " << t
-					<< " sat" << (*sat)->getId()
-					<< " -- " << windowsPhotos.size() << " photos visibles ";
-				for (auto p_it: windowsPhotos) {
-					std::cout << *p_it << " ";
-				}
-				std::cout << std::endl;
-			}
-
+			// save these photos (or override their Moment)
 			for (auto p_it: windowsPhotos) {
-				photoWeCanShoot[&(*p_it)] = Moment( //TODO delete somewhere
-														// or use shared_pointer
+				photoWeCanShoot[&(*p_it)] = Moment(
 					*sat,
 					t,
 					p_it->getLatitude(),
@@ -152,9 +142,9 @@ void BasicAlgo::solve(Simulation* s) { // TODO
 		}
 	}
 
-	std::cout << std::endl << "---- photos to take : " << std::endl;
+	log("Photographs to take:");
 
-	for (auto photo_it: photoWeCanShoot) {
+	for (auto photo_it: photoWeCanShoot) { // TODO remove log
 		Moment& m = photo_it.second;
 		std::cout << "time " << m.t
 			<< " sat" << m.s->getId()
