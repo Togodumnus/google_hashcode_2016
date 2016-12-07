@@ -172,4 +172,23 @@ void BasicAlgo::solve(Simulation* s) { // TODO
 	 * Infer collections we can't complete
 	 */
 
+	for (auto col_it: s->getCollections()) {
+		std::vector<Photograph*>& colPhotographs = col_it->getPhotographs();
+
+		// is a photo not in photoWeCanShoot ?
+		bool missingPhoto = std::any_of(
+			colPhotographs.begin(),
+			colPhotographs.end(),
+			[&photoWeCanShoot](Photograph* p) {
+				return !photoWeCanShoot.count(p); // true if photo not found
+			}
+		);
+
+		if (missingPhoto) {
+			log("Removing all photo of collection", col_it->getId());
+			for (auto p_it: colPhotographs) {
+				photoWeCanShoot.erase(p_it);
+			}
+		}
+	}
 }

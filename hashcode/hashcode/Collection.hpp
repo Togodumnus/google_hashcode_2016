@@ -36,11 +36,15 @@ class Collection{
 		Collection(const Collection &collection);
 		Collection& operator=(const Collection &collection);
 
-		inline unsigned short getNumberOfPhotographs() {
+		inline unsigned short getId() const {
+			return m_id;
+		}
+
+		inline unsigned short getNumberOfPhotographs() const {
 			return m_number_of_locations;
 		}
 
-		inline unsigned short getNumberOfTimeRanges() {
+		inline unsigned short getNumberOfTimeRanges() const {
 			return m_number_of_time_ranges;
 		}
 
