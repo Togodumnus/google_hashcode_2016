@@ -5,6 +5,7 @@
 
 #include "Photograph.hpp"
 #include "Satellite.hpp"
+#include "utils.hpp"
 
 /**
 *    Shoot class

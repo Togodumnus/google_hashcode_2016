@@ -41,6 +41,7 @@ int Simulation::write_results()
 	std::ofstream file("results.txt", std::ios::out | std::ios::trunc);
 	if (file)
 	{
+		//TODO remplacer "test" par itération sur m_shoots
 		file << "test";
 		file.close();
 	}
