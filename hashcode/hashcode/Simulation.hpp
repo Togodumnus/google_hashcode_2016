@@ -14,6 +14,8 @@
 
 class Satellite;
 
+
+
 class ReadException : std::exception {
 	std::string file;
 	public:
@@ -28,6 +30,8 @@ class ReadException : std::exception {
 };
 
 class Simulation {
+
+	friend std::ostream& operator<<(std::ostream&, const Simulation&);
 
 	private:
 		unsigned long int m_duration;

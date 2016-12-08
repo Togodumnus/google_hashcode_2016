@@ -17,6 +17,7 @@ int main(){
 	try {
 		std::unique_ptr<Algorithm> a(new BasicAlgo());
 		Simulation s = Simulation(INPUT, a);
+		std::cout<< s << std::endl;
 		s.solve();
 	} catch (ReadException& e) {
 		std::cerr << "Error : " << e.what() << std::endl;
