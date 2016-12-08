@@ -9,7 +9,7 @@
 
 using namespace std;
 // const char* INPUT = "data/forever_alone.in"; // VS
-const char* INPUT = "hashcode/hashcode/data/toy.in";
+const char* INPUT = "hashcode/hashcode/data/forever_alone.in";
 
 int main(){
 	std::cout << "Reading file " << INPUT << std::endl;
