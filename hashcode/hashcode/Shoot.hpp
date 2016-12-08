@@ -1,5 +1,8 @@
 #pragma once
 
+#include <iostream>
+#include <fstream>
+
 #include "Photograph.hpp"
 #include "Satellite.hpp"
 
@@ -8,16 +11,25 @@
 **/
 class Shoot {
 
-protected:
+private:
 	long int m_moment = 0;
 	Photograph* m_photo;
 	Satellite* m_sat;
-
-	friend std::ostream& operator<<(std::ostream&, const Shoot&);
 
 public:
 	Shoot(long int, Photograph*, Satellite*);
 	~Shoot();
 	Shoot(const Shoot &shoot);
+
+	//Fonction probablement obsolète vu que Guillaume veut faire différemment
+	/*inline void Write() {
+		std::ofstream outfile;
+		outfile.open("sortie.txt", std::ios_base::app);
+  		outfile << m_photo->getLatitude() << " " << m_photo->getLongitude() << " " << m_moment << " " << m_satellite->getId(); 
+	}*/
+
+	friend std::ostream& operator<<(std::ostream&, const Shoot&);
+
+
 
 };
