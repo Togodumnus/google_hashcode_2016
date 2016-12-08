@@ -26,6 +26,7 @@ std::ostream & operator<<(std::ostream & o, const Shoot & s)
 
 std::ofstream& operator<<(std::ofstream& of, const Shoot& s)
 {
-	of << s.m_photo->getLatitude();
+	of 	<< s.m_photo->getLatitude() << " " << s.m_photo->getLongitude() << " "
+		<< s.m_moment << " " << s.m_sat->getId();
 	return of;
 }

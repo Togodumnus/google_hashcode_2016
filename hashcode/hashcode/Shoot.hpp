@@ -22,11 +22,12 @@ public:
 	Shoot(const Shoot &shoot);
 
 	//Fonction probablement obsolète vu que Guillaume veut faire différemment
-	/*inline void Write() {
+	inline void Write() {
 		std::ofstream outfile;
 		outfile.open("sortie.txt", std::ios_base::app);
-  		outfile << m_photo->getLatitude() << " " << m_photo->getLongitude() << " " << m_moment << " " << m_satellite->getId(); 
-	}*/
+  		outfile << m_photo->getLatitude() << " " << m_photo->getLongitude() << " "
+				<< m_moment << " " << m_sat->getId(); 
+	}
 
 	friend std::ostream& operator<<(std::ostream&, const Shoot&);
 
