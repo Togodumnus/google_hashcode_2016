@@ -14,7 +14,7 @@ class Collection; // necessary because of mutual inclusion
 /**
  * Photograph
  */
-class Photograph : Location {
+class Photograph : public Location {
 	private:
 		/**
 		 * collections the photograph belongs to

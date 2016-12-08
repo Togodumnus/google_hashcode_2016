@@ -9,7 +9,7 @@
 
 using SatelliteLine = std::array<std::string, 5>;
 
-class Satellite : Location {
+class Satellite : public Location {
 
 	private:
 		unsigned short m_id = 0;

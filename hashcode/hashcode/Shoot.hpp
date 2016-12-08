@@ -30,6 +30,7 @@ public:
 
 	friend std::ostream& operator<<(std::ostream&, const Shoot&);
 
+	friend std::ofstream& operator<<(std::ofstream&, const Shoot&);
 
 
 };

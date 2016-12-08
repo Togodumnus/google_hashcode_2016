@@ -23,3 +23,9 @@ std::ostream & operator<<(std::ostream & o, const Shoot & s)
 		<< "sat[" << s.m_sat << "] "
 		<< ")";
 }
+
+std::ofstream& operator<<(std::ofstream& of, const Shoot& s)
+{
+	of << s.m_photo->getLatitude();
+	return of;
+}
