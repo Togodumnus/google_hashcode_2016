@@ -35,3 +35,13 @@ Simulation::Simulation(const Simulation& simulation)
 	m_number_of_collections = simulation.m_number_of_collections; // copy
 	m_number_of_satellites	= simulation.m_number_of_satellites;  // copy
 }
+
+std::ostream& operator<<(std::ostream& os, const Simulation& simu){
+	os << "Nombre de satellites : " << simu.m_number_of_satellites << "\n";
+	os << "Nombre de collections : " <<  simu.m_number_of_collections << "\n";
+	for (std::vector<Collection*>::const_iterator it = simu.m_collections.begin(); it != simu.m_collections.end(); it++){
+		os << "La collection " << (*it)->getID() << " a " << (*it)->getNumberOfPhotographs() << " photos à prendre \n";
+	}
+
+	return os;
+}

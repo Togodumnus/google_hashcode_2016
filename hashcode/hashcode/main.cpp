@@ -13,6 +13,7 @@ int main(){
 
 	try {
 		Simulation s = Simulation(INPUT);
+		std::cout<< s << std::endl;
 	} catch (ReadException& e) {
 		std::cerr << "Error : " << e.what() << std::endl;
 	}

@@ -40,6 +40,10 @@ class Collection{
 			return m_number_of_locations;
 		}
 
+		inline unsigned short getID(){
+			return m_id;
+		}
+
 		inline unsigned short getNumberOfTimeRanges() {
 			return m_number_of_time_ranges;
 		}
