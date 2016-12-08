@@ -45,3 +45,21 @@ std::ostream& operator<<(std::ostream& os, const Simulation& simu){
 
 	return os;
 }
+
+int Simulation::write_results()
+{
+	std::ofstream file("results.txt", std::ios::out | std::ios::trunc);
+	if (file)
+	{
+		for(auto &it:m_shoots){
+			file << *it;
+			file << "\n";
+		}
+		file.close();
+	}
+	else
+		std::cerr << "Erreur à l'ouverture !" << std::endl;
+
+	return 0;
+
+}

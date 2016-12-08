@@ -9,7 +9,7 @@
 
 using SatelliteLine = std::array<std::string, 5>;
 
-class Satellite : Location {
+class Satellite : public Location {
 
 	private:
 		unsigned short m_id = 0;
@@ -31,6 +31,8 @@ class Satellite : Location {
 		~Satellite();
 		Satellite(const Satellite&);
 		Satellite& operator=(const Satellite&);
+
+		inline unsigned short getId() { return m_id; }
 
 		// void getPosition(unsigned long int time); // TODO position au temps t
 		// void moveCamera(); // TODO not sure if belongs here

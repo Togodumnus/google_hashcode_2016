@@ -1,10 +1,13 @@
 #pragma once
 
 #include <string>
+#include <fstream>
+#include <iostream>
 
 #include "Collection.hpp"
 #include "Satellite.hpp"
 #include "Photograph.hpp"
+#include "Shoot.hpp"
 
 
 class Satellite;
@@ -40,6 +43,8 @@ class Simulation {
 		std::vector<Satellite*>  m_satellites;
 		std::vector<Collection*> m_collections;
 
+		std::vector<Shoot*> m_shoots;
+
 		void parseInput(const char* input_file, bool logging = false);
 
 	public:
@@ -60,4 +65,5 @@ class Simulation {
 			return this->m_number_of_collections;
 		}
 
+		int write_results();
 };

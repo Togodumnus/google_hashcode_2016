@@ -25,6 +25,7 @@
     <ClCompile Include="parsing.cpp" />
     <ClCompile Include="Photograph.cpp" />
     <ClCompile Include="Satellite.cpp" />
+    <ClCompile Include="Shoot.cpp" />
     <ClCompile Include="Simulation.cpp" />
     <ClCompile Include="TimeRange.cpp" />
   </ItemGroup>
@@ -33,6 +34,7 @@
     <ClInclude Include="Location.hpp" />
     <ClInclude Include="Photograph.hpp" />
     <ClInclude Include="Satellite.hpp" />
+    <ClInclude Include="Shoot.hpp" />
     <ClInclude Include="Simulation.hpp" />
     <ClInclude Include="TimeRange.hpp" />
   </ItemGroup>
