@@ -148,8 +148,8 @@ void BasicAlgo::solve(Simulation* s) {
 	// construct time index by satellite
 	for (auto photo_it: photosToTake) {
 		Shoot* shoot = photo_it->getShoot();
-		photosToTakeIndex[shoot->satellite].insert(
-			std::make_pair(shoot->t, photo_it)
+		photosToTakeIndex[shoot->m_satellite].insert(
+			std::make_pair(shoot->m_t, photo_it)
 		);
 
 		std::cout << *shoot << std::endl; // TODO remove log
@@ -230,7 +230,7 @@ void BasicAlgo::solve(Simulation* s) {
 
 				t_0 = t;
 
-				//TODO save Shoot somewhere
+				s->addShoot(p->getShoot());
 
 			} else { //log pb
 				if (w_lat >= sat->getOrientationMaxChange()) {

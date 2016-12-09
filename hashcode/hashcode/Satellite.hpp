@@ -19,26 +19,26 @@ class Satellite : public Location {
 		unsigned short m_id = 0;
 
 		// orientation of the camera
-		LocationUnit m_cam_lat  = 0;
+		LocationUnit m_cam_lat	= 0;
 		LocationUnit m_cam_long = 0;
 
 		int m_velocity, // arcs/turn [-500; 500]
 			m_orientation_max_change,
 			m_orientation_max_value;
 
-        friend std::ostream& operator<<(std::ostream&, const Satellite&);
+		friend std::ostream& operator<<(std::ostream&, const Satellite&);
 
 	public:
 		std::map<unsigned int, std::pair<LocationUnit, LocationUnit>> positions;
 
 		Satellite(unsigned short, LocationUnit, LocationUnit, int, int, int);
-        Satellite(unsigned short, SatelliteLine);
+		Satellite(unsigned short, SatelliteLine);
 
 		~Satellite();
 		Satellite(const Satellite&);
 		Satellite& operator=(const Satellite&);
 
-		inline int getId() const {
+		inline short getId() const {
 			return this->m_id;
 		};
 

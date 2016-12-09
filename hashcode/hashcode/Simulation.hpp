@@ -1,15 +1,12 @@
 #pragma once
 
 #include <string>
-#include <memory>
 #include <exception>
-#include <stdexcept>
 #include <vector>
 
 #include "Collection.hpp"
-#include "Satellite.hpp"
-#include "Photograph.hpp"
 #include "Algorithm.hpp"
+#include "Shoot.hpp"
 
 class Satellite;
 
@@ -35,12 +32,9 @@ class Simulation {
 		unsigned int	  m_number_of_satellites;
 		unsigned int	  m_number_of_collections;
 
-		// TODO missing info (class "shoot" instead ? or attributes on class
-		// photograph ?)
-		std::vector<Photograph*> m_photographs_taken;
-
 		std::vector<Satellite*>  m_satellites;
 		std::vector<Collection*> m_collections;
+		std::vector<Shoot*>      m_shoots;
 
 		std::unique_ptr<Algorithm>& m_algo;
 
@@ -65,7 +59,6 @@ class Simulation {
 		}
 
 		inline Satellite* getSatelliteN(const unsigned int n) {
-
 			if(this->getNumberSatellites() <= n){
 				throw std::out_of_range("N > nb satellites.");
 			}
@@ -82,5 +75,11 @@ class Simulation {
 			return this->m_satellites;
 		}
 
+		inline void addShoot(Shoot* s) {
+			this->m_shoots.push_back(s);
+		}
+
 		void solve();
+
+		int write_results();
 };

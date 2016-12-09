@@ -1,6 +1,7 @@
 #pragma once
 
 #include <ostream>
+#include <fstream>
 #include "Satellite.hpp"
 
 class Photograph;
@@ -9,24 +10,28 @@ class Photograph;
  * Represent the time when the satellite take the photograph
  */
 struct Shoot {
-	Photograph* photograph;
-	Satellite*  satellite;
-	unsigned long int t;
-
-	friend std::ostream& operator<<(std::ostream& o, const Shoot& s) {
-		o << "Shoot[time=" << s.t
-			<< " satellite" << s.satellite->getId()
-			<< " photo " << s.photograph << "]";
-		return o;
-	}
+	Photograph* m_photograph;
+	Satellite*  m_satellite;
+	unsigned long int m_t;
 
 	Shoot(
 		Photograph* photograph,
 		Satellite*  satellite,
 		unsigned long int t
-	) : photograph(photograph), satellite(satellite), t(t) {};
+	);
 
-	LocationUnit distance() {
-		return satellite->distanceT(t, *photograph);
+	Shoot(const Shoot & shoot);
+
+	~Shoot() {};
+
+	bool operator<(const Shoot& s) const {
+        return (m_t < s.m_t);
+    }
+
+	inline LocationUnit distance() {
+		return m_satellite->distanceT(m_t, *m_photograph);
 	}
+
+	friend std::ostream& operator<<(std::ostream&, const Shoot&);
+	friend std::ofstream& operator<<(std::ofstream&, const Shoot&);
 };

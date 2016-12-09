@@ -1,4 +1,3 @@
-#include <fstream>
 #include "Simulation.hpp"
 
 Simulation::Simulation(const char* input_file, std::unique_ptr<Algorithm>& algo)
@@ -52,4 +51,25 @@ std::ostream& operator<<(std::ostream& os, const Simulation& simu){
 	}
 
 	return os;
+}
+
+int Simulation::write_results() //TODO refacto
+{
+
+	std::ofstream file("results.txt", std::ios::out | std::ios::trunc);
+	if (file)
+	{
+		file << m_shoots.size() << "\n"; // write number of taken photos
+		for(auto &it:m_shoots){
+			std::cout << *it << std::endl;
+			file << *it;
+			file << "\n";
+		}
+		file.close(); // TODO pas toujours le même nombre de lignes pour deux
+					  // lancer de suite (wc -l results.txt)
+	}
+	else
+		std::cerr << "Erreur à l'ouverture !" << std::endl;
+
+	return 0;
 }
