@@ -3,7 +3,7 @@
 Simulation::Simulation(const char* input_file, std::unique_ptr<Algorithm>& algo)
 	: m_algo(algo)
 {
-	parseInput(input_file, true);
+	parseInput(input_file);
 }
 
 Simulation::~Simulation()

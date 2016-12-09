@@ -17,6 +17,7 @@ struct Shoot;
  */
 class Photograph : public Location {
 	private:
+		int m_id;
 		Shoot* m_shoot = nullptr;
 
 		/**
@@ -27,13 +28,17 @@ class Photograph : public Location {
 		friend std::ostream& operator<<(std::ostream&, const Photograph&);
 
 	public:
-		explicit Photograph(PhotographLine);
+		explicit Photograph(int, PhotographLine);
 		explicit Photograph(LocationUnit latitude, LocationUnit longitude);
 		virtual ~Photograph();
 		Photograph& operator=(const Photograph& photograph);
 		Photograph(const Photograph& photograph);
 
 		bool addToCollection(Collection*);
+
+		inline int getId() const {
+			return m_id;
+		}
 
 		inline Shoot* getShoot() {
 			return m_shoot;

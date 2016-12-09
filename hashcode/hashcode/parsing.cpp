@@ -21,7 +21,8 @@ enum class ReadState {
 	TimeRange,
 };
 
-void Simulation::parseInput(const char* input_file, bool logging) {
+void Simulation::parseInput(const char* input_file) {
+
 
 	Simulation* simulation = this;
 
@@ -31,6 +32,8 @@ void Simulation::parseInput(const char* input_file, bool logging) {
 	int cptCollections; // compteur décroissant de collections
 	int cptPhotos;		// compteur décroissant de photos
 	int cptTimeRanges;	// compteur décroissant des fenêtres de temps
+
+	int cptPhotosAll = 0;
 
 	std::ifstream input(input_file); // on crée un buffer de stream
 
@@ -158,7 +161,10 @@ void Simulation::parseInput(const char* input_file, bool logging) {
 					}
 					cpt = 0;
 
-					Photograph* p = new Photograph(PhotographLine);
+					Photograph* p = new Photograph(
+						cptPhotosAll++,
+						PhotographLine
+					);
 					std::cout << "[parsing]\t" << *p << std::endl;
 
 					unsigned short collectionIndex =
