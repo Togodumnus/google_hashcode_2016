@@ -14,13 +14,19 @@ const double LOG_INTERVAL = .01; // 1%
 
 using SatelliteIndex = std::map<unsigned int, Photograph*>;
 
-void BasicAlgo::solve(Simulation* s) {
+struct SetAllocator {
+	// we use this for the order to be consistent accross runs
+	bool operator()(const Photograph* p1, const Photograph* p2) const {
+		return p1->getId() < p2->getId();
+	}
+};
 
+void BasicAlgo::solve(Simulation* s) {
 
 	std::vector<Collection*>& collections = s->getCollections();
 	std::vector<Satellite*>&  satellites  = s->getSatellites();
 
-	std::set<Photograph*> photosToTake;
+	std::set<Photograph*, SetAllocator> photosToTake;
 
 	// one index for each satellite
 	std::map<Satellite*, SatelliteIndex> photosToTakeIndex;
