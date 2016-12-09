@@ -6,12 +6,10 @@
 #include "utils.hpp"
 #include "Satellite.hpp"
 
-
-
 Satellite::Satellite(
 		unsigned short id,
-		long int latitude,
-		long int longitude,
+		LocationUnit latitude,
+		LocationUnit longitude,
 		int velocity,
 		int orientation_max_change,
 		int orientation_max_value) :
@@ -64,7 +62,7 @@ std::ostream& operator<<(std::ostream& o, const Satellite& s) {
 		<< ")";
 }
 
-long int Satellite::getLatitudeT(unsigned long int time) { // TODO test
+LocationUnit Satellite::getLatitudeT(unsigned long int time) { // TODO test
 	/*
 	 * In degrees :
 		abs( ((posInit + vitesse * temps - 90) %% 360) - 180 ) - 90
@@ -78,7 +76,7 @@ long int Satellite::getLatitudeT(unsigned long int time) { // TODO test
 	) - 324000;
 }
 
-long int Satellite::getLongitudeT(unsigned long int time) { // TODO test
+LocationUnit Satellite::getLongitudeT(unsigned long int time) { // TODO test
 	/*
 	 * In degrees :
 		(posInit + vitesse * temps - 180) %% 360 - 180
@@ -89,3 +87,11 @@ long int Satellite::getLongitudeT(unsigned long int time) { // TODO test
 		modulo(this->getLongitude() + this->earth_velocity * long(time) - 648000,1296000)
 	) - 648000;
 }
+
+LocationUnit Satellite::distanceT(unsigned long int t, const Location& l) {
+	return std::sqrt(
+		pow(getLatitudeT(t) - l.getLatitude(), 2)
+		+ pow(getLongitudeT(t) - l.getLongitude(), 2)
+	);
+}
+

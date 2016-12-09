@@ -10,7 +10,7 @@
 
 using SatelliteLine = std::array<std::string, 5>;
 
-class Satellite : Location {
+class Satellite : public Location {
 
 	private:
 		// earth goes -15" each turn
@@ -50,7 +50,8 @@ class Satellite : Location {
 			return this->m_orientation_max_value;
 		};
 
-		long int getLatitudeT(unsigned long int time);
-		long int getLongitudeT(unsigned long int time);
-		// void moveCamera(); // TODO not sure if belongs here
+		LocationUnit getLatitudeT(unsigned long int time);
+		LocationUnit getLongitudeT(unsigned long int time);
+
+		LocationUnit distanceT(unsigned long int, const Location&);
 };

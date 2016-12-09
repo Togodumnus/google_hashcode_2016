@@ -11,10 +11,7 @@
 #include "Photograph.hpp"
 #include "Algorithm.hpp"
 
-
 class Satellite;
-
-
 
 class ReadException : std::exception {
 	std::string file;

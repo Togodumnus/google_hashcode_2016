@@ -1,6 +1,6 @@
 #pragma once
 
-using LocationUnit = long int;
+using LocationUnit = long;
 
 /**
  *	Location class
