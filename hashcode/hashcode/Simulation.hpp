@@ -80,6 +80,10 @@ class Simulation {
 			this->m_shoots.push_back(s);
 		}
 
+		inline int countShoots() const {
+			return this->m_shoots.size();
+		}
+
 		void solve();
 
 		int write_results();

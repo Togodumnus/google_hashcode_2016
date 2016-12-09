@@ -114,36 +114,21 @@ void BasicAlgo::solve(Simulation* s) {
 				std::inserter(windowsPhotos, windowsPhotos.begin())
 			);
 
-			// iterator on photographs we can reach and we shoot take
-			auto goodPhotos_it = std::find_if(
-					windowsPhotos.begin(),
-					windowsPhotos.end(),
-					[t, &satellite](Photograph* p) {
-						Shoot* s = p->getShoot();
+			// save these photograh (or override their Shoot) if needed
+			for (Photograph* p: windowsPhotos) {
+				Shoot* old_shoot = p->getShoot();
 
-						//never shoot this photograph
-						if (s == nullptr) {
-							return true;
-						}
-
-						// already shoot this one but this position is better
-						if (s->distance() > satellite.distanceT(t, *(p))) {
-							delete s; // remove old Shoot
-							return true;
-						}
-
-						return false;
-					}
-			);
-
-			// save these photograh (or override their Shoot)
-			for (; goodPhotos_it != windowsPhotos.end(); goodPhotos_it++) {
-				Photograph* p = *goodPhotos_it;
-				Shoot* s = new Shoot(p, &satellite, t);
-				p->setShoot(s);
-				photosToTake.insert(p);
+				if (
+					//never shoot this photograph
+					old_shoot == nullptr
+					// already shoot this one but this position is better
+					|| old_shoot->distance() > satellite.distanceT(t, *(p))
+				) {
+					Shoot* new_shot = new Shoot(p, &satellite, t);
+					p->setShoot(new_shot);
+					photosToTake.insert(p);
+				}
 			}
-
 		}
 	}
 
@@ -155,8 +140,6 @@ void BasicAlgo::solve(Simulation* s) {
 		photosToTakeIndex[shoot->m_satellite].insert(
 			std::make_pair(shoot->m_t, photo_it)
 		);
-
-		std::cout << *shoot << std::endl; // TODO remove log
 	};
 
 	// TODO on voit que deux photos peuvent être attribuées au même satellite
@@ -226,9 +209,9 @@ void BasicAlgo::solve(Simulation* s) {
 			if (w_lat < sat->getOrientationMaxChange()
 					&& w_long < sat->getOrientationMaxChange()) {
 
-				std::cout << "sat" << sat->getId()
-					<< " take photo " << *p
-					<< "\t at turn " << t << std::endl;
+				// std::cout << "sat" << sat->getId()
+					// << " take photo " << *p
+					// << "\t at turn " << t << std::endl;
 
 				camera.first  = p->getLatitude();
 				camera.second = p->getLongitude();
@@ -237,7 +220,25 @@ void BasicAlgo::solve(Simulation* s) {
 
 				s->addShoot(p->getShoot());
 
+				// int d = sat->getOrientationMaxValue();
+				// LocationUnit las = sat->getLatitudeT(p->getShoot()->m_t);
+				// LocationUnit lgs = sat->getLongitudeT(p->getShoot()->m_t);
+
+				// //TODO remove
+				// if (std::abs(las - p->getLatitude()) >= d
+				//         || std::abs(lgs - p->getLongitude()) >= d) {
+				//     std::cout << "error ----------------" << std::endl;
+				// }
+
+				// std::cout
+				//     << "t"
+				//     << p->getShoot()->m_t
+				//     << " sat(" << sat->getLatitudeT(p->getShoot()->m_t)
+				//     << "," << sat->getLongitudeT(p->getShoot()->m_t) << ") "
+				//     << std::endl;
+
 			} else { //log pb
+				std::cout << "pb -----------" << std::endl;
 				if (w_lat >= sat->getOrientationMaxChange()) {
 					std::cout <<
 						"sat " << sat->getId() << " turn " << t <<
@@ -254,4 +255,5 @@ void BasicAlgo::solve(Simulation* s) {
 		}
 	}
 
+	std::cout << "Photographs taken :" << s->countShoots() << std::endl;
 }
