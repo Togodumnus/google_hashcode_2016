@@ -3,6 +3,7 @@
 #include <string>
 #include <exception>
 #include <vector>
+#include <memory>
 
 #include "Collection.hpp"
 #include "Algorithm.hpp"
