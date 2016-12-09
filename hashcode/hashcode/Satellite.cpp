@@ -90,8 +90,8 @@ LocationUnit Satellite::getLongitudeT(unsigned long int time) { // TODO test
 
 LocationUnit Satellite::distanceT(unsigned long int t, const Location& l) {
 	return std::sqrt(
-		pow(getLatitudeT(t) - l.getLatitude(), 2)
-		+ pow(getLongitudeT(t) - l.getLongitude(), 2)
+		pow(Location::offsetLatitude(getLatitudeT(t), l.getLatitude()), 2)
+		+ pow(Location::offsetLongitude(getLongitudeT(t), l.getLongitude()), 2)
 	);
 }
 
