@@ -56,6 +56,14 @@ std::ostream& operator<<(std::ostream& os, const Simulation& simu){
 int Simulation::write_results() //TODO refacto
 {
 
+	std::sort(
+		m_shoots.begin(),
+		m_shoots.end(),
+		[](const Shoot* s1, const Shoot* s2) {
+			return *s1 < *s1;
+		}
+	);
+
 	std::ofstream file("results.txt", std::ios::out | std::ios::trunc);
 	if (file)
 	{
