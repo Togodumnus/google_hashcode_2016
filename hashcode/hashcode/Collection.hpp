@@ -36,16 +36,20 @@ class Collection{
 		Collection(const Collection &collection);
 		Collection& operator=(const Collection &collection);
 
-		inline unsigned short getNumberOfPhotographs() {
-			return m_number_of_locations;
-		}
-
-		inline unsigned short getID(){
+		inline unsigned short getId() const {
 			return m_id;
 		}
 
-		inline unsigned short getNumberOfTimeRanges() {
+		inline unsigned short getNumberOfPhotographs() const {
+			return m_number_of_locations;
+		}
+
+		inline unsigned short getNumberOfTimeRanges() const {
 			return m_number_of_time_ranges;
+		}
+
+		inline std::vector<Photograph*>& getPhotographs() {
+			return m_photographs;
 		}
 
 		void add_photograph(Photograph*);

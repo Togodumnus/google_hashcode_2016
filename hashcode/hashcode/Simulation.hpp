@@ -1,18 +1,14 @@
 #pragma once
 
 #include <string>
-#include <fstream>
-#include <iostream>
+#include <exception>
+#include <vector>
 
 #include "Collection.hpp"
-#include "Satellite.hpp"
-#include "Photograph.hpp"
+#include "Algorithm.hpp"
 #include "Shoot.hpp"
 
-
 class Satellite;
-
-
 
 class ReadException : std::exception {
 	std::string file;
@@ -36,34 +32,54 @@ class Simulation {
 		unsigned int	  m_number_of_satellites;
 		unsigned int	  m_number_of_collections;
 
-		// TODO missing info (class "shoot" instead ? or attributes on class
-		// photograph ?)
-		std::vector<Photograph*> m_photographs_taken;
-
 		std::vector<Satellite*>  m_satellites;
 		std::vector<Collection*> m_collections;
+		std::vector<Shoot*>      m_shoots;
 
-		std::vector<Shoot*> m_shoots;
+		std::unique_ptr<Algorithm>& m_algo;
 
 		void parseInput(const char* input_file, bool logging = false);
 
 	public:
-		Simulation(const char* input_file);
+		Simulation(const char* input_file, std::unique_ptr<Algorithm>&);
 		~Simulation();
 		Simulation& operator=(const Simulation&);
 		Simulation(const Simulation&);
 
-		inline unsigned int getDuration() {
+		inline unsigned int getDuration() const {
 			return this->m_duration;
 		}
 
-		inline unsigned int getNumberSatellites() {
+		inline unsigned int getNumberSatellites() const {
 			return this->m_number_of_satellites;
 		}
 
-		inline unsigned int getNumberCollections() {
+		inline unsigned int getNumberCollections() const {
 			return this->m_number_of_collections;
 		}
+
+		inline Satellite* getSatelliteN(const unsigned int n) {
+			if(this->getNumberSatellites() <= n){
+				throw std::out_of_range("N > nb satellites.");
+			}
+			else {
+				return this->m_satellites[n];
+			}
+		}
+
+		inline std::vector<Collection*>& getCollections() {
+			return this->m_collections;
+		}
+
+		inline std::vector<Satellite*>& getSatellites() {
+			return this->m_satellites;
+		}
+
+		inline void addShoot(Shoot* s) {
+			this->m_shoots.push_back(s);
+		}
+
+		void solve();
 
 		int write_results();
 };

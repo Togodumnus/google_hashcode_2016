@@ -1,32 +1,29 @@
 #include "Shoot.hpp"
 
-Shoot::Shoot(long int moment, Photograph * photo, Satellite * sat) :
-	m_moment(moment), m_photo(photo), m_sat(sat) { }
-
-
-Shoot::~Shoot()
-{
-}
+Shoot::Shoot(
+	Photograph* photograph,
+	Satellite*  satellite,
+	unsigned long int t
+) : m_photograph(photograph), m_satellite(satellite), m_t(t) {};
 
 Shoot::Shoot(const Shoot & shoot)
 {
-	m_moment = shoot.m_moment;
-	m_photo = shoot.m_photo;
-	m_sat = shoot.m_sat;
+	m_photograph = shoot.m_photograph;
+	m_satellite  = shoot.m_satellite;
+	m_t = shoot.m_t;
 }
 
-std::ostream & operator<<(std::ostream & o, const Shoot & s)
-{
-	return o << "Shoot("
-		<< "moment[" << s.m_moment << "] "
-		<< "photo[" << s.m_photo << "] "
-		<< "sat[" << s.m_sat << "] "
-		<< ")";
+std::ostream& operator<<(std::ostream& o, const Shoot& s) {
+	o << "Shoot[time=" << s.m_t
+		<< " satellite" << s.m_satellite->getId()
+		<< " photo " << s.m_photograph << "]";
+	return o;
 }
 
 std::ofstream& operator<<(std::ofstream& of, const Shoot& s)
 {
-	of 	<< s.m_photo->getLatitude() << " " << s.m_photo->getLongitude() << " "
-		<< s.m_moment << " " << s.m_sat->getId();
+	of	<< s.m_photograph->getLatitude()
+		<< " " << s.m_photograph->getLongitude()
+		<< " " << s.m_t << " " << s.m_satellite->getId();
 	return of;
 }

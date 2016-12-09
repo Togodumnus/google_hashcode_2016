@@ -37,6 +37,7 @@ class LogMachine {
 				std::cout << o << std::endl;
 			}
 		}
+
 		template<class O>
 		void operator()(std::string what, O& o) {
 			if (m_flag) {
@@ -45,5 +46,23 @@ class LogMachine {
 				std::cout << " " << o << std::endl;
 			}
 		}
+
+		template<class O>
+		void operator()(std::string what, O&& o) {
+			if (m_flag) {
+				out_prefix();
+				std::cout << what;
+				std::cout << " " << o << std::endl;
+			}
+		}
 };
 
+
+/**
+ * real modulo
+ * @see http://stackoverflow.com/a/12089637/2058840
+ */
+inline int modulo(int a, int b) {
+	const int result = a % b;
+	return result >= 0 ? result : result + b;
+}

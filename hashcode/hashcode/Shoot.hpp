@@ -1,38 +1,37 @@
 #pragma once
 
-#include <iostream>
+#include <ostream>
 #include <fstream>
-
-#include "Photograph.hpp"
 #include "Satellite.hpp"
-#include "utils.hpp"
+
+class Photograph;
 
 /**
-*    Shoot class
-**/
-class Shoot {
+ * Represent the time when the satellite take the photograph
+ */
+struct Shoot {
+	Photograph* m_photograph;
+	Satellite*  m_satellite;
+	unsigned long int m_t;
 
-private:
-	long int m_moment = 0;
-	Photograph* m_photo;
-	Satellite* m_sat;
+	Shoot(
+		Photograph* photograph,
+		Satellite*  satellite,
+		unsigned long int t
+	);
 
-public:
-	Shoot(long int, Photograph*, Satellite*);
-	~Shoot();
-	Shoot(const Shoot &shoot);
+	Shoot(const Shoot & shoot);
 
-	//Fonction probablement obsolète vu que Guillaume veut faire différemment
-	inline void Write() {
-		std::ofstream outfile;
-		outfile.open("sortie.txt", std::ios_base::app);
-  		outfile << m_photo->getLatitude() << " " << m_photo->getLongitude() << " "
-				<< m_moment << " " << m_sat->getId(); 
+	~Shoot() {};
+
+	bool operator<(const Shoot& s) const {
+        return (m_t < s.m_t);
+    }
+
+	inline LocationUnit distance() {
+		return m_satellite->distanceT(m_t, *m_photograph);
 	}
 
 	friend std::ostream& operator<<(std::ostream&, const Shoot&);
-
 	friend std::ofstream& operator<<(std::ofstream&, const Shoot&);
-
-
 };

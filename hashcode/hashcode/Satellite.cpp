@@ -1,12 +1,15 @@
 #include <ostream>
 #include <iostream>
 #include <array>
+#include <cmath>
+
+#include "utils.hpp"
 #include "Satellite.hpp"
 
 Satellite::Satellite(
 		unsigned short id,
-		long int latitude,
-		long int longitude,
+		LocationUnit latitude,
+		LocationUnit longitude,
 		int velocity,
 		int orientation_max_change,
 		int orientation_max_value) :
@@ -58,3 +61,37 @@ std::ostream& operator<<(std::ostream& o, const Satellite& s) {
 		<< "orientationMaxValue[" << s.m_orientation_max_value << "]"
 		<< ")";
 }
+
+LocationUnit Satellite::getLatitudeT(unsigned long int time) { // TODO test
+	/*
+	 * In degrees :
+		abs( ((posInit + vitesse * temps - 90) %% 360) - 180 ) - 90
+	 * In arcseconds :
+	 	abs( ((posInit + vitesse * temps - 324000) %% 1296000) - 648000 ) - 324000
+	 */
+	return std::abs(
+		(
+			modulo(this->getLatitude() + this->m_velocity * long(time) - 324000,1296000)
+		) - 648000
+	) - 324000;
+}
+
+LocationUnit Satellite::getLongitudeT(unsigned long int time) { // TODO test
+	/*
+	 * In degrees :
+		(posInit + vitesse * temps - 180) %% 360 - 180
+	 * In arcseconds :
+	 	(posInit + vitesse * temps - 648000) %% 1296000 - 648000
+	 */
+	return (
+		modulo(this->getLongitude() + this->earth_velocity * long(time) - 648000,1296000)
+	) - 648000;
+}
+
+LocationUnit Satellite::distanceT(unsigned long int t, const Location& l) {
+	return std::sqrt(
+		pow(getLatitudeT(t) - l.getLatitude(), 2)
+		+ pow(getLongitudeT(t) - l.getLongitude(), 2)
+	);
+}
+
