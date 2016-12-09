@@ -37,6 +37,7 @@
     <ClInclude Include="Shoot.hpp" />
     <ClInclude Include="Simulation.hpp" />
     <ClInclude Include="TimeRange.hpp" />
+    <ClInclude Include="utils.hpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{51D8D66E-6119-4F7B-A94B-8EEA9B7D8BFA}</ProjectGuid>
