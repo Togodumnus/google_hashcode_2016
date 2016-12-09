@@ -67,9 +67,9 @@ void BasicAlgo::solve(Simulation* s) {
 			LocationUnit longitude = (*sat)->getLongitudeT(t);
 
 			std::pair<LocationUnit, LocationUnit>
-				lat_bounds(lat - d, lat + d);
+				lat_bounds(lat - d + 1, lat + d);
 			std::pair<LocationUnit, LocationUnit>
-				long_bounds(longitude - d, longitude + d);
+				long_bounds(longitude - d + 1, longitude + d);
 
 			// FIXME on peut sortir du domaine de définition des latitude
 			// et longitude

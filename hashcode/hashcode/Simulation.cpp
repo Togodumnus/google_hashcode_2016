@@ -18,7 +18,7 @@ Simulation::~Simulation()
 	}
 	m_collections.clear();
 
-	// TODO delete all photgraphs taken
+	// TODO delete all Shoot
 }
 
 Simulation& Simulation::operator=(const Simulation& simulation)
