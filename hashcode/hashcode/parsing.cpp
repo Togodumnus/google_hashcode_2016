@@ -7,7 +7,6 @@
 #include "Collection.hpp"
 #include "Simulation.hpp"
 #include "TimeRange.hpp"
-#include "utils.hpp"
 
 /**
  * Different states of the reading of input file
@@ -26,9 +25,7 @@ void Simulation::parseInput(const char* input_file, bool logging) {
 
 	Simulation* simulation = this;
 
-	LogMachine log("parsing", logging);
-
-	log("Start");
+	std::cout << "[parsing]\t" << "Start" << std::endl;
 
 	int cptSatellites;	// compteur décroissant de satellites
 	int cptCollections; // compteur décroissant de collections
@@ -57,18 +54,20 @@ void Simulation::parseInput(const char* input_file, bool logging) {
 			// deuxième buffer pour parser a l'intérieur des lignes
 			std::istringstream iss2(result);
 
-			log("input : ", result);
+			std::cout << "[parsing]\t" << "input : " << result << std::endl;
 
 			switch (t) {
 
 				case ReadState::NumberOfTurns:
-					log("nombre de tours", result);
+					std::cout << "[parsing]\t" << "nombre de tours"
+						<< result << std::endl;
 					simulation->m_duration = std::stoi(result);
 					t = ReadState::SatellitesNumber;
 					break;
 
 				case ReadState::SatellitesNumber:
-					log("nombre de satellites", result);
+					std::cout << "[parsing]\t" << "nombre de satellites"
+						<< result << std::endl;
 					cptSatellites = std::stoi(result);
 					simulation->m_number_of_satellites = cptSatellites;
 					t = ReadState::Satellites;
@@ -92,7 +91,7 @@ void Simulation::parseInput(const char* input_file, bool logging) {
 					// on ajoute le satellite a la simulation
 					this->m_satellites.push_back(s);
 
-					log(*s);
+					std::cout << "[parsing]\t" << *s << std::endl;
 					cptSatellites--; // next
 
 					if (cptSatellites == 0) {
@@ -104,7 +103,8 @@ void Simulation::parseInput(const char* input_file, bool logging) {
 
 				case ReadState::CollectionsNumber:
 
-					log("nombre de collections", result);
+					std::cout << "[parsing]\t" << "nombre de collections"
+						<< result << std::endl;
 					cptCollections = stoi(result);
 					this->m_number_of_collections = cptCollections;
 					t = ReadState::Collection;
@@ -135,7 +135,7 @@ void Simulation::parseInput(const char* input_file, bool logging) {
 					cptTimeRanges = c->getNumberOfTimeRanges();;
 					cptCollections--; // next
 
-					log(*c);
+					std::cout << "[parsing]\t" << *c << std::endl;
 
 					// on passe aux photos de la collection
 					t = ReadState::Photograph;
@@ -159,14 +159,15 @@ void Simulation::parseInput(const char* input_file, bool logging) {
 					cpt = 0;
 
 					Photograph* p = new Photograph(PhotographLine);
-					log(*p);
+					std::cout << "[parsing]\t" << *p << std::endl;
 
 					unsigned short collectionIndex =
 						this->m_number_of_collections - cptCollections - 1;
 
 					this->m_collections.at(collectionIndex)->add_photograph(p);
 					// on ajoute la photo a la collection correspondante
-					log("added to collection", collectionIndex);
+					std::cout << "[parsing]\t" << "added to collection"
+						<< collectionIndex << std::endl;
 
 					cptPhotos--;
 
@@ -191,7 +192,7 @@ void Simulation::parseInput(const char* input_file, bool logging) {
 					cpt = 0;
 
 					TimeRange* time = new TimeRange(timeRangeLine);
-					log(*time);
+					std::cout << "[parsing]\t" << *time << std::endl;
 
 					unsigned short collectionIndex =
 						this->m_number_of_collections - cptCollections - 1;
@@ -199,12 +200,13 @@ void Simulation::parseInput(const char* input_file, bool logging) {
 					// on ajoute la timerange a la collection correspondante
 					this->m_collections.at(collectionIndex)
 						->add_timeRange(time);
-					log("added to collection", collectionIndex);
+					std::cout << "[parsing]\t" << "added to collection"
+						<< collectionIndex << std::endl;
 
 					cptTimeRanges--;
 
 					if (cptTimeRanges == 0 && cptCollections == 0) {
-						log("End");
+						std::cout << "[parsing]\t" << "End" << std::endl;
 						return;
 					} else if (cptTimeRanges == 0) {
 						// une fois qu'on a ajouté tous les Time Range,

@@ -9,7 +9,6 @@
 #include "Photograph.hpp"
 #include "Shoot.hpp"
 #include "Collection.hpp"
-#include "utils.hpp"
 
 const double LOG_INTERVAL = .01; // 1%
 
@@ -17,7 +16,6 @@ using SatelliteIndex = std::map<unsigned int, Photograph*>;
 
 void BasicAlgo::solve(Simulation* s) {
 
-	LogMachine log("basicAlgo");
 
 	std::vector<Collection*>& collections = s->getCollections();
 	std::vector<Satellite*>&  satellites  = s->getSatellites();
@@ -27,7 +25,7 @@ void BasicAlgo::solve(Simulation* s) {
 	// one index for each satellite
 	std::map<Satellite*, SatelliteIndex> photosToTakeIndex;
 
-	log("Start building photographs index");
+	std::cout << "Start building photographs index" << std::endl;
 
 	/**
 	 * 1.
@@ -43,14 +41,14 @@ void BasicAlgo::solve(Simulation* s) {
 		}
 	}
 
-	log("End building photographs index");
+	std::cout << "End building photographs index" << std::endl;
 
 	/**
 	 * 2.
 	 * For each turn, for each satellite, select photo we can reach
 	 */
 
-	log("Start looking for photo we can shoot");
+	std::cout << "Start looking for photo we can shoot" << std::endl;
 
 	// for each turn, for each satellite, find photographs it can reach
 	for (unsigned int t = 0; t < s->getDuration(); t++) {
@@ -143,7 +141,7 @@ void BasicAlgo::solve(Simulation* s) {
 		}
 	}
 
-	log("Photographs to take", photosToTake.size());
+	std::cout << "Photographs to take" << photosToTake.size() << std::endl;
 
 	// construct time index by satellite
 	for (auto photo_it: photosToTake) {
@@ -160,14 +158,14 @@ void BasicAlgo::solve(Simulation* s) {
 	// faire un index sur le tour pour savoir si le satellite est occupé ?
 	// TODO c'est toujours vrai ?
 
-	log("End looking for photo we can shoot");
+	std::cout << "End looking for photo we can shoot" << std::endl;
 
 	/**
 	 * 3.
 	 * Infer collections we can't complete
 	 */
 
-	log("Remove collections we can't complete");
+	std::cout << "Remove collections we can't complete" << std::endl;
 
 	for (auto col_it: s->getCollections()) {
 		std::vector<Photograph*>& colPhotographs = col_it->getPhotographs();
@@ -182,14 +180,15 @@ void BasicAlgo::solve(Simulation* s) {
 		);
 
 		if (missingPhoto) {
-			log("Removing all photo of collection", col_it->getId());
+			std::cout << "Removing all photo of collection"
+				<< col_it->getId() << std::endl;
 			for (auto p_it: colPhotographs) {
 				photosToTake.erase(p_it);
 			}
 		}
 	}
 
-	log("Photographs to take :", photosToTake.size());
+	std::cout << "Photographs to take :" << photosToTake.size() << std::endl;
 
 	/**
 	 * 4.
