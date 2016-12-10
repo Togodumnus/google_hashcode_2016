@@ -15,14 +15,8 @@ using namespace std;
 int main(int argc, char* argv[]){
 
 
-	string INPUT_string = "hashcode/hashcode/data/"; // on transforme en string pour pouvoir utiliser le +
-	INPUT_string += argv[1];
-
-	string OUTPUT_string = "hashcode/hashcode/data/";
-	OUTPUT_string += argv[2];
-
-	const char *INPUT = INPUT_string.c_str(); // on remet en char* pour l'utiliser dans les fonctions
-	const char *OUTPUT = OUTPUT_string.c_str();
+	const char* INPUT = argv[1];
+	const char* OUTPUT = argv[2];
 
 
 	std::cout << "Reading file " << INPUT << std::endl;
