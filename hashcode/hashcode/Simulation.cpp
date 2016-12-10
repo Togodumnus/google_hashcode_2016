@@ -1,5 +1,4 @@
 #include "Simulation.hpp"
-#include "Algorithm.hpp"
 
 Simulation::Simulation(const char* input_file, std::unique_ptr<Algorithm>& algo)
 	: m_algo(algo)
@@ -54,7 +53,7 @@ std::ostream& operator<<(std::ostream& os, const Simulation& simu){
 	return os;
 }
 
-int Simulation::write_results() //TODO refacto
+int Simulation::write_results(const char* OUTPUT) //TODO refacto
 {
 
 	std::sort(
@@ -65,7 +64,7 @@ int Simulation::write_results() //TODO refacto
 		}
 	);
 
-	std::ofstream file("results.txt", std::ios::out | std::ios::trunc);
+	std::ofstream file(OUTPUT, std::ios::out | std::ios::trunc);
 	if (file)
 	{
 		file << m_shoots.size() << "\n"; // write number of taken photos

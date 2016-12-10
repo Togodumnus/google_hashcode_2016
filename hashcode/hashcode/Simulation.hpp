@@ -87,5 +87,5 @@ class Simulation {
 
 		void solve();
 
-		int write_results();
+		int write_results(const char* OUTPUT);
 };
