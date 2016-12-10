@@ -26,6 +26,8 @@ class Satellite : public Location {
 			m_orientation_max_velocity,
 			m_orientation_max_value;
 
+		bool sideT(unsigned int t);
+
 		friend std::ostream& operator<<(std::ostream&, const Satellite&);
 
 	public:

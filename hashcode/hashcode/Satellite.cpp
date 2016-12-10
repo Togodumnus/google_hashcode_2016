@@ -62,6 +62,10 @@ std::ostream& operator<<(std::ostream& o, const Satellite& s) {
 		<< ")";
 }
 
+bool Satellite::sideT(unsigned int t) {
+	return modulo((getLatitude() + (t * m_velocity) + 324000) / 648000, 2) == 1;
+}
+
 LocationUnit Satellite::getLatitudeT(unsigned long int time) { // TODO test
 	/*
 	 * In degrees :
@@ -78,14 +82,24 @@ LocationUnit Satellite::getLatitudeT(unsigned long int time) { // TODO test
 
 LocationUnit Satellite::getLongitudeT(unsigned long int time) { // TODO test
 	/*
+	 * Longitude if satellite never go up
+	 *
 	 * In degrees :
 		(posInit + vitesse * temps - 180) %% 360 - 180
 	 * In arcseconds :
 	 	(posInit + vitesse * temps - 648000) %% 1296000 - 648000
 	 */
-	return (
-		modulo(this->getLongitude() + this->earth_velocity * long(time) - 648000,1296000)
+	LocationUnit l = modulo(
+		this->getLongitude() + this->earth_velocity * long(time) - 648000,
+		1296000
 	) - 648000;
+
+	// switch side because of latitude move
+	if (sideT(time)) {
+		return l < 0 ? l + 648000 : l - 648000;
+	} else {
+		return l;
+	}
 }
 
 LocationUnit Satellite::distanceT(unsigned long int t, const Location& l) {
