@@ -23,8 +23,10 @@ class Satellite : public Location {
 		LocationUnit m_cam_long = 0;
 
 		int m_velocity, // arcs/turn [-500; 500]
-			m_orientation_max_change,
+			m_orientation_max_velocity,
 			m_orientation_max_value;
+
+		bool sideT(unsigned int t);
 
 		friend std::ostream& operator<<(std::ostream&, const Satellite&);
 
@@ -46,8 +48,8 @@ class Satellite : public Location {
 			return this->m_orientation_max_value;
 		};
 
-		inline int getOrientationMaxChange() const {
-			return this->m_orientation_max_value;
+		inline int getOrientationMaxVelocity() const {
+			return this->m_orientation_max_velocity;
 		};
 
 		LocationUnit getLatitudeT(unsigned long int time);

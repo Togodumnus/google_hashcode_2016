@@ -1,7 +1,8 @@
 #include "Photograph.hpp"
 
-Photograph::Photograph(PhotographLine photographLine):
-	Location(std::stol(photographLine[0]), std::stol(photographLine[1])) { }
+Photograph::Photograph(int id, PhotographLine photographLine):
+	Location(std::stol(photographLine[0]), std::stol(photographLine[1])),
+	m_id(id) {}
 
 Photograph::Photograph(LocationUnit latitude, LocationUnit longitude):
 	Location(latitude, longitude) { }
@@ -28,8 +29,8 @@ bool Photograph::addToCollection(Collection* col){
 
 std::ostream& operator<<(std::ostream& o, const Photograph& p) {
 	return o << "Photograph("
-		<< &p << " "
-		<< "lat[" << p.m_latitude << "] "
-		<< "long[" << p.m_longitude << "]"
+		<< "id=" << p.m_id << " "
+		<< "lat=" << p.m_latitude << " "
+		<< "long=" << p.m_longitude << ""
 		<< ")";
 }

@@ -39,7 +39,7 @@ class Simulation {
 
 		std::unique_ptr<Algorithm>& m_algo;
 
-		void parseInput(const char* input_file, bool logging = false);
+		void parseInput(const char* input_file);
 
 	public:
 		Simulation(const char* input_file, std::unique_ptr<Algorithm>&);
@@ -78,6 +78,10 @@ class Simulation {
 
 		inline void addShoot(Shoot* s) {
 			this->m_shoots.push_back(s);
+		}
+
+		inline int countShoots() const {
+			return this->m_shoots.size();
 		}
 
 		void solve();

@@ -3,7 +3,7 @@
 Simulation::Simulation(const char* input_file, std::unique_ptr<Algorithm>& algo)
 	: m_algo(algo)
 {
-	parseInput(input_file, true);
+	parseInput(input_file);
 }
 
 Simulation::~Simulation()
@@ -18,7 +18,7 @@ Simulation::~Simulation()
 	}
 	m_collections.clear();
 
-	// TODO delete all photgraphs taken
+	// TODO delete all Shoot
 }
 
 Simulation& Simulation::operator=(const Simulation& simulation)

@@ -14,13 +14,19 @@ const double LOG_INTERVAL = .01; // 1%
 
 using SatelliteIndex = std::map<unsigned int, Photograph*>;
 
-void BasicAlgo::solve(Simulation* s) {
+struct SetAllocator {
+	// we use this for the order to be consistent accross runs
+	bool operator()(const Photograph* p1, const Photograph* p2) const {
+		return p1->getId() < p2->getId();
+	}
+};
 
+void BasicAlgo::solve(Simulation* s) {
 
 	std::vector<Collection*>& collections = s->getCollections();
 	std::vector<Satellite*>&  satellites  = s->getSatellites();
 
-	std::set<Photograph*> photosToTake;
+	std::set<Photograph*, SetAllocator> photosToTake;
 
 	// one index for each satellite
 	std::map<Satellite*, SatelliteIndex> photosToTakeIndex;
@@ -67,9 +73,9 @@ void BasicAlgo::solve(Simulation* s) {
 			LocationUnit longitude = (*sat)->getLongitudeT(t);
 
 			std::pair<LocationUnit, LocationUnit>
-				lat_bounds(lat - d, lat + d);
+				lat_bounds(lat - d + 1, lat + d);
 			std::pair<LocationUnit, LocationUnit>
-				long_bounds(longitude - d, longitude + d);
+				long_bounds(longitude - d + 1, longitude + d);
 
 			// FIXME on peut sortir du domaine de définition des latitude
 			// et longitude
@@ -108,36 +114,21 @@ void BasicAlgo::solve(Simulation* s) {
 				std::inserter(windowsPhotos, windowsPhotos.begin())
 			);
 
-			// iterator on photographs we can reach and we shoot take
-			auto goodPhotos_it = std::find_if(
-					windowsPhotos.begin(),
-					windowsPhotos.end(),
-					[t, &satellite](Photograph* p) {
-						Shoot* s = p->getShoot();
+			// save these photograh (or override their Shoot) if needed
+			for (Photograph* p: windowsPhotos) {
+				Shoot* old_shoot = p->getShoot();
 
-						//never shoot this photograph
-						if (s == nullptr) {
-							return true;
-						}
-
-						// already shoot this one but this position is better
-						if (s->distance() > satellite.distanceT(t, *(p))) {
-							delete s; // remove old Shoot
-							return true;
-						}
-
-						return false;
-					}
-			);
-
-			// save these photograh (or override their Shoot)
-			for (; goodPhotos_it != windowsPhotos.end(); goodPhotos_it++) {
-				Photograph* p = *goodPhotos_it;
-				Shoot* s = new Shoot(p, &satellite, t);
-				p->setShoot(s);
-				photosToTake.insert(p);
+				if (
+					//never shoot this photograph
+					old_shoot == nullptr
+					// already shoot this one but this position is better
+					|| old_shoot->distance() > satellite.distanceT(t, *(p))
+				) {
+					Shoot* new_shot = new Shoot(p, &satellite, t);
+					p->setShoot(new_shot);
+					photosToTake.insert(p);
+				}
 			}
-
 		}
 	}
 
@@ -149,8 +140,6 @@ void BasicAlgo::solve(Simulation* s) {
 		photosToTakeIndex[shoot->m_satellite].insert(
 			std::make_pair(shoot->m_t, photo_it)
 		);
-
-		std::cout << *shoot << std::endl; // TODO remove log
 	};
 
 	// TODO on voit que deux photos peuvent être attribuées au même satellite
@@ -211,41 +200,43 @@ void BasicAlgo::solve(Simulation* s) {
 			unsigned int t = moment.first;
 			Photograph* p  = moment.second;
 
-			double w_lat = std::abs(p->getLatitude() - camera.first)
-								/ (t - t_0);
-			double w_long = std::abs(p->getLongitude() - camera.second)
-								/ (t - t_0);
+			std::pair<LocationUnit, LocationUnit> new_camera(
+				p->getLatitude()  - sat->getLatitudeT(t),
+				p->getLongitude() - sat->getLongitudeT(t)
+			);
+
+			double w_lat = std::abs(new_camera.first - camera.first)
+								/ double(t - t_0);
+			double w_long = std::abs(new_camera.second - camera.second)
+								/ double(t - t_0);
 
 			// we can reach this photograph at t with the camera position t_0
-			if (w_lat < sat->getOrientationMaxChange()
-					&& w_long < sat->getOrientationMaxChange()) {
+			if (w_lat < sat->getOrientationMaxVelocity()
+					&& w_long < sat->getOrientationMaxVelocity()) {
 
-				std::cout << "sat" << sat->getId()
-					<< " take photo " << *p
-					<< "\t at turn " << t << std::endl;
-
-				camera.first  = p->getLatitude();
-				camera.second = p->getLongitude();
+				camera = new_camera;
 
 				t_0 = t;
 
 				s->addShoot(p->getShoot());
 
 			} else { //log pb
-				if (w_lat >= sat->getOrientationMaxChange()) {
+				std::cout << "pb -----------" << std::endl;
+				if (w_lat >= sat->getOrientationMaxVelocity()) {
 					std::cout <<
 						"sat " << sat->getId() << " turn " << t <<
-						" w_lat " << w_lat << " >= " << sat->getOrientationMaxChange()
+						" w_lat " << w_lat << " >= " << sat->getOrientationMaxVelocity()
 						<< std::endl;
 				}
-				if (w_long >= sat->getOrientationMaxChange()) {
+				if (w_long >= sat->getOrientationMaxVelocity()) {
 					std::cout <<
 						"sat " << sat->getId() << " turn " << t <<
-						" w_long " << w_long << " >= " << sat->getOrientationMaxChange()
+						" w_long " << w_long << " >= " << sat->getOrientationMaxVelocity()
 						<< std::endl;
 				}
 			}
 		}
 	}
 
+	std::cout << "Photographs taken :" << s->countShoots() << std::endl;
 }
