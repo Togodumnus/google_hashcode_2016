@@ -200,42 +200,25 @@ void BasicAlgo::solve(Simulation* s) {
 			unsigned int t = moment.first;
 			Photograph* p  = moment.second;
 
-			double w_lat = std::abs(p->getLatitude() - camera.first)
-								/ (t - t_0);
-			double w_long = std::abs(p->getLongitude() - camera.second)
-								/ (t - t_0);
+			std::pair<LocationUnit, LocationUnit> new_camera(
+				p->getLatitude()  - sat->getLatitudeT(t),
+				p->getLongitude() - sat->getLongitudeT(t)
+			);
 
-			// we can reach this photograph at t with the camera position t_0
-			if (w_lat < sat->getOrientationMaxChange()
-					&& w_long < sat->getOrientationMaxChange()) {
+			double w_lat = std::abs(new_camera.first - camera.first)
+								/ double(t - t_0);
+			double w_long = std::abs(new_camera.second - camera.second)
+								/ double(t - t_0);
 
 			// we can reach this photograph at t with the camera position t_0
 			if (w_lat < sat->getOrientationMaxVelocity()
 					&& w_long < sat->getOrientationMaxVelocity()) {
 
-				camera.first  = p->getLatitude();
-				camera.second = p->getLongitude();
+				camera = new_camera;
 
 				t_0 = t;
 
 				s->addShoot(p->getShoot());
-
-				// int d = sat->getOrientationMaxValue();
-				// LocationUnit las = sat->getLatitudeT(p->getShoot()->m_t);
-				// LocationUnit lgs = sat->getLongitudeT(p->getShoot()->m_t);
-
-				// //TODO remove
-				// if (std::abs(las - p->getLatitude()) >= d
-				//         || std::abs(lgs - p->getLongitude()) >= d) {
-				//     std::cout << "error ----------------" << std::endl;
-				// }
-
-				// std::cout
-				//     << "t"
-				//     << p->getShoot()->m_t
-				//     << " sat(" << sat->getLatitudeT(p->getShoot()->m_t)
-				//     << "," << sat->getLongitudeT(p->getShoot()->m_t) << ") "
-				//     << std::endl;
 
 			} else { //log pb
 				std::cout << "pb -----------" << std::endl;

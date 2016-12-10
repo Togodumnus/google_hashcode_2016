@@ -17,7 +17,8 @@ int main(){
 	try {
 		std::unique_ptr<Algorithm> a(new BasicAlgo());
 		Simulation s = Simulation(INPUT, a);
-		std::cout<< s << std::endl;
+		std::cout << s << std::endl;
+
 		s.solve();
 
 		s.write_results();
