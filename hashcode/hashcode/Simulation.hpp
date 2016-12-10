@@ -4,6 +4,7 @@
 #include <exception>
 #include <vector>
 #include <memory>
+#include <algorithm>
 
 #include "Collection.hpp"
 #include "Algorithm.hpp"

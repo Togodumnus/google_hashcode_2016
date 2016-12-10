@@ -1,4 +1,5 @@
 #include "Simulation.hpp"
+#include "Algorithm.hpp"
 
 Simulation::Simulation(const char* input_file, std::unique_ptr<Algorithm>& algo)
 	: m_algo(algo)
