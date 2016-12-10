@@ -209,9 +209,9 @@ void BasicAlgo::solve(Simulation* s) {
 			if (w_lat < sat->getOrientationMaxChange()
 					&& w_long < sat->getOrientationMaxChange()) {
 
-				// std::cout << "sat" << sat->getId()
-					// << " take photo " << *p
-					// << "\t at turn " << t << std::endl;
+			// we can reach this photograph at t with the camera position t_0
+			if (w_lat < sat->getOrientationMaxVelocity()
+					&& w_long < sat->getOrientationMaxVelocity()) {
 
 				camera.first  = p->getLatitude();
 				camera.second = p->getLongitude();
@@ -239,16 +239,16 @@ void BasicAlgo::solve(Simulation* s) {
 
 			} else { //log pb
 				std::cout << "pb -----------" << std::endl;
-				if (w_lat >= sat->getOrientationMaxChange()) {
+				if (w_lat >= sat->getOrientationMaxVelocity()) {
 					std::cout <<
 						"sat " << sat->getId() << " turn " << t <<
-						" w_lat " << w_lat << " >= " << sat->getOrientationMaxChange()
+						" w_lat " << w_lat << " >= " << sat->getOrientationMaxVelocity()
 						<< std::endl;
 				}
-				if (w_long >= sat->getOrientationMaxChange()) {
+				if (w_long >= sat->getOrientationMaxVelocity()) {
 					std::cout <<
 						"sat " << sat->getId() << " turn " << t <<
-						" w_long " << w_long << " >= " << sat->getOrientationMaxChange()
+						" w_long " << w_long << " >= " << sat->getOrientationMaxVelocity()
 						<< std::endl;
 				}
 			}
