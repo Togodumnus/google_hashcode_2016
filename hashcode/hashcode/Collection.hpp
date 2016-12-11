@@ -6,9 +6,9 @@
 #include <string>
 
 #include "Photograph.hpp"
-#include "TimeRange.hpp"
 
 using CollectionLine = std::array<std::string, 3>;
+using TimeRange = std::pair<unsigned long int, unsigned long int>;
 
 class Collection{
 	private:
@@ -25,7 +25,7 @@ class Collection{
 		/**
 		 * time ranges during which the collection's photographs can be taken
 		 */
-		std::vector<TimeRange*> m_time_ranges;
+		std::vector<TimeRange> m_time_ranges;
 
 		friend std::ostream& operator<<(std::ostream&, const Collection&);
 
@@ -53,5 +53,5 @@ class Collection{
 		}
 
 		void add_photograph(Photograph*);
-		void add_timeRange(TimeRange*);
+		void add_timeRange(TimeRange);
 };

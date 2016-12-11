@@ -27,7 +27,7 @@ void Collection::add_photograph(Photograph* photograph){
 	photograph->addToCollection(this);
 };
 
-void Collection::add_timeRange(TimeRange* t){
+void Collection::add_timeRange(TimeRange t){
 	m_time_ranges.push_back(t);
 };
 

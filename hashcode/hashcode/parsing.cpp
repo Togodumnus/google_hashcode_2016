@@ -6,7 +6,6 @@
 #include "Satellite.hpp"
 #include "Collection.hpp"
 #include "Simulation.hpp"
-#include "TimeRange.hpp"
 
 /**
  * Different states of the reading of input file
@@ -186,7 +185,7 @@ void Simulation::parseInput(const char* input_file) {
 
 				case ReadState::TimeRange:
 				{
-					TimeRangeLine timeRangeLine;
+					std::array<std::string, 2> timeRangeLine;
 
 					// lecture de la ligne à découper selon les espaces
 					while (std::getline(iss2, result2, ' ')) {
@@ -197,8 +196,13 @@ void Simulation::parseInput(const char* input_file) {
 					}
 					cpt = 0;
 
-					TimeRange* time = new TimeRange(timeRangeLine);
-					std::cout << "[parsing]\t" << *time << std::endl;
+					unsigned long int start_time = std::stoi(timeRangeLine[0]);
+					unsigned long int end_time   = std::stoi(timeRangeLine[1]);
+
+					TimeRange time = std::make_pair(start_time, end_time);
+					std::cout << "[parsing]\t" <<
+						"TimeRange(" << start_time << ", " << end_time << ")"
+						<< std::endl;
 
 					unsigned short collectionIndex =
 						this->m_number_of_collections - cptCollections - 1;
