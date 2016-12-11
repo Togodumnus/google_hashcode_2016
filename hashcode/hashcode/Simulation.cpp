@@ -53,7 +53,7 @@ std::ostream& operator<<(std::ostream& os, const Simulation& simu){
 	return os;
 }
 
-int Simulation::write_results(const char* OUTPUT) //TODO refacto
+int Simulation::write_results(const char* OUTPUT)
 {
 
 	std::sort(
@@ -73,8 +73,7 @@ int Simulation::write_results(const char* OUTPUT) //TODO refacto
 			file << *it;
 			file << "\n";
 		}
-		file.close(); // TODO pas toujours le même nombre de lignes pour deux
-					  // lancer de suite (wc -l results.txt)
+		file.close();
 	}
 	else
 		std::cerr << "Erreur à l'ouverture !" << std::endl;
