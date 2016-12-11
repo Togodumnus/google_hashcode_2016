@@ -1,5 +1,7 @@
 #include "Collection.hpp"
 
+#include <algorithm>
+
 Collection::Collection(unsigned short id, CollectionLine line): m_id(id)
 {
 	m_value = std::stoi(line[0]);
@@ -30,6 +32,16 @@ void Collection::add_photograph(Photograph* photograph){
 void Collection::add_timeRange(TimeRange t){
 	m_time_ranges.push_back(t);
 };
+
+bool Collection::isInTimeRanges(unsigned long int t) {
+	return std::any_of(
+		m_time_ranges.begin(),
+		m_time_ranges.end(),
+		[t](std::pair<unsigned long int, unsigned long int> range) {
+			return t >= range.first && t <= range.second;
+		}
+	);
+}
 
 std::ostream& operator<<(std::ostream& o, const Collection& c) {
 	return o << "Collection("

@@ -54,4 +54,6 @@ class Collection{
 
 		void add_photograph(Photograph*);
 		void add_timeRange(TimeRange);
+
+		bool isInTimeRanges(unsigned long int);
 };
