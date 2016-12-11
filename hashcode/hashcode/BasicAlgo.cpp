@@ -118,6 +118,10 @@ void BasicAlgo::solve(Simulation* s) {
 			for (Photograph* p: windowsPhotos) {
 				Shoot* old_shoot = p->getShoot();
 
+				if (!p->isInTimeRanges(t)) {
+					continue;
+				}
+
 				if (
 					//never shoot this photograph
 					old_shoot == nullptr
