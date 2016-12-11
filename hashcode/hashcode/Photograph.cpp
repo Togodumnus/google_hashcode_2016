@@ -1,5 +1,7 @@
 #include "Photograph.hpp"
 
+#include <algorithm>
+
 Photograph::Photograph(int id, PhotographLine photographLine):
 	Location(std::stol(photographLine[0]), std::stol(photographLine[1])),
 	m_id(id) {}
@@ -25,6 +27,16 @@ Photograph& Photograph::operator=(const Photograph& photograph)
 bool Photograph::addToCollection(Collection* col){
 	m_collections.push_back(col);
 	return true;
+}
+
+bool Photograph::isInTimeRanges(unsigned long int t) {
+	return std::any_of(
+		m_collections.begin(),
+		m_collections.end(),
+		[t](Collection* collection) {
+			return collection->isInTimeRanges(t);
+		}
+	);
 }
 
 std::ostream& operator<<(std::ostream& o, const Photograph& p) {
