@@ -6,6 +6,7 @@
 #include <ostream>
 
 #include "Location.hpp"
+#include "Collection.hpp"
 
 using PhotographLine = std::array<std::string, 2>;
 
@@ -47,4 +48,6 @@ class Photograph : public Location {
 		inline void setShoot(Shoot* shoot) {
 			m_shoot = shoot;
 		}
+
+		bool isInTimeRanges(unsigned long int);
 };

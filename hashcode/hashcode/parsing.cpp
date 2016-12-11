@@ -169,8 +169,11 @@ void Simulation::parseInput(const char* input_file) {
 					unsigned short collectionIndex =
 						this->m_number_of_collections - cptCollections - 1;
 
-					this->m_collections.at(collectionIndex)->add_photograph(p);
 					// on ajoute la photo a la collection correspondante
+					Collection* c = this->m_collections.at(collectionIndex);
+					p->addToCollection(c);
+					c->add_photograph(p);
+
 					std::cout << "[parsing]\t" << "added to collection"
 						<< collectionIndex << std::endl;
 

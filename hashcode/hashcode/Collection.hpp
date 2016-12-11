@@ -5,10 +5,10 @@
 #include <ostream>
 #include <string>
 
-#include "Photograph.hpp"
-
 using CollectionLine = std::array<std::string, 3>;
 using TimeRange = std::pair<unsigned long int, unsigned long int>;
+
+class Photograph;
 
 class Collection{
 	private:

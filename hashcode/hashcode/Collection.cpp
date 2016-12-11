@@ -26,7 +26,6 @@ Collection& Collection::operator=(const Collection & collection)
 
 void Collection::add_photograph(Photograph* photograph){
 	m_photographs.push_back(photograph);
-	photograph->addToCollection(this);
 };
 
 void Collection::add_timeRange(TimeRange t){
