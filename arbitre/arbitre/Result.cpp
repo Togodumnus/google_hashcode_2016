@@ -5,6 +5,10 @@ unsigned int Result::FigureOutScore(const char* input_file){
 	return 0;
 }
 
+enum class ReadState {
+	NumberOfPictures,
+	TypicalLine,
+};
 
 void parse(std::string input_file){
 	std::cout << "[parsing]\t" << "Start" << std::endl;
@@ -13,10 +17,40 @@ void parse(std::string input_file){
 		throw ReadException(input_file);
 	}   
 	std::string line; // ligne actuelle
+	ReadState t = ReadState::NumberOfPictures;
+
 	while (std::getline(input, line)){
 		int cpt = 0; // compteur d'élément dans une ligne
-		if (std::getline(iss, result, '\n')){
+		std::istringstream iss(line);
 
+		std::string result;
+		std::string result2;
+		if (std::getline(iss, result, '\n')){
+			// deuxième buffer pour parser a l'intérieur des lignes
+			std::istringstream iss2(result);
+
+			switch(t) {
+
+				case ReadState::NumberOfPictures:
+					m_number_of_pictures=std::stoi(result);
+					t = ReadState::TypicalLine;
+					break;
+				case ReadState::TypicalLine:
+					int i=0;
+					while (std::getline(iss2, result2, ' ')) {
+						if (i==0)
+							m_number_of_pictures = result2;
+						else if (i==1)
+							m_latitude = result2;
+						else if (i==2)
+							m_longitude = result2;
+						else if (i==3)
+							m_id_satellite = result2;
+						else if (i==4)
+							m_moment = result2;
+					}
+					break;
+			}
 		}
 	}
 }
