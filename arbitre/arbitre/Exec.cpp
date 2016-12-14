@@ -9,10 +9,11 @@ Exec::~Exec(){
 }
 
 void Exec::duration(){
-	//std::string str(INPUT);
+	//std::string str(this->m_executable);
     std::chrono::time_point<std::chrono::system_clock> start, end;
     start = std::chrono::system_clock::now();
-    system("../bin/hashcode ../hashcode/hashcode/data/forever_alone.in ../hashcode/hashcode/data/forever_alone.out");
+    //system("../bin/hashcode ../hashcode/hashcode/data/forever_alone.in ../hashcode/hashcode/data/forever_alone.out");
+    system(this->m_executable);
     end = std::chrono::system_clock::now();
  
     int elapsed_seconds = std::chrono::duration_cast<std::chrono::seconds>
