@@ -25,5 +25,6 @@ public:
 	 * à la classe Result qui va calculer le score et vérifier le tout
 	 */
 	void duration(const char* INPUT);
+	friend std::ofstream& operator<<(std::ofstream&, const Exec&);
 
 };

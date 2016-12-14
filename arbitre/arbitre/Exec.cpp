@@ -16,3 +16,7 @@ void Exec::duration(const char* INPUT){
               << "elapsed time: " << elapsed_seconds << "s\n";
 }
 
+std::ofstream& operator<<(std::ofstream& of, const Exec& s){
+
+}
+
