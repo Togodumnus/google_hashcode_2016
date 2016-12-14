@@ -43,6 +43,11 @@ void duration(){
 */
 
 int main(int argc, const char* argv[]) {
-    listFiles* listFile = new listFiles(argv[1]);
+    if (argc > 1) { // on a un argument
+            listFiles* listFile = new listFiles(argv[1]);
+    }
+    else {
+        cout << " Fournissez un dossier à traiter " << endl;
+    }
 
 }
