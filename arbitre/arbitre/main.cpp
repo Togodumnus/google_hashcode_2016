@@ -9,8 +9,8 @@ int main(int argc, const char* argv[]) {
     if (argc > 1) { // on a un argument
             listFiles* listFile = new listFiles(argv[1]);
 
-            for (std::vector<const char*>::const_iterator it = listFile->getFiles().begin(); it != listFile->getFiles().end(); it++) {
-                std::cout << " it = " << *it << std::endl;
+            for (std::vector<string>::const_iterator it = listFile->getFiles().begin(); it != listFile->getFiles().end(); it++) {
+                //std::cout << " it = " << *it << std::endl;
 
                 Exec* programme = new Exec(*it);
                 

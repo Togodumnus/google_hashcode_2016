@@ -16,8 +16,9 @@ class Exec {
 private:
 
 	// name of the executable file
-	const char* m_executable;
-
+	std::string m_executable = "bin/hashcode ";
+	std::string m_input;
+	std::string m_output;
 	// seconds ?	
 	unsigned int m_duration;
 
@@ -28,7 +29,7 @@ private:
 	const char* m_jeu;
 
 public:
-	Exec(const char* fichier);
+	Exec(std::string fichier);
 	~Exec();
 	
 	/*
@@ -38,4 +39,5 @@ public:
 	void duration();
 	friend std::ofstream& operator<<(std::ofstream&, const Exec&);
 
+	bool replace(std::string& str, const std::string& from, const std::string& to);
 };

@@ -15,10 +15,10 @@ using namespace std;
 class listFiles {
 
 private:
-	std::vector<const char*> fichiers;
-	const char* dossier;
+	std::vector<string> fichiers;
+	std::string dossier;
 public:
 	listFiles(const char*);
 	~listFiles();
-	std::vector<const char*>& getFiles();
+	std::vector<string>& getFiles();
 };
