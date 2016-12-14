@@ -10,14 +10,11 @@ int main(int argc, const char* argv[]) {
             listFiles* listFile = new listFiles(argv[1]);
 
             for (std::vector<const char*>::const_iterator it = listFile->getFiles().begin(); it != listFile->getFiles().end(); it++) {
+                std::cout << " it = " << *it << std::endl;
+
+                Exec* programme = new Exec(*it);
                 
-
-                std::cout << *it << std::endl;
-
-                //Exec* programme = new Exec(*it);
-                //std::string str(*it);
-                //std::cout << *it << std::endl;
-                //programme->duration();
+                programme->duration();
             }
         }
 
