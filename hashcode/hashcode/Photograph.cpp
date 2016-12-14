@@ -44,3 +44,11 @@ std::ostream& operator<<(std::ostream& o, const Photograph& p) {
 		<< "long=" << p.m_longitude << ""
 		<< ")";
 }
+
+LocationUnit Photograph::getLatitude() const {
+	return this->m_latitude;
+}
+
+LocationUnit Photograph::getLongitude() const {
+	return this->m_longitude;
+}

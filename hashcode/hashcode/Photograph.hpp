@@ -49,4 +49,9 @@ class Photograph : public Location {
 		}
 
 		bool isInTimeRanges(unsigned long int);
+
+		// need to copy this for multiindex
+		LocationUnit getLatitude() const;
+		LocationUnit getLongitude() const;
+
 };
