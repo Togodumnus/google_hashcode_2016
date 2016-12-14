@@ -2,10 +2,13 @@
 
 #include <string>
 #include <vector>
+#include <iostream>
 
 
 
 class Result {
+
+friend std::ostream& operator<<(std::ostream&, const Result&);
 
 private:
 	long m_number_of_pictures;

@@ -70,3 +70,12 @@ void Result::parse(std::string input_file){
 		}
 	}
 }
+
+std::ostream& operator<<(std::ostream& o, const Result& s) {
+	o 	<< "NB of pics : " << s.m_number_of_pictures << "\n";
+	for(auto &it : s.m_results) {
+		o 	<< it.m_latitude << " " << it.m_longitude << " "
+			<< it.m_id_satellite << " " << it.m_moment << " ";
+	}
+	return o;
+}
