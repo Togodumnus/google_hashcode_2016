@@ -14,8 +14,7 @@
 class Exec {
 
 private:
-	std::vector<string> listeFichiers;
-	struct dirent *entry;
+	const char* executable;
 
 public:
 	Exec();
@@ -25,7 +24,6 @@ public:
 	 * Faut aussi que tu stockes les résultats qq part pour qu'on les envoie apres
 	 * à la classe Result qui va calculer le score et vérifier le tout
 	 */
-	void listFile(const char* INPUT);
-	void duration();
+	void duration(const char* INPUT);
 
 };

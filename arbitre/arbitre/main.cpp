@@ -1,4 +1,7 @@
 #include <iostream>
+#include <Exec.hpp>
+#include <Result.hpp>
+#include <listFiles.hpp>
 
 // J'laisse ça là pour au cas ou j'ai cassé des trucs
 /*
@@ -39,6 +42,7 @@ void duration(){
 }
 */
 
-int main() {
+int main(int argc, const char* argv[]) {
+    listFiles* listFile = new listFiles(argv[1]);
 
 }

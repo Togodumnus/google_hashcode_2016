@@ -1,23 +1,7 @@
 #include "Exec.hpp"
 
-void Exec::listFile(const char* INPUT){
-		/* D'après Nico c'est pas la meilleure solution
-		 * Théoriquement c'est valide partout, mais
-		 * Sur Windows ça bug
-		 *
-		 * Le problème c'est que tu prends en compte aussi les Directory
-		 */
-        DIR *pDIR;
-        if( pDIR=opendir(INPUT) ){
-                while(entry = readdir(pDIR)){
-                        if( strcmp(entry->d_name, ".") != 0 && strcmp(entry->d_name, "..") != 0 )
-                        cout << entry->d_name << "\n";
-                }
-                closedir(pDIR);
-        }
-}
 
-void Exec::duration(){
+void Exec::duration(const char* INPUT){
 	std::string str(INPUT);
     std::chrono::time_point<std::chrono::system_clock> start, end;
     start = std::chrono::system_clock::now();
