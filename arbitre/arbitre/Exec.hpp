@@ -16,6 +16,15 @@ class Exec {
 private:
 	const char* executable;
 
+	// seconds ?	
+	unsigned int duration;
+
+	// appeler result pour déterminer le score
+	unsigned int score;
+
+	// nom du fichier de jeu 
+	const char* jeu;
+
 public:
 	Exec();
 	~Exec();
