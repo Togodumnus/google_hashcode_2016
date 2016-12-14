@@ -30,10 +30,9 @@ class Photograph : public Location {
 
 	public:
 		explicit Photograph(int, PhotographLine);
-		explicit Photograph(LocationUnit latitude, LocationUnit longitude);
 		virtual ~Photograph();
 		Photograph& operator=(const Photograph& photograph);
-		Photograph(const Photograph& photograph);
+		explicit Photograph(const Photograph&);
 
 		bool addToCollection(Collection*);
 
