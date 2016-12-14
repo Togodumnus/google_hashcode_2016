@@ -17,6 +17,7 @@ unsigned int Result::FigureOutScore(const char* input_file){
 	 */
 
 	// TODO sort m_results by m_id_satellite
+	std::sort(m_results.begin(), m_results.end(), less_than_key());
 
 	
 	return 0;

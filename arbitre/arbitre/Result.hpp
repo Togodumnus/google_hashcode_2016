@@ -2,10 +2,14 @@
 
 #include <string>
 #include <vector>
+
+
+
 class Result {
 
 private:
 	long m_number_of_pictures;
+
 	struct execution_result{
 		unsigned int m_score;
 		long m_latitude;
@@ -24,3 +28,5 @@ public:
 	// TODO verifier le parsing.
 	void parse(std::string);
 };
+
+
