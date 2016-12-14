@@ -40,7 +40,5 @@ void duration(){
 */
 
 int main() {
-	
-
 
 }
