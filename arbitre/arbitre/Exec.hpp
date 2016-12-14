@@ -14,6 +14,8 @@
 class Exec {
 
 private:
+
+	// name of the executable file
 	const char* executable;
 
 	// seconds ?	
