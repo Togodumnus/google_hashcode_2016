@@ -31,7 +31,6 @@ void Result::parse(std::string input_file){
 	ReadState t = ReadState::NumberOfPictures;
 
 	while (std::getline(input, line)){
-		int cpt = 0; // compteur d'élément dans une ligne
 		std::istringstream iss(line);
 
 		std::string result;
