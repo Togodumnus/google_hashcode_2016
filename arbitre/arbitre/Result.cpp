@@ -1,8 +1,10 @@
-#include "Result.hpp"
-
 #include <fstream>
-#include "Utils.hpp"
 #include <sstream>
+#include <algorithm>
+
+#include "Result.hpp"
+#include "Utils.hpp"
+
 
 unsigned int Result::FigureOutScore(const char* input_file){
 	/*
