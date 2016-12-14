@@ -5,7 +5,7 @@
 
 #include "Simulation.hpp"
 #include "Algorithm.hpp"
-#include "BasicAlgo.hpp"
+#include "ConstraintAlgo.hpp"
 
 using namespace std;
 
@@ -22,13 +22,13 @@ int main(int argc, char* argv[]){
 	std::cout << "Reading file " << INPUT << std::endl;
 
 	try {
-		std::unique_ptr<Algorithm> a(new BasicAlgo());
+		std::unique_ptr<Algorithm> a(new ConstraintAlgo());
 		Simulation s = Simulation(INPUT, a);
 		std::cout << s << std::endl;
 
 		s.solve();
 
-		s.write_results(OUTPUT);
+		// s.write_results(OUTPUT);
 
 	} catch (ReadException& e) {
 		std::cerr << "Error : " << e.what() << std::endl;
