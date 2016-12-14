@@ -1,7 +1,14 @@
 #include "Result.hpp"
 
 unsigned int Result::FigureOutScore(const char* input_file){
-
+	/*
+	 * TODO
+	 * 
+	 *		1) verifier que les photos sont atteignables par le satellite
+	 *		2) verifier que le satellite peut effectuer la rotation entre 2 photos
+	 *		3) stocker les photos bonnes dans les collection
+	 *		4) calculer le score final par rapport aux collections completees
+	 */
 	return 0;
 }
 

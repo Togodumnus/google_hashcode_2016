@@ -21,6 +21,9 @@ public:
 	Result();
 	~Result();
 
+	// TODO
 	unsigned int FigureOutScore(const char* input_file);
+
+	// TODO verifier le parsing.
 	void parse(std::string input_file)
 };
