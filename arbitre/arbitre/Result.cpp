@@ -38,27 +38,26 @@ void Result::parse(std::string input_file){
 		if (std::getline(iss, result, '\n')){
 			// deuxième buffer pour parser a l'intérieur des lignes
 			std::istringstream iss2(result);
-
 			switch(t) {
-
 				case ReadState::NumberOfPictures:
 					m_number_of_pictures=std::stoi(result);
+					m_results.reserve(m_number_of_pictures);
 					t = ReadState::TypicalLine;
 					break;
 				case ReadState::TypicalLine:
 					int i=0;
+					execution_result res;
 					while (std::getline(iss2, result2, ' ')) {
 						if (i==0)
-							m_number_of_pictures = result2;
+							res.m_latitude = std::stoi(result2);
 						else if (i==1)
-							m_latitude = result2;
+							res.m_longitude = std::stoi(result2);
 						else if (i==2)
-							m_longitude = result2;
+							res.m_id_satellite = std::stoi(result2);
 						else if (i==3)
-							m_id_satellite = result2;
-						else if (i==4)
-							m_moment = result2;
+							res.m_moment = std::stoi(result2);
 					}
+					m_results.push_back(res);
 					break;
 			}
 		}
