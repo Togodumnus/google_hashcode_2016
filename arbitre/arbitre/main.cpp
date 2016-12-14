@@ -1,18 +1,17 @@
 #include <iostream>
 #include <Exec.hpp>
 #include <Result.hpp>
-#include <listFiles.hpp>
+//#include <listFiles.hpp>
 
 // J'laisse ça là pour au cas ou j'ai cassé des trucs
 /*
 void listFile(const char* INPUT){
-		/* D'après Nico c'est de la merde
+		* D'après Nico c'est de la merde
 		 * Théoriquement c'est valide partout, mais
 		 * Sur Windows ça bug
 		 *
 		 * Le problème c'est que tu prends en compte aussi les Directory
-		 */
-		 /*
+		 *
         DIR *pDIR;
         struct dirent *entry;
         if( pDIR=opendir(INPUT) ){
@@ -43,6 +42,6 @@ void duration(){
 */
 
 int main(int argc, const char* argv[]) {
-    listFiles* listFile = new listFiles(argv[1]);
+    //listFiles* listFile = new listFiles(argv[1]);
 
 }

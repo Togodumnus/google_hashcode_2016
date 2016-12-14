@@ -13,6 +13,10 @@ unsigned int Result::FigureOutScore(const char* input_file){
 	 *		3) stocker les photos bonnes dans les collection
 	 *		4) calculer le score final par rapport aux collections completees
 	 */
+
+	// TODO sort m_results by m_id_satellite
+
+	
 	return 0;
 }
 

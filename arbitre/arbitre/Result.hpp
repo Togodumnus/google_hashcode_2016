@@ -14,7 +14,6 @@ private:
 		unsigned int m_moment;
 	};
 	std::vector<execution_result> m_results;
-
 public:
 	Result();
 	~Result();
