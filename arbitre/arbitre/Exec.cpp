@@ -16,7 +16,8 @@ void Exec::duration(const char* INPUT){
               << "elapsed time: " << elapsed_seconds << "s\n";
 }
 
-std::ofstream& operator<<(std::ofstream& of, const Exec& s){
-  return of << executable << "," << duration << "," << score << "," << jeu;
+std::ofstream& operator<<(std::ofstream& of, const Exec& exec){
+	of << exec.m_executable << "," << exec.m_duration << "," << exec.m_score << "," << exec.m_jeu;
+	return of;
 }
 
