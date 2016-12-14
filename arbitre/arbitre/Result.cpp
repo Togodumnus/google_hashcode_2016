@@ -1,5 +1,9 @@
 #include "Result.hpp"
 
+#include <fstream>
+#include "Utils.hpp"
+#include <sstream>
+
 unsigned int Result::FigureOutScore(const char* input_file){
 	/*
 	 * TODO
