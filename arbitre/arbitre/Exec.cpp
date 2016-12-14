@@ -1,8 +1,15 @@
 #include "Exec.hpp"
 
+Exec::Exec(const char* fichier){
+    this->m_executable = fichier;
+}
 
-void Exec::duration(const char* INPUT){
-	std::string str(INPUT);
+Exec::~Exec(){
+
+}
+
+void Exec::duration(){
+	//std::string str(INPUT);
     std::chrono::time_point<std::chrono::system_clock> start, end;
     start = std::chrono::system_clock::now();
     system("../bin/hashcode ../hashcode/hashcode/data/forever_alone.in ../hashcode/hashcode/data/forever_alone.out");

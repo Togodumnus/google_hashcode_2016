@@ -5,7 +5,7 @@
 #include <stdio.h>
 #include <cstdlib>
 #include <iostream>
-#include <string.h>
+#include <string>
 #include <fstream>
 #include <dirent.h>
 #include <vector>
@@ -28,14 +28,14 @@ private:
 	const char* m_jeu;
 
 public:
-	Exec();
+	Exec(const char* fichier);
 	~Exec();
 	
 	/*
 	 * Faut aussi que tu stockes les résultats qq part pour qu'on les envoie apres
 	 * à la classe Result qui va calculer le score et vérifier le tout
 	 */
-	void duration(const char* INPUT);
+	void duration();
 	friend std::ofstream& operator<<(std::ofstream&, const Exec&);
 
 };

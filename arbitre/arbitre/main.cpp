@@ -45,7 +45,14 @@ void duration(){
 int main(int argc, const char* argv[]) {
     if (argc > 1) { // on a un argument
             listFiles* listFile = new listFiles(argv[1]);
-    }
+
+            for (std::vector<const char*>::const_iterator it = listFile->getFiles().begin(); it != listFile->getFiles().end(); it++) {
+                Exec* programme = new Exec(*it);
+                programme->duration();
+            }
+        }
+
+
     else {
         cout << " Fournissez un dossier à traiter " << endl;
     }
