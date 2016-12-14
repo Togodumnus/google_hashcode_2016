@@ -22,4 +22,5 @@ public:
 	~Result();
 
 	unsigned int FigureOutScore(const char* input_file);
+	void parse(std::string input_file)
 };

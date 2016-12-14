@@ -10,8 +10,8 @@ enum class ReadState {
 	TypicalLine,
 };
 
-void parse(std::string input_file){
-	std::cout << "[parsing]\t" << "Start" << std::endl;
+void Result::parse(std::string input_file){
+
 	std::ifstream input(input_file); // on crée un buffer de stream
 	if (input.fail() || input.bad()) {
 		throw ReadException(input_file);
