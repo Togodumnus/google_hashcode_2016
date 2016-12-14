@@ -1,17 +1,13 @@
-#include <iostream>
+#include "Exec.hpp"
 
-// J'laisse ça là pour au cas ou j'ai cassé des trucs
-/*
-void listFile(const char* INPUT){
-		/* D'après Nico c'est de la merde
+void Exec::listFile(const char* INPUT){
+		/* D'après Nico c'est pas la meilleure solution
 		 * Théoriquement c'est valide partout, mais
 		 * Sur Windows ça bug
 		 *
 		 * Le problème c'est que tu prends en compte aussi les Directory
 		 */
-		 /*
         DIR *pDIR;
-        struct dirent *entry;
         if( pDIR=opendir(INPUT) ){
                 while(entry = readdir(pDIR)){
                         if( strcmp(entry->d_name, ".") != 0 && strcmp(entry->d_name, "..") != 0 )
@@ -21,9 +17,7 @@ void listFile(const char* INPUT){
         }
 }
 
-
-void duration(){
-
+void Exec::duration(){
 	std::string str(INPUT);
     std::chrono::time_point<std::chrono::system_clock> start, end;
     start = std::chrono::system_clock::now();
@@ -37,10 +31,4 @@ void duration(){
     std::cout << "finished computation at " << std::ctime(&end_time)
               << "elapsed time: " << elapsed_seconds << "s\n";
 }
-*/
 
-int main() {
-	
-
-
-}
