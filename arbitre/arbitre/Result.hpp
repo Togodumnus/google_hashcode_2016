@@ -17,6 +17,15 @@ private:
 		unsigned short m_id_satellite;
 		unsigned int m_moment;
 	};
+
+	struct less_than_key
+	{
+	    inline bool operator() (const execution_result& struct1, const execution_result& struct2)
+	    {
+	        return (struct1.m_id_satellite < struct2.m_id_satellite);
+	    }
+	};
+
 	std::vector<execution_result> m_results;
 public:
 	Result();
