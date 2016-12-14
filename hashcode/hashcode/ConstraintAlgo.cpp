@@ -17,7 +17,7 @@ void ConstraintAlgo::buildPhotographIndex() {
 	}
 }
 
-void ConstraintAlgo::generateShoots() {
+void ConstraintAlgo::generateShoots() { // TODO paralléliser ça
 
 	Simulation* s = this->simulation;
 	std::vector<Satellite*>& satellites = this->simulation->getSatellites();
