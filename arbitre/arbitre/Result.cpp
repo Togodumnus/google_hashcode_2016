@@ -66,9 +66,10 @@ void Result::parse(std::string &input_file){
 						else if (i==1)
 							res.m_longitude = std::stoi(result2);
 						else if (i==2)
-							res.m_id_satellite = std::stoi(result2);
-						else if (i==3)
 							res.m_moment = std::stoi(result2);
+						else if (i==3)
+							res.m_id_satellite = std::stoi(result2);
+						i++;
 					}
 					m_results.push_back(res);
 					break;
