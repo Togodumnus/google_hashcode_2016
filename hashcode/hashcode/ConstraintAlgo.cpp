@@ -101,12 +101,16 @@ void ConstraintAlgo::initConstraints() {
 
 	Shoots_by_photo& shootsIndex = this->shoots.get<PhotoIndex>();
 
-	for (const Shoot s : shootsIndex) {
-		this->constraints[s.m_photograph]++;
+	std::map<Photograph*, unsigned int> freq;
+
+	for (const Shoot& s : shootsIndex) {
+		freq[s.m_photograph]++;
 	}
 
-	for (const std::pair<Photograph*, unsigned int>& p : this->constraints) {
-		this->constraints[p.first] = p.first->getValue() + MAX_FREQ - p.second;
+	for (const std::pair<Photograph*, unsigned int>& p : freq) {
+		this->constraints.insert(Constraint(
+			p.first->getValue() + MAX_FREQ - p.second, p.first
+		));
 	}
 
 }
@@ -133,8 +137,10 @@ void ConstraintAlgo::solve(Simulation* s) {
 	this->initConstraints();
 	std::cout << "End constraints init" << std::endl;
 
-	for (auto p : this->constraints) {
-		std::cout << *p.first << " " << p.second<< std::endl;
+	ConstraintIndex::nth_index<0>::type& constraints =
+		this->constraints.get<0>();
+	for (auto it = constraints.rbegin(); it != constraints.rend(); it++) {
+		std::cout << (*it).m_value << " " << *((*it).m_photograph) << std::endl;
 	}
 
 	std::cout << "end" << std::endl;

@@ -60,6 +60,33 @@ using ShootMutliIndex = multi_index_container<
 	>
 >;
 
+struct Constraint {
+
+	unsigned int m_value;
+	Photograph* m_photograph;
+
+	Constraint(unsigned int v, Photograph* p): m_value(v), m_photograph(p) {}
+	Constraint(const Constraint& c):
+		m_value(c.m_value), m_photograph(c.m_photograph) {}
+	Constraint(Constraint&& c):
+		m_value(c.m_value), m_photograph(c.m_photograph) {}
+
+	bool operator<(const Constraint& c) const {
+		return m_value < c.m_value;
+	};
+};
+
+using ConstraintIndex = multi_index_container<
+	Constraint,
+	indexed_by<
+		ordered_non_unique<identity<Constraint>>,
+		ordered_unique<
+			tag<PhotoIndex>,
+			member<Constraint, Photograph*, &Constraint::m_photograph>
+		>
+	>
+>;
+
 class ConstraintAlgo: public Algorithm {
 
 	Simulation* simulation;
@@ -67,7 +94,7 @@ class ConstraintAlgo: public Algorithm {
 	GeoPhotographIndex photosIndex;
 	ShootMutliIndex    shoots;
 
-	std::map<Photograph*, unsigned int> constraints;
+	ConstraintIndex constraints;
 
 	/**
 	 * 1.
