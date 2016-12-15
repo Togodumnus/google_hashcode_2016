@@ -1,9 +1,11 @@
 #include <fstream>
 #include <sstream>
 #include <algorithm>
+#include <iostream>
 
 #include "Result.hpp"
 #include "Utils.hpp"
+#include "hashcode/Simulation.hpp"
 
 
 unsigned int Result::FigureOutScore(std::string &input_file){
@@ -19,8 +21,9 @@ unsigned int Result::FigureOutScore(std::string &input_file){
 	this->parse(input_file);
 	// Test sort
 	std::sort(m_results.begin(), m_results.end(), less_than_key());
-
-	
+	// std::cout << *this;
+	std::string a("./arbitre/arbitre/data/constellation.in");
+	Simulation sim(a);
 
 	
 	return 0;
