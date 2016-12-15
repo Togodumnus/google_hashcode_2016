@@ -145,17 +145,29 @@ bool ConstraintAlgo::isShootReachable(const Shoot& s) {
 	Shoots_by_satellite_time& shootsIndex =
 		this->shootsDone.get<SatelliteTimeIndex>();
 
-	auto li = shootsIndex.lower_bound(boost::make_tuple(s.m_satellite, s.m_t-1));
-	auto ui = shootsIndex.upper_bound(boost::make_tuple(s.m_satellite, s.m_t));
+	auto li = shootsIndex.lower_bound(
+		boost::make_tuple(s.m_satellite, s.m_t - 1)
+	);
+	auto ui = shootsIndex.upper_bound(
+		boost::make_tuple(s.m_satellite, s.m_t)
+	);
+
 
 	// shoot of the same satellite, before s
-	const Shoot& s_past = *li;
+	bool past_ok = true;
+	if (li != shootsIndex.end()) {
+		const Shoot& s_past = *li;
+		past_ok = this->canGoFromShootToShoot(s_past, s);
+	}
 
 	// shoot of the same satellite, after s
-	const Shoot& s_futur = *ui;
+	bool future_ok = true;
+	if (ui != shootsIndex.end()) {
+		const Shoot& s_future = *ui;
+		future_ok = this->canGoFromShootToShoot(s_future, s);
+	}
 
-	return this->canGoFromShootToShoot(s_past, s)
-		&& this->canGoFromShootToShoot(s_futur, s);
+	return past_ok && future_ok;
 }
 
 
@@ -165,39 +177,6 @@ struct ShootAllocator {
 		return s1->distance() > s2->distance();
 	}
 };
-
-void ConstraintAlgo::findShoot(
-	Photograph* photo,
-	std::function<void(const Shoot*)> success,
-	std::function<void()>       error
-) {
-	Shoots_by_photo& shootsIndex = this->shoots.get<PhotoIndex>();
-	Shoots_by_photo::iterator s_it = shootsIndex.find(photo);
-
-	std::set<const Shoot*, ShootAllocator> photo_shoots;
-
-	for (auto it = s_it; it != shootsIndex.end(); it++) {
-		if (!this->isShootReachable(*it)) {
-			continue;
-		}
-		const Shoot* s = &(*it);
-
-		// if shoot has already been tried
-		ShootNode& parent = *(this->branch.rbegin());
-		if (parent.shootTested.find(s) != parent.shootTested.end()) {
-			continue;
-		}
-
-		photo_shoots.insert(s);
-	}
-
-	if (photo_shoots.size()) {
-		success(*photo_shoots.begin());
-	} else {
-		error();
-	}
-
-}
 
 void ConstraintAlgo::removeNode() {
 	ShootNode n =*(this->branch.rbegin());
@@ -216,20 +195,53 @@ void ConstraintAlgo::addNode(const Shoot* s) {
 	//TODO augmenter contrainte
 }
 
+void ConstraintAlgo::findShoot(Photograph* photo) {
+	Shoots_by_photo& shootsIndex = this->shoots.get<PhotoIndex>();
+	std::pair<Shoots_by_photo::iterator, Shoots_by_photo::iterator> find_it =
+		shootsIndex.equal_range(photo);
+
+	std::set<const Shoot*, ShootAllocator> photo_shoots;
+
+	for (auto it = find_it.first; it != find_it.second; it++) {
+		if (!this->isShootReachable(*it)) {
+			continue;
+		}
+		const Shoot* s = &(*it);
+		std::cout << *s << std::endl;
+
+		// if shoot has already been tried
+		if (this->branch.begin() != this->branch.end()) {
+			ShootNode& parent = *(this->branch.rbegin());
+			std::cout << parent.shoot << std::endl;
+			if (parent.shootTested.find(s) != parent.shootTested.end()) {
+				continue;
+			}
+		}
+
+		photo_shoots.insert(s);
+	}
+
+	if (photo_shoots.size()) {
+		this->addNode(*photo_shoots.begin());
+	} else {
+		this->removeNode();
+	}
+
+}
+
 void ConstraintAlgo::findGoodBranch() {
 
-	do { // TODO change
+	do {
 
+		//TODO ne pas reprendre la même photo ...
 		const Constraint& max = *(this->constraints.rbegin());
 		Photograph* maxPhoto = max.m_photograph;
 
-		this->findShoot(
-			maxPhoto,
-			[](const Shoot* s) {}, //TODO
-			[]() {}
-		);
+		std::cout << *maxPhoto << std::endl;
 
-	} while(this->branch.begin() == this->branch.end());
+		this->findShoot(maxPhoto);
+
+	} while(this->branch.begin() != this->branch.end());
 
 	throw NoSolutionException(); //TODO find better way to stop
 }
@@ -255,6 +267,10 @@ void ConstraintAlgo::solve(Simulation* s) {
 	std::cout << "Init constraints" << std::endl;
 	this->initConstraints();
 	std::cout << "End constraints init" << std::endl;
+
+	std::cout << "Find solution" << std::endl;
+	this->findGoodBranch();
+	std::cout << "End solution" << std::endl;
 
 	ConstraintIndex::nth_index<0>::type& constraints =
 		this->constraints.get<0>();

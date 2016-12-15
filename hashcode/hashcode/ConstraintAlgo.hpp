@@ -162,11 +162,7 @@ class ConstraintAlgo: public Algorithm {
 	 */
 	void findGoodBranch();
 
-	void findShoot(
-		Photograph* photo,
-		std::function<void(const Shoot*)> success,
-		std::function<void()>       error
-	);
+	void findShoot(Photograph* photo);
 
 	bool isShootReachable(const Shoot& s);
 
