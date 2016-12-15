@@ -4,6 +4,7 @@
 #include <vector>
 #include <array>
 #include <ostream>
+#include <numeric>
 
 #include "Location.hpp"
 #include "Collection.hpp"
@@ -50,6 +51,16 @@ class Photograph : public Location {
 
 		inline void setShoot(Shoot* shoot) {
 			m_shoot = shoot;
+		}
+
+		inline unsigned int getValue() {
+			return std::accumulate(
+				m_collections.begin(), m_collections.end(),
+				0,
+				[](unsigned int s, Collection* c) {
+					return s + c->getValue();
+				}
+			);
 		}
 
 		bool isInTimeRanges(unsigned long int);
