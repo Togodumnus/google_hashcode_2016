@@ -1,6 +1,7 @@
 include_directories("arbitre/")
 
 file(GLOB SRC_FOLDER
+    "arbitre/**/*.cpp"
     "arbitre/*.cpp"
 	"arbitre/main.cpp"
 )
