@@ -40,7 +40,6 @@ struct TimeIndex {};
 using ShootMutliIndex = multi_index_container<
 	Shoot,
 	indexed_by<
-		// ordered_unique<identity<Shoot*>>,
 		ordered_non_unique<
 			tag<ColIndex>,
 			member<Shoot, Collection*, &Shoot::m_collection>
@@ -52,11 +51,7 @@ using ShootMutliIndex = multi_index_container<
 		ordered_non_unique<
 			tag<SatelliteIndex>,
 			member<Shoot, Satellite*, &Shoot::m_satellite>
-		>,
-		ordered_non_unique<
-			tag<TimeIndex>,
-			member<Shoot, unsigned long int, &Shoot::m_t
-		>>
+		>
 	>
 >;
 
@@ -92,6 +87,24 @@ struct ShootNode {
 	std::set<Shoot*> shootTested;	// children already tested
 };
 
+using ShootDoneMutliIndex = multi_index_container<
+	Shoot,
+	indexed_by<
+		ordered_non_unique<
+			tag<PhotoIndex>,
+			member<Shoot, Photograph*, &Shoot::m_photograph>
+		>,
+		ordered_non_unique<
+			tag<SatelliteIndex>,
+			member<Shoot, Satellite*, &Shoot::m_satellite>
+		>,
+		ordered_non_unique<
+			tag<TimeIndex>,
+			member<Shoot, unsigned long int, &Shoot::m_t
+		>>
+	>
+>;
+
 class ConstraintAlgo: public Algorithm {
 
 	Simulation* simulation;
@@ -101,9 +114,9 @@ class ConstraintAlgo: public Algorithm {
 
 	ConstraintIndex constraints;
 
-	std::set<Photograph*> photosDone;
+	ShootDoneMutliIndex shootsDone;
 
-	std::list<ShootNode>  branch;
+	std::list<ShootNode> branch;
 
 	/**
 	 * 1.
