@@ -4,6 +4,22 @@
 #include <vector>
 #include <iostream>
 
+#include "hashcode/Location.hpp"
+#include "hashcode/Satellite.hpp"
+#include "hashcode/Photograph.hpp"
+
+struct ResultShoot : public Location {
+	unsigned int m_time;
+
+	bool operator<(const ResultShoot& RS) const {
+		return m_time < RS.m_time;
+	}
+	ResultShoot(const ResultShoot& rs) :
+		Location(rs), m_time(rs.m_time){}
+	ResultShoot(long latitude, long longitude, unsigned int t):
+		Location(latitude, longitude), m_time(t){}
+};
+
 
 
 
