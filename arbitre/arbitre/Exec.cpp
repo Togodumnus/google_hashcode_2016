@@ -32,12 +32,10 @@ Exec::~Exec(){
 
 void Exec::duration(std::string INPUT){
 
-    //std::cout << " input  = " << this->m_input << std::endl;
-    //string commande = this->m_executable + " " + INPUT + OUTPUT;
-    /*std::chrono::time_point<std::chrono::system_clock> start, end;
+    std::chrono::time_point<std::chrono::system_clock> start, end;
     start = std::chrono::system_clock::now();
     //system("../bin/hashcode ../hashcode/hashcode/data/forever_alone.in ../hashcode/hashcode/data/forever_alone.out");
-    system((commande).c_str()); // on fait string -> char* pour que system fonctionne
+    system((INPUT).c_str()); // on fait string -> char* pour que system fonctionne
     end = std::chrono::system_clock::now();
  
     int elapsed_seconds = std::chrono::duration_cast<std::chrono::seconds>
@@ -45,7 +43,7 @@ void Exec::duration(std::string INPUT){
     std::time_t end_time = std::chrono::system_clock::to_time_t(end);
  
     std::cout << "finished computation at " << std::ctime(&end_time)
-              << "elapsed time: " << elapsed_seconds << "s\n";*/
+              << "elapsed time: " << elapsed_seconds << "s\n";
               
 }
 

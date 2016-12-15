@@ -27,6 +27,7 @@ private:
 	// duration of the solution	
 	unsigned int m_duration;
 
+	// score of the solution
 	unsigned int m_score;
 
 	// nom du fichier de jeu 

@@ -18,7 +18,7 @@ int main(int argc, const char* argv[]) {
 
 
             for (std::vector<std::string>::const_iterator it = listFile->getFiles().begin(); it != listFile->getFiles().end(); it++) {
-                //std::cout << " it = " << *it << std::endl;
+                std::cout << " itijrig = " << *it << std::endl;
 
                 Exec* programme = new Exec(*it);
 
@@ -34,9 +34,9 @@ int main(int argc, const char* argv[]) {
 
                     commande += " " + input + " " + output;  // la commande totale a éxécuté 
 
-                    std::cout << commande << std::endl;
+                    //std::cout << commande << std::endl;
 
-                    programme->duration(*it);
+                    programme->duration(commande);
 
 
             }
