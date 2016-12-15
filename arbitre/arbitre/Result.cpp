@@ -11,32 +11,72 @@
 
 
 unsigned int Result::FigureOutScore(std::string &input_file){
-	std::cout << "[SCORE] Function starts" << std::endl;
-	/*
-	 * TODO
-	 * 
-	 * array < set < ResultShoot, 
-	 */
 
 	this->parse(input_file);
-	std::cout << "\t[PARSING] done" << std::endl;
-	// Test sort
+	
+	/*
 	std::sort(m_results.begin(), m_results.end(), less_than_key());
 	std::cout << "\t[SORTING] done" << std::endl;
-	//std::cout << *this << std::endl;
-	std::string a("./arbitre/arbitre/data/constellation.in");
+	*/
+
+	std::string a("./arbitre/arbitre/data/forever_alone.in");
 	Simulation sim(a);
 	
-	//std::cout << sim.getNumberSatellites() << std::endl;
-	std::vector<std::set<ResultShoot>> michael;
-	std::cout << sim.getNumberSatellites() << std::endl;
-	michael.reserve(sim.getNumberSatellites());
-	std::cout << "[VECTOR] Remplissage début" << std::endl;
+	std::map<int, std::set<ResultShoot>> map_res;
+
 	for(auto &it : m_results) {
-		ResultShoot a(it.m_latitude, it.m_longitude, it.m_moment);
-		std::cout << it.m_id_satellite << std::endl;
-		(michael[it.m_id_satellite]).insert(a);
+		map_res[it.m_id_satellite].insert(ResultShoot(it.m_latitude, it.m_longitude, it.m_moment));
 	}
+
+	/*
+	 * TODO
+	 * 		Check if at time t, id_satellite's got the photo in his windows
+	 *		Check if the speed isn't too fast
+	 */
+
+	// Do a for(i=0 to nb satellites)
+
+	// 
+
+	/*
+	for(auto f : SERVER_IPS) {
+	  // use f here
+	}    
+	*/
+	long lat, longi;
+	unsigned int time;
+	int orientationValue;
+	int sum;
+	// unsigned to remove warning
+	for(unsigned int i=0; i<sim.getNumberSatellites(); i++) {
+		int j=0;
+		for(auto ind : map_res[i]){
+
+			/*
+			std::cout 	<< "Lat photo sat : " 	<< ind.getLatitude() << "\n"
+						<< "Longi photo sat : " << ind.getLongitude() << std::endl;
+			*/
+
+			// get latitude & longitude
+			lat = sim.getSatelliteN(i)->getLatitudeT(ind.m_time);
+			longi = sim.getSatelliteN(i)->getLongitudeT(ind.m_time);
+			orientationValue = sim.getSatelliteN(i)->getOrientationMaxValue();
+
+			if ( 	ind.getLatitude()  > ( lat + orientationValue   ||
+					ind.getLatitude()  < ( lat - orientationValue   ||
+					ind.getLongitude() > ( longi + orientationValue ||
+					ind.getLongitude() < ( longi - orientationValue ))))){
+				//std::cout << "WRONG VALUE\n" << ind.getLatitude() << " ; " << lat + orientationValue << std::endl;
+				j++;
+			}
+
+		}
+		std::cout << j << std::endl;
+		sum+=j;
+
+	}
+	std::cout << "Number of pictures impossible : " << sum << "/" << this->m_number_of_pictures << std::endl;
+
 
 	
 	return 0;
