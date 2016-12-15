@@ -9,6 +9,7 @@
 #include <fstream>
 #include <dirent.h>
 #include <vector>
+#include "listFiles.hpp"
 
 
 class Exec {
@@ -16,9 +17,11 @@ class Exec {
 private:
 
 	// name of the executable file
-	std::string m_executable = "bin/hashcode ";
-	std::string m_input;
-	std::string m_output;
+	std::string m_executable;
+
+	// input files 
+	std::vector<std::string> m_input;
+	std::vector<std::string> m_output;
 	// seconds ?	
 	unsigned int m_duration;
 
