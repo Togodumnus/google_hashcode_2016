@@ -10,17 +10,19 @@ class Photograph;
  * Represent the time when the satellite take the photograph
  */
 struct Shoot {
+	Collection* m_collection;
 	Photograph* m_photograph;
 	Satellite*  m_satellite;
 	unsigned long int m_t;
 
 	Shoot(
+		Collection* collection,
 		Photograph* photograph,
 		Satellite*  satellite,
 		unsigned long int t
 	);
 
-	Shoot(const Shoot & shoot);
+	Shoot(const Shoot& shoot);
 
 	~Shoot() {};
 

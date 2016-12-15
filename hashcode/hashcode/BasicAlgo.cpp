@@ -128,7 +128,7 @@ void BasicAlgo::solve(Simulation* s) {
 					// already shoot this one but this position is better
 					|| old_shoot->distance() > satellite.distanceT(t, *(p))
 				) {
-					Shoot* new_shot = new Shoot(p, &satellite, t);
+					Shoot* new_shot = new Shoot(nullptr, p, &satellite, t);
 					p->setShoot(new_shot);
 					photosToTake.insert(p);
 				}
