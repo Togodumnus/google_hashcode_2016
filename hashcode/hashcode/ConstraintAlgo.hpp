@@ -67,6 +67,8 @@ class ConstraintAlgo: public Algorithm {
 	GeoPhotographIndex photosIndex;
 	ShootMutliIndex    shoots;
 
+	std::map<Photograph*, unsigned int> constraints;
+
 	/**
 	 * 1.
 	 * Build latitude / longitude index on Photographs
@@ -84,6 +86,12 @@ class ConstraintAlgo: public Algorithm {
 	 * Remove collections we can not complete
 	 * */
 	void cleanCollections();
+
+	/**
+	 * 4.
+	 * Init constraints
+	 * */
+	void initConstraints();
 
 	public:
 		void solve(Simulation*);

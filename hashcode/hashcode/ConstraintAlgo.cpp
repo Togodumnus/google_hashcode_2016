@@ -8,6 +8,7 @@ typedef ShootMutliIndex::index<ColIndex>::type    Shoots_by_col;
 typedef ShootMutliIndex::index<PhotoIndex>::type  Shoots_by_photo;
 
 const double LOG_INTERVAL = .01; // 1%
+const double MAX_FREQ = 2000; //TODO optimize
 
 void ConstraintAlgo::buildPhotographIndex() {
 
@@ -96,6 +97,20 @@ void ConstraintAlgo::cleanCollections() {
 
 }
 
+void ConstraintAlgo::initConstraints() {
+
+	Shoots_by_photo& shootsIndex = this->shoots.get<PhotoIndex>();
+
+	for (const Shoot s : shootsIndex) {
+		this->constraints[s.m_photograph]++;
+	}
+
+	for (const std::pair<Photograph*, unsigned int>& p : this->constraints) {
+		this->constraints[p.first] = p.first->getValue() + MAX_FREQ - p.second;
+	}
+
+}
+
 void ConstraintAlgo::solve(Simulation* s) {
 
 	this->simulation = s;
@@ -114,9 +129,13 @@ void ConstraintAlgo::solve(Simulation* s) {
 	this->cleanCollections();
 	std::cout << "End collections removal" << std::endl;
 
-	// for (auto p : this->shoots) {
-	//     std::cout << p << std::endl;
-	// }
+	std::cout << "Init constraints" << std::endl;
+	this->initConstraints();
+	std::cout << "End constraints init" << std::endl;
+
+	for (auto p : this->constraints) {
+		std::cout << *p.first << " " << p.second<< std::endl;
+	}
 
 	std::cout << "end" << std::endl;
 
