@@ -1,7 +1,6 @@
 #include "Simulation.hpp"
 
-Simulation::Simulation(const char* input_file, std::unique_ptr<Algorithm>& algo)
-	: m_algo(algo)
+Simulation::Simulation(std::string& input_file)
 {
 	parseInput(input_file);
 }
@@ -23,7 +22,6 @@ Simulation::~Simulation()
 
 Simulation& Simulation::operator=(const Simulation& simulation)
 {
-	m_algo = std::move(simulation.m_algo);
 	m_duration = simulation.m_duration;
 	m_number_of_collections = simulation.m_number_of_collections; // copy
 	m_number_of_satellites	= simulation.m_number_of_satellites;  // copy
@@ -32,16 +30,15 @@ Simulation& Simulation::operator=(const Simulation& simulation)
 }
 
 Simulation::Simulation(const Simulation& simulation)
-	: m_algo(simulation.m_algo)
 {
 	m_duration = simulation.m_duration;
 	m_number_of_collections = simulation.m_number_of_collections; // copy
 	m_number_of_satellites	= simulation.m_number_of_satellites;  // copy
 }
 
-void Simulation::solve() {
+/*void Simulation::solve() {
 	m_algo->solve(this);
-}
+}*/
 
 std::ostream& operator<<(std::ostream& os, const Simulation& simu){
 	os << "Nombre de satellites : " << simu.m_number_of_satellites << "\n";

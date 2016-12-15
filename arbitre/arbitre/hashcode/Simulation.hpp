@@ -5,6 +5,7 @@
 #include <vector>
 #include <memory>
 #include <algorithm>
+#include <string>
 
 #include "Collection.hpp"
 #include "Algorithm.hpp"
@@ -12,7 +13,7 @@
 
 class Satellite;
 
-class ReadException : std::exception {
+/*class ReadException : std::exception {
 	std::string file;
 	public:
 		inline ReadException(std::string f) {
@@ -23,7 +24,7 @@ class ReadException : std::exception {
 			m += file;
 			return m.c_str();
 		};
-};
+};*/
 
 class Simulation {
 
@@ -38,12 +39,12 @@ class Simulation {
 		std::vector<Collection*> m_collections;
 		std::vector<Shoot*>      m_shoots;
 
-		std::unique_ptr<Algorithm>& m_algo;
+		//std::unique_ptr<Algorithm>& m_algo;
 
-		void parseInput(const char* input_file);
+		void parseInput(std::string& input_file);
 
 	public:
-		Simulation(const char* input_file, std::unique_ptr<Algorithm>&);
+		Simulation(std::string& input_file);
 		~Simulation();
 		Simulation& operator=(const Simulation&);
 		Simulation(const Simulation&);
@@ -85,7 +86,7 @@ class Simulation {
 			return this->m_shoots.size();
 		}
 
-		void solve();
+		//void solve();
 
 		int write_results(const char* OUTPUT);
 };

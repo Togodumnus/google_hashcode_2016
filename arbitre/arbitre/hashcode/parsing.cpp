@@ -2,10 +2,12 @@
 #include <fstream>
 #include <sstream>
 #include <array>
+#include <string>
 
 #include "Satellite.hpp"
 #include "Collection.hpp"
 #include "Simulation.hpp"
+#include "../Utils.hpp"
 
 /**
  * Different states of the reading of input file
@@ -20,7 +22,7 @@ enum class ReadState {
 	TimeRange,
 };
 
-void Simulation::parseInput(const char* input_file) {
+void Simulation::parseInput(std::string& input_file) {
 
 
 	Simulation* simulation = this;
