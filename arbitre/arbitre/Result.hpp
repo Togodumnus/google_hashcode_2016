@@ -31,8 +31,7 @@ private:
 
 	std::vector<execution_result> m_results;
 public:
-	Result();
-	~Result();
+	Result() {};
 
 	// TODO
 	unsigned int FigureOutScore(std::string &input_file);
