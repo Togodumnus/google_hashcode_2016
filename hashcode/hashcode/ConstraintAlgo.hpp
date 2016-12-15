@@ -96,6 +96,8 @@ class ConstraintAlgo: public Algorithm {
 
 	ConstraintIndex constraints;
 
+	std::set<Photograph*> photosDone;
+
 	/**
 	 * 1.
 	 * Build latitude / longitude index on Photographs
