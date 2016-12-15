@@ -13,12 +13,8 @@
 unsigned int Result::FigureOutScore(std::string &input_file){
 
 	this->parse(input_file);
-	
-	/*
-	std::sort(m_results.begin(), m_results.end(), less_than_key());
-	std::cout << "\t[SORTING] done" << std::endl;
-	*/
 
+	// Only for the tests
 	std::string a("./arbitre/arbitre/data/forever_alone.in");
 	Simulation sim(a);
 	
@@ -34,15 +30,6 @@ unsigned int Result::FigureOutScore(std::string &input_file){
 	 *		Check if the speed isn't too fast
 	 */
 
-	// Do a for(i=0 to nb satellites)
-
-	// 
-
-	/*
-	for(auto f : SERVER_IPS) {
-	  // use f here
-	}    
-	*/
 	long lat, longi;
 	unsigned int time;
 	int orientationValue;
@@ -52,12 +39,6 @@ unsigned int Result::FigureOutScore(std::string &input_file){
 		int j=0;
 		for(auto ind : map_res[i]){
 
-			/*
-			std::cout 	<< "Lat photo sat : " 	<< ind.getLatitude() << "\n"
-						<< "Longi photo sat : " << ind.getLongitude() << std::endl;
-			*/
-
-			// get latitude & longitude
 			lat = sim.getSatelliteN(i)->getLatitudeT(ind.m_time);
 			longi = sim.getSatelliteN(i)->getLongitudeT(ind.m_time);
 			orientationValue = sim.getSatelliteN(i)->getOrientationMaxValue();
@@ -66,7 +47,6 @@ unsigned int Result::FigureOutScore(std::string &input_file){
 					ind.getLatitude()  < ( lat - orientationValue   ||
 					ind.getLongitude() > ( longi + orientationValue ||
 					ind.getLongitude() < ( longi - orientationValue ))))){
-				//std::cout << "WRONG VALUE\n" << ind.getLatitude() << " ; " << lat + orientationValue << std::endl;
 				j++;
 			}
 
@@ -77,8 +57,6 @@ unsigned int Result::FigureOutScore(std::string &input_file){
 	}
 	std::cout << "Number of pictures impossible : " << sum << "/" << this->m_number_of_pictures << std::endl;
 
-
-	
 	return 0;
 }
 
@@ -89,11 +67,11 @@ enum class ReadState {
 
 void Result::parse(std::string &input_file){
 
-	std::ifstream input(input_file); // on crée un buffer de stream
+	std::ifstream input(input_file);
 	if (input.fail() || input.bad()) {
 		throw ReadException(input_file);
 	}   
-	std::string line; // ligne actuelle
+	std::string line;
 	ReadState t = ReadState::NumberOfPictures;
 
 	while (std::getline(input, line)){
@@ -102,7 +80,6 @@ void Result::parse(std::string &input_file){
 		std::string result;
 		std::string result2;
 		if (std::getline(iss, result, '\n')){
-			// deuxième buffer pour parser a l'intérieur des lignes
 			std::istringstream iss2(result);
 			switch(t) {
 				case ReadState::NumberOfPictures:
@@ -134,9 +111,9 @@ void Result::parse(std::string &input_file){
 std::ostream& operator<<(std::ostream& o, const Result& s) {
 	o 	<< "NB of pics : " << s.m_number_of_pictures << "\n";
 	for(auto &it : s.m_results) {
-		o 	<< it.m_latitude << " " << it.m_longitude << " "
-			<< it.m_moment << " " << it.m_id_satellite << " ";
-		o << "\n";
+		o 	<< it.m_latitude << " " << it.m_longitude    << " "
+			<< it.m_moment 	 << " " << it.m_id_satellite << " ";
+		o   << "\n";
 	}
 	return o;
 }
