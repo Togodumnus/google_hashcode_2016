@@ -30,7 +30,7 @@ struct Shoot {
         return (m_t < s.m_t);
     }
 
-	inline LocationUnit distance() {
+	inline LocationUnit distance() const {
 		return m_satellite->distanceT(m_t, *m_photograph);
 	}
 

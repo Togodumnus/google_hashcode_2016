@@ -3,9 +3,12 @@
 #include <vector>
 #include <unordered_set>
 
-typedef GeoPhotographIndex::index<PhotoLat>::type Photos_by_lat;
-typedef ShootMutliIndex::index<ColIndex>::type    Shoots_by_col;
-typedef ShootMutliIndex::index<PhotoIndex>::type  Shoots_by_photo;
+typedef GeoPhotographIndex::index<PhotoLat>::type    Photos_by_lat;
+typedef ShootMutliIndex::index<ColIndex>::type       Shoots_by_col;
+typedef ShootMutliIndex::index<PhotoIndex>::type     Shoots_by_photo;
+
+typedef ShootDoneMutliIndex::index<SatelliteTimeIndex>::type
+	Shoots_by_satellite_time;
 
 const double LOG_INTERVAL = .01; // 1%
 const double MAX_FREQ = 2000; //TODO optimize
@@ -113,6 +116,122 @@ void ConstraintAlgo::initConstraints() {
 		));
 	}
 
+}
+
+bool ConstraintAlgo::canGoFromShootToShoot(const Shoot& s1, const Shoot& s2) {
+
+	std::pair<LocationUnit, LocationUnit> Loc1(
+		s1.m_photograph->getLatitude(),
+		s1.m_photograph->getLongitude()
+	);
+
+	std::pair<LocationUnit, LocationUnit> Loc2(
+		s2.m_photograph->getLatitude(),
+		s2.m_photograph->getLongitude()
+	);
+
+	double w_lat = std::abs(Loc1.first - Loc2.first)
+		/ double(s2.m_t - s1.m_t);
+
+	double w_long = std::abs(Loc1.second - Loc2.second)
+		/ double(s2.m_t - s1.m_t);
+
+	return w_lat < s2.m_satellite->getOrientationMaxVelocity()
+			&& w_long < s2.m_satellite->getOrientationMaxVelocity();
+}
+
+bool ConstraintAlgo::isShootReachable(const Shoot& s) {
+
+	Shoots_by_satellite_time& shootsIndex =
+		this->shootsDone.get<SatelliteTimeIndex>();
+
+	auto li = shootsIndex.lower_bound(boost::make_tuple(s.m_satellite, s.m_t-1));
+	auto ui = shootsIndex.upper_bound(boost::make_tuple(s.m_satellite, s.m_t));
+
+	// shoot of the same satellite, before s
+	const Shoot& s_past = *li;
+
+	// shoot of the same satellite, after s
+	const Shoot& s_futur = *ui;
+
+	return this->canGoFromShootToShoot(s_past, s)
+		&& this->canGoFromShootToShoot(s_futur, s);
+}
+
+
+struct ShootAllocator {
+	bool operator()(const Shoot* s1, const Shoot* s2) const {
+		//TODO choose distance between last shoot instead ?
+		return s1->distance() > s2->distance();
+	}
+};
+
+void ConstraintAlgo::findShoot(
+	Photograph* photo,
+	std::function<void(const Shoot*)> success,
+	std::function<void()>       error
+) {
+	Shoots_by_photo& shootsIndex = this->shoots.get<PhotoIndex>();
+	Shoots_by_photo::iterator s_it = shootsIndex.find(photo);
+
+	std::set<const Shoot*, ShootAllocator> photo_shoots;
+
+	for (auto it = s_it; it != shootsIndex.end(); it++) {
+		if (!this->isShootReachable(*it)) {
+			continue;
+		}
+		const Shoot* s = &(*it);
+
+		// if shoot has already been tried
+		ShootNode& parent = *(this->branch.rbegin());
+		if (parent.shootTested.find(s) != parent.shootTested.end()) {
+			continue;
+		}
+
+		photo_shoots.insert(s);
+	}
+
+	if (photo_shoots.size()) {
+		success(*photo_shoots.begin());
+	} else {
+		error();
+	}
+
+}
+
+void ConstraintAlgo::removeNode() {
+	ShootNode n =*(this->branch.rbegin());
+	this->branch.pop_back();
+	this->shootsDone.erase(*(n.shoot));
+	//TODO baisser contrainte
+
+	ShootNode& parent = *(this->branch.rbegin());
+	parent.shootTested.insert(n.shoot);
+}
+
+void ConstraintAlgo::addNode(const Shoot* s) {
+	this->branch.push_back(ShootNode(s));
+	this->shootsDone.insert(*s);
+
+	//TODO augmenter contrainte
+}
+
+void ConstraintAlgo::findGoodBranch() {
+
+	do { // TODO change
+
+		const Constraint& max = *(this->constraints.rbegin());
+		Photograph* maxPhoto = max.m_photograph;
+
+		this->findShoot(
+			maxPhoto,
+			[](const Shoot* s) {}, //TODO
+			[]() {}
+		);
+
+	} while(this->branch.begin() == this->branch.end());
+
+	throw NoSolutionException(); //TODO find better way to stop
 }
 
 void ConstraintAlgo::solve(Simulation* s) {

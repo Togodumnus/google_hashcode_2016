@@ -1,7 +1,10 @@
 #pragma once
 
+#include <set>
+#include <list>
 #include <boost/multi_index_container.hpp>
 #include <boost/multi_index/ordered_index.hpp>
+#include <boost/multi_index/composite_key.hpp>
 #include <boost/multi_index/identity.hpp>
 #include <boost/multi_index/member.hpp>
 #include <boost/multi_index/mem_fun.hpp>
@@ -35,7 +38,7 @@ using GeoPhotographIndex = multi_index_container<
 struct ColIndex {};
 struct PhotoIndex {};
 struct SatelliteIndex {};
-struct TimeIndex {};
+struct SatelliteTimeIndex {};
 
 using ShootMutliIndex = multi_index_container<
 	Shoot,
@@ -83,27 +86,38 @@ using ConstraintIndex = multi_index_container<
 >;
 
 struct ShootNode {
-	Shoot&           shoot;			// current shoot
-	std::set<Shoot*> shootTested;	// children already tested
+	explicit ShootNode(const Shoot* s): shoot(s) {};
+	const Shoot*           shoot;		// current shoot
+	std::set<const Shoot*> shootTested;	// children already tested
 };
+
 
 using ShootDoneMutliIndex = multi_index_container<
 	Shoot,
 	indexed_by<
+		ordered_non_unique<identity<Shoot>>,
 		ordered_non_unique<
 			tag<PhotoIndex>,
 			member<Shoot, Photograph*, &Shoot::m_photograph>
 		>,
 		ordered_non_unique<
-			tag<SatelliteIndex>,
-			member<Shoot, Satellite*, &Shoot::m_satellite>
-		>,
-		ordered_non_unique<
-			tag<TimeIndex>,
-			member<Shoot, unsigned long int, &Shoot::m_t
-		>>
+			tag<SatelliteTimeIndex>,
+			composite_key<
+				Shoot,
+				member<Shoot, Satellite*, &Shoot::m_satellite>,
+				member<Shoot, unsigned long, &Shoot::m_t>
+			>
+		>
 	>
 >;
+
+class NoSolutionException: std::exception {
+	public:
+		NoSolutionException() {};
+		const char* what() const noexcept {
+			return "No solution";
+		}
+};
 
 class ConstraintAlgo: public Algorithm {
 
@@ -144,8 +158,22 @@ class ConstraintAlgo: public Algorithm {
 
 	/**
 	 * 5.
+	 * Look for a good solution
 	 */
 	void findGoodBranch();
+
+	void findShoot(
+		Photograph* photo,
+		std::function<void(const Shoot*)> success,
+		std::function<void()>       error
+	);
+
+	bool isShootReachable(const Shoot& s);
+
+	bool canGoFromShootToShoot(const Shoot&, const Shoot&);
+
+	void removeNode();
+	void addNode(const Shoot*);
 
 	public:
 		void solve(Simulation*);
