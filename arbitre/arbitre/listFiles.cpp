@@ -8,12 +8,10 @@ listFiles::listFiles(const char* INPUT){
 
         if(pDIR=opendir(INPUT)){
 
-				//std::string str(INPUT); // on transforme en string afin de le concaténer avec le fichier
 
                 while(auto entry = readdir(pDIR)){
                         if(strcmp(entry->d_name, ".") != 0 && strcmp(entry->d_name, "..") != 0 ){
                             std::string fichier = concat(INPUT, entry->d_name);
-                            //std::cout << fichier << std::endl;
                 	        fichiers.push_back(fichier);
                     }
                 }

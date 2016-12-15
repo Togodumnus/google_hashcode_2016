@@ -10,13 +10,11 @@ inline std::string concat(const char* c1, const char* c2){
 
 	std::string s3(s1 + "/" + s2);
 
-	//char* c3 = s3.c_str();
-
 	return s3;
 }
 
-inline bool replaceString(std::string& str, const std::string& from, const std::string& to) {  // fonction qui prend un std::string 
-                                                                                        //et remplace le from par le to
+inline bool replaceString(std::string& str, const std::string& from, const std::string& to) {  	// fonction qui prend un std::string 
+                                                                                        		//et remplace le from par le to
     size_t start_pos = str.find(from);
     if(start_pos == std::string::npos)
         return false;
