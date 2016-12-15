@@ -31,7 +31,7 @@ private:
 	unsigned int m_score;
 
 	// nom du fichier de jeu 
-	const char* m_jeu;
+	std::string m_jeu;
 
 public:
 	Exec(std::string fichier);

@@ -1,15 +1,39 @@
 #include <string>
-
 #include <iostream>
+
 #include "Exec.hpp"
 #include "Result.hpp"
 #include "listFiles.hpp"
 #include "utils.hpp"
 
+using namespace std;
+//#include <listFiles.hpp>
+
+// J'laisse ça là pour au cas ou j'ai cassé des trucs
+/*
+void listFile(const char* INPUT){
+		* D'après Nico c'est de la merde
+		 * Théoriquement c'est valide partout, mais
+		 * Sur Windows ça bug
+		 *
+		 * Le problème c'est que tu prends en compte aussi les Directory
+		 *
+        DIR *pDIR;
+        struct dirent *entry;
+        if( pDIR=opendir(INPUT) ){
+                while(entry = readdir(pDIR)){
+                        if( strcmp(entry->d_name, ".") != 0 && strcmp(entry->d_name, "..") != 0 )
+                        cout << entry->d_name << "\n";
+                }
+                closedir(pDIR);
+        }
+}
+
 //using namespace std;
 
-
+*/
 int main(int argc, const char* argv[]) {
+
     if (argc > 1) { // on a un argument
 
 
@@ -57,4 +81,9 @@ int main(int argc, const char* argv[]) {
         std::cout << " Fournissez un dossier à traiter " << std::endl;
     }
 
+    //listFiles* listFile = new listFiles(argv[1]);
+	/*Result res;
+	std::string a("./arbitre/arbitre/sortie/results_constellation.out");
+	res.FigureOutScore(a);
+	*/
 }
