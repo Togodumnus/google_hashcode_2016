@@ -1,6 +1,10 @@
 #include <iostream>
+#include <string>
+
 #include <Exec.hpp>
 #include <Result.hpp>
+
+using namespace std;
 //#include <listFiles.hpp>
 
 // J'laisse ça là pour au cas ou j'ai cassé des trucs
@@ -43,5 +47,7 @@ void duration(){
 
 int main(int argc, const char* argv[]) {
     //listFiles* listFile = new listFiles(argv[1]);
-
+	Result res;
+	std::string a("./arbitre/arbitre/sortie/results_constellation.out");
+	res.FigureOutScore(a);
 }
