@@ -21,23 +21,23 @@ Exec::~Exec(){
 
 }
 
-bool Exec::replace(std::string& str, const std::string& from, const std::string& to) {  // fonction qui prend un string 
+/*bool Exec::replace(std::string& str, const std::string& from, const std::string& to) {  // fonction qui prend un string 
                                                                                         //et remplace le from par le to
     size_t start_pos = str.find(from);
     if(start_pos == std::string::npos)
         return false;
     str.replace(start_pos, from.length(), to);
     return true;
-}
+}*/
 
-void Exec::duration(){
+void Exec::duration(std::string INPUT){
 
-    //std::cout << " exe = " << this->m_executable << std::endl;
-
+    //std::cout << " input  = " << this->m_input << std::endl;
+    //string commande = this->m_executable + " " + INPUT + OUTPUT;
     /*std::chrono::time_point<std::chrono::system_clock> start, end;
     start = std::chrono::system_clock::now();
     //system("../bin/hashcode ../hashcode/hashcode/data/forever_alone.in ../hashcode/hashcode/data/forever_alone.out");
-    system((this->m_executable).c_str()); // on fait string -> char* pour que system fonctionne
+    system((commande).c_str()); // on fait string -> char* pour que system fonctionne
     end = std::chrono::system_clock::now();
  
     int elapsed_seconds = std::chrono::duration_cast<std::chrono::seconds>

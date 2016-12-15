@@ -2,9 +2,13 @@
 
 #include <string>
 
+
 class Result {
 
 private:
+	std::string input;
+	std::string output;
+	int time;
 	unsigned int m_score;
 	long m_latitude;
 	long m_longitude;

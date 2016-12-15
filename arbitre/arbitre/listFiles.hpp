@@ -9,16 +9,14 @@
 #include <sys/types.h>
 #include <dirent.h>
 
-using namespace std;
-
 
 class listFiles {
 
 private:
-	std::vector<string> fichiers;
+	std::vector<std::string> fichiers;
 	std::string dossier;
 public:
 	listFiles(const char*);
 	~listFiles();
-	std::vector<string>& getFiles();
+	std::vector<std::string>& getFiles();
 };

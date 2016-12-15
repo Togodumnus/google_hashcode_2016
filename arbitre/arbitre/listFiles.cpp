@@ -3,7 +3,7 @@
 
 listFiles::listFiles(const char* INPUT){
 		
-        this->dossier = string(INPUT);
+        this->dossier = std::string(INPUT);
         DIR *pDIR;
 
         if(pDIR=opendir(INPUT)){
@@ -12,7 +12,7 @@ listFiles::listFiles(const char* INPUT){
 
                 while(auto entry = readdir(pDIR)){
                         if(strcmp(entry->d_name, ".") != 0 && strcmp(entry->d_name, "..") != 0 ){
-                            string fichier = concat(INPUT, entry->d_name);
+                            std::string fichier = concat(INPUT, entry->d_name);
                             //std::cout << fichier << std::endl;
                 	        fichiers.push_back(fichier);
                     }
@@ -25,7 +25,7 @@ listFiles::~listFiles(){
 
 };
 
-std::vector<string>& listFiles::getFiles(){
+std::vector<std::string>& listFiles::getFiles(){
 	return this->fichiers;
 }
 

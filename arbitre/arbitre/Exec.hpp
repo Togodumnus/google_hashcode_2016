@@ -39,8 +39,13 @@ public:
 	 * Faut aussi que tu stockes les résultats qq part pour qu'on les envoie apres
 	 * à la classe Result qui va calculer le score et vérifier le tout
 	 */
-	void duration();
+	void duration(std::string);
 	friend std::ofstream& operator<<(std::ofstream&, const Exec&);
 
-	bool replace(std::string& str, const std::string& from, const std::string& to);
+	//bool replace(std::string& str, const std::string& from, const std::string& to);
+
+	inline std::vector<std::string> getInput(){
+		return m_input;
+	}
+
 };
