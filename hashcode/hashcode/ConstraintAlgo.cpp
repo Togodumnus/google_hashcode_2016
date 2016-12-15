@@ -1,6 +1,11 @@
 #include "ConstraintAlgo.hpp"
 
+#include <vector>
+#include <unordered_set>
+
 typedef GeoPhotographIndex::index<PhotoLat>::type Photos_by_lat;
+typedef ShootMutliIndex::index<ColIndex>::type    Shoots_by_col;
+typedef ShootMutliIndex::index<PhotoIndex>::type  Shoots_by_photo;
 
 const double LOG_INTERVAL = .01; // 1%
 
@@ -65,6 +70,32 @@ void ConstraintAlgo::generateShoots() { // TODO paralléliser ça
 	}
 }
 
+void ConstraintAlgo::cleanCollections() {
+
+	std::vector<Collection*>& collections = this->simulation->getCollections();
+
+	Shoots_by_col& shootsIndex = this->shoots.get<ColIndex>();
+
+	for (Collection* col: collections) {
+
+		std::pair<Shoots_by_col::iterator, Shoots_by_col::iterator> p =
+			shootsIndex.equal_range(col);
+
+		std::unordered_set<Photograph*> photos_in_col;
+		for (auto it = p.first; it != p.second; it++) {
+			photos_in_col.insert(it->m_photograph);
+		}
+
+		// missing photographs
+		if (col->getNumberOfPhotographs() > photos_in_col.size()) {
+			std::cout << "Remove " << *col << std::endl;
+			shootsIndex.erase(p.first, p.second);
+		}
+
+	}
+
+}
+
 void ConstraintAlgo::solve(Simulation* s) {
 
 	this->simulation = s;
@@ -75,10 +106,13 @@ void ConstraintAlgo::solve(Simulation* s) {
 	this->buildPhotographIndex();
 	std::cout << "End building photographs index" << std::endl;
 
-
 	std::cout << "Start looking for photo we can shoot" << std::endl;
 	this->generateShoots();
 	std::cout << "End looking for photo we can shoot" << std::endl;
+
+	std::cout << "Remove collections we can not complete" << std::endl;
+	this->cleanCollections();
+	std::cout << "End collections removal" << std::endl;
 
 	// for (auto p : this->shoots) {
 	//     std::cout << p << std::endl;

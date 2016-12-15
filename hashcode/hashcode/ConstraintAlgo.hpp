@@ -32,14 +32,31 @@ using GeoPhotographIndex = multi_index_container<
 	>
 >;
 
+struct ColIndex {};
+struct PhotoIndex {};
+struct SatelliteIndex {};
+struct TimeIndex {};
 
 using ShootMutliIndex = multi_index_container<
 	Shoot,
 	indexed_by<
 		// ordered_unique<identity<Shoot*>>,
-		ordered_non_unique<member<Shoot, Photograph*, &Shoot::m_photograph>>,
-		ordered_non_unique<member<Shoot, Satellite*, &Shoot::m_satellite>>,
-		ordered_non_unique<member<Shoot, unsigned long int, &Shoot::m_t>>
+		ordered_non_unique<
+			tag<ColIndex>,
+			member<Shoot, Collection*, &Shoot::m_collection>
+		>,
+		ordered_non_unique<
+			tag<PhotoIndex>,
+			member<Shoot, Photograph*, &Shoot::m_photograph>
+		>,
+		ordered_non_unique<
+			tag<SatelliteIndex>,
+			member<Shoot, Satellite*, &Shoot::m_satellite>
+		>,
+		ordered_non_unique<
+			tag<TimeIndex>,
+			member<Shoot, unsigned long int, &Shoot::m_t
+		>>
 	>
 >;
 
@@ -61,6 +78,12 @@ class ConstraintAlgo: public Algorithm {
 	 * For each turn, for each satellite, select photo we can reach
 	 */
 	void generateShoots();
+
+	/**
+	 * 3.
+	 * Remove collections we can not complete
+	 * */
+	void cleanCollections();
 
 	public:
 		void solve(Simulation*);
