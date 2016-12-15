@@ -2,6 +2,8 @@
 #include <sstream>
 #include <algorithm>
 #include <iostream>
+#include <vector>
+#include <set>
 
 #include "Result.hpp"
 #include "utils.hpp"
