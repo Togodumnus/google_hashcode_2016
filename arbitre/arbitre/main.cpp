@@ -34,6 +34,7 @@ void listFile(const char* INPUT){
 */
 int main(int argc, const char* argv[]) {
 
+	/*
     if (argc > 1) { // on a un argument
 
 
@@ -67,10 +68,10 @@ int main(int argc, const char* argv[]) {
 
                 //Exec* programme = new Exec(*it);
 
-                /*for (std::vector<string>::const_iterator it = listFile->getFiles().begin(); it != listFile->getFiles().end(); it++) {
+                for (std::vector<string>::const_iterator it = listFile->getFiles().begin(); it != listFile->getFiles().end(); it++) {
                 std::cout << " it = " << *it << std::endl;
 
-                (programme->m_input).push_back()*/
+                (programme->m_input).push_back()
                 
                 //programme->duration();
             }
@@ -80,10 +81,10 @@ int main(int argc, const char* argv[]) {
     else {
         std::cout << " Fournissez un dossier à traiter " << std::endl;
     }
-
+	*/
     //listFiles* listFile = new listFiles(argv[1]);
-	/*Result res;
+	Result res;
 	std::string a("./arbitre/arbitre/sortie/results_constellation.out");
 	res.FigureOutScore(a);
-	*/
+	
 }
