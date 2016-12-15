@@ -16,8 +16,11 @@ unsigned int Result::FigureOutScore(std::string &input_file){
 	 *		4) calculer le score final par rapport aux collections completees
 	 */
 
-	// TODO sort m_results by m_id_satellite
+	this->parse(input_file);
+	// Test sort
 	std::sort(m_results.begin(), m_results.end(), less_than_key());
+
+	
 
 	
 	return 0;

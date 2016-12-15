@@ -1,5 +1,3 @@
-
-
 class ReadException : std::exception {
 std::string file;
 public:
