@@ -36,6 +36,10 @@ class Photograph : public Location {
 
 		bool addToCollection(Collection*);
 
+		std::vector<Collection*>& getCollections() {
+			return m_collections;
+		}
+
 		inline int getId() const {
 			return m_id;
 		}

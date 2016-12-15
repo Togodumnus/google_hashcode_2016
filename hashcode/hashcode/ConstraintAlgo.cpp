@@ -56,7 +56,9 @@ void ConstraintAlgo::generateShoots() { // TODO paralléliser ça
 				Photograph* p = *it;
 				if (long_bounds.first < p->getLongitude()
 						&& long_bounds.second > p->getLongitude()) {
-					this->shoots.insert(Shoot(p, satellite, t));
+					for (Collection* col: p->getCollections()) {
+						this->shoots.insert(Shoot(col, p, satellite, t));
+					}
 				}
 			}
 		}
