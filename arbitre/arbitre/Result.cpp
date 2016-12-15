@@ -16,12 +16,6 @@ unsigned int Result::FigureOutScore(std::string &input_file){
 	 * TODO
 	 * 
 	 * array < set < ResultShoot, 
-	 *
-	 *
-	 *
-	 *
-	 *
-	 *
 	 */
 
 	this->parse(input_file);
@@ -35,11 +29,14 @@ unsigned int Result::FigureOutScore(std::string &input_file){
 	
 	//std::cout << sim.getNumberSatellites() << std::endl;
 	std::vector<std::set<ResultShoot>> michael;
+	std::cout << sim.getNumberSatellites() << std::endl;
 	michael.reserve(sim.getNumberSatellites());
+	std::cout << "[VECTOR] Remplissage début" << std::endl;
 	for(auto &it : m_results) {
-		michael[it.m_id_satellite].insert(ResultShoot(it.m_latitude, it.m_longitude, it.m_moment));
+		ResultShoot a(it.m_latitude, it.m_longitude, it.m_moment);
+		std::cout << it.m_id_satellite << std::endl;
+		(michael[it.m_id_satellite]).insert(a);
 	}
-
 
 	
 	return 0;
