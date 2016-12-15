@@ -30,7 +30,7 @@ Exec::~Exec(){
     return true;
 }*/
 
-void Exec::duration(std::string INPUT){
+unsigned int Exec::duration(std::string INPUT){
 
     std::chrono::time_point<std::chrono::system_clock> start, end;
     start = std::chrono::system_clock::now();
@@ -44,6 +44,8 @@ void Exec::duration(std::string INPUT){
  
     std::cout << "finished computation at " << std::ctime(&end_time)
               << "elapsed time: " << elapsed_seconds << "s\n";
+
+    return elapsed_seconds;
               
 }
 

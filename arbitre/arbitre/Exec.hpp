@@ -38,7 +38,7 @@ public:
 	~Exec();
 	
 
-	void duration(std::string);
+	unsigned int duration(std::string);
 	friend std::ofstream& operator<<(std::ofstream&, const Exec&);
 
 

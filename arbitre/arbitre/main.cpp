@@ -38,11 +38,11 @@ int main(int argc, const char* argv[]) {
 
 
             listFiles* listFile = new listFiles(argv[1]); // nom du dossier contenant les executables
-            listFiles* listInput = new listFiles("arbitre/arbitre/dataIN"); // nom des fichiers d'entrées
+            listFiles* listInput = new listFiles("arbitre/arbitre/dataTEST"); // nom des fichiers d'entrées
 
 
             for (std::vector<std::string>::const_iterator it = listFile->getFiles().begin(); it != listFile->getFiles().end(); it++) {
-                std::cout << " itijrig = " << *it << std::endl;
+                std::cout << " it = " << *it << std::endl;
 
                 Exec* programme = new Exec(*it);
 
@@ -56,11 +56,14 @@ int main(int argc, const char* argv[]) {
                     replaceString(output,"in","out"); // on change le .in en .out
                     replaceString(output,"IN","OUT"); // on créer un dossier dataOUT dans le même dossier que dataIN
 
-                    commande += " " + input + " " + output;  // la commande totale a éxécuté 
+                    commande += " " + input + " " + output + " >> /dev/null" ;  // la commande totale a éxécuté 
 
                     //std::cout << commande << std::endl;
 
-                    programme->duration(commande);
+                
+                    Result* result = new Result(input, output, programme->duration(commande));
+
+                    std::cout << *result << std::endl;
 
 
             }

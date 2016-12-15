@@ -12,9 +12,9 @@ class Result {
 friend std::ostream& operator<<(std::ostream&, const Result&);
 
 private:
-	std::string input;
-	std::string output;
-	int time;
+	std::string m_input;
+	std::string m_output;
+	unsigned int m_time;
 
 	long m_number_of_pictures;
 
@@ -37,6 +37,7 @@ private:
 	std::vector<execution_result> m_results;
 public:
 	Result() {};
+	Result(std::string m_input, std::string m_output, unsigned int m_time);
 
 	// TODO
 	unsigned int FigureOutScore(std::string &input_file);

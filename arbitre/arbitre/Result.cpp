@@ -34,6 +34,10 @@ enum class ReadState {
 	TypicalLine,
 };
 
+Result::Result(std::string input, std::string output, unsigned int time): m_input(input), m_output(output), m_time(time){
+
+}
+
 void Result::parse(std::string &input_file){
 
 	std::ifstream input(input_file); // on crée un buffer de stream
@@ -79,11 +83,16 @@ void Result::parse(std::string &input_file){
 }
 
 std::ostream& operator<<(std::ostream& o, const Result& s) {
-	o 	<< "NB of pics : " << s.m_number_of_pictures << "\n";
+	o << " input : " << s.m_input << "\n ";
+	o << "output : "<< s.m_output << "\n ";
+	o << "time : " << s.m_time << "\n ";
+
+
+	/*o 	<< "NB of pics : " << s.m_number_of_pictures << "\n";
 	for(auto &it : s.m_results) {
 		o 	<< it.m_latitude << " " << it.m_longitude << " "
 			<< it.m_moment << " " << it.m_id_satellite << " ";
 		o << "\n";
-	}
+	}*/
 	return o;
 }
