@@ -6,7 +6,7 @@
 #include "Utils.hpp"
 
 
-unsigned int Result::FigureOutScore(const char* input_file){
+unsigned int Result::FigureOutScore(std::string &input_file){
 	/*
 	 * TODO
 	 * 
@@ -28,7 +28,7 @@ enum class ReadState {
 	TypicalLine,
 };
 
-void Result::parse(std::string input_file){
+void Result::parse(std::string &input_file){
 
 	std::ifstream input(input_file); // on crée un buffer de stream
 	if (input.fail() || input.bad()) {
