@@ -27,7 +27,7 @@ void Simulation::parseInput(std::string& input_file) {
 
 	Simulation* simulation = this;
 
-	std::cout << "[parsing]\t" << "Start" << std::endl;
+	//std::cout << "[parsing]\t" << "Start" << std::endl;
 
 	int cptSatellites;	// compteur décroissant de satellites
 	int cptCollections; // compteur décroissant de collections
@@ -58,20 +58,22 @@ void Simulation::parseInput(std::string& input_file) {
 			// deuxième buffer pour parser a l'intérieur des lignes
 			std::istringstream iss2(result);
 
-			std::cout << "[parsing]\t" << "input : " << result << std::endl;
+			//std::cout << "[parsing]\t" << "input : " << result << std::endl;
 
 			switch (t) {
 
 				case ReadState::NumberOfTurns:
-					std::cout << "[parsing]\t" << "nombre de tours"
+					/*std::cout << "[parsing]\t" << "nombre de tours"
 						<< result << std::endl;
+					*/
 					simulation->m_duration = std::stoi(result);
 					t = ReadState::SatellitesNumber;
 					break;
 
 				case ReadState::SatellitesNumber:
-					std::cout << "[parsing]\t" << "nombre de satellites"
+					/*std::cout << "[parsing]\t" << "nombre de satellites"
 						<< result << std::endl;
+					*/
 					cptSatellites = std::stoi(result);
 					simulation->m_number_of_satellites = cptSatellites;
 					t = ReadState::Satellites;
@@ -95,7 +97,7 @@ void Simulation::parseInput(std::string& input_file) {
 					// on ajoute le satellite a la simulation
 					this->m_satellites.push_back(s);
 
-					std::cout << "[parsing]\t" << *s << std::endl;
+					//std::cout << "[parsing]\t" << *s << std::endl;
 					cptSatellites--; // next
 
 					if (cptSatellites == 0) {
@@ -107,8 +109,9 @@ void Simulation::parseInput(std::string& input_file) {
 
 				case ReadState::CollectionsNumber:
 
-					std::cout << "[parsing]\t" << "nombre de collections"
+					/*std::cout << "[parsing]\t" << "nombre de collections"
 						<< result << std::endl;
+					*/
 					cptCollections = stoi(result);
 					this->m_number_of_collections = cptCollections;
 					t = ReadState::Collection;
@@ -139,7 +142,7 @@ void Simulation::parseInput(std::string& input_file) {
 					cptTimeRanges = c->getNumberOfTimeRanges();;
 					cptCollections--; // next
 
-					std::cout << "[parsing]\t" << *c << std::endl;
+					//std::cout << "[parsing]\t" << *c << std::endl;
 
 					// on passe aux photos de la collection
 					t = ReadState::Photograph;
@@ -166,7 +169,7 @@ void Simulation::parseInput(std::string& input_file) {
 						cptPhotosAll++,
 						PhotographLine
 					);
-					std::cout << "[parsing]\t" << *p << std::endl;
+					//std::cout << "[parsing]\t" << *p << std::endl;
 
 					unsigned short collectionIndex =
 						this->m_number_of_collections - cptCollections - 1;
@@ -176,8 +179,8 @@ void Simulation::parseInput(std::string& input_file) {
 					p->addToCollection(c);
 					c->add_photograph(p);
 
-					std::cout << "[parsing]\t" << "added to collection"
-						<< collectionIndex << std::endl;
+					//std::cout << "[parsing]\t" << "added to collection"
+					//	<< collectionIndex << std::endl;
 
 					cptPhotos--;
 
@@ -205,9 +208,9 @@ void Simulation::parseInput(std::string& input_file) {
 					unsigned long int end_time   = std::stoi(timeRangeLine[1]);
 
 					TimeRange time = std::make_pair(start_time, end_time);
-					std::cout << "[parsing]\t" <<
+					/*std::cout << "[parsing]\t" <<
 						"TimeRange(" << start_time << ", " << end_time << ")"
-						<< std::endl;
+						<< std::endl;*/
 
 					unsigned short collectionIndex =
 						this->m_number_of_collections - cptCollections - 1;
@@ -215,13 +218,13 @@ void Simulation::parseInput(std::string& input_file) {
 					// on ajoute la timerange a la collection correspondante
 					this->m_collections.at(collectionIndex)
 						->add_timeRange(time);
-					std::cout << "[parsing]\t" << "added to collection"
-						<< collectionIndex << std::endl;
+					/*std::cout << "[parsing]\t" << "added to collection"
+						<< collectionIndex << std::endl;*/
 
 					cptTimeRanges--;
 
 					if (cptTimeRanges == 0 && cptCollections == 0) {
-						std::cout << "[parsing]\t" << "End" << std::endl;
+						//std::cout << "[parsing]\t" << "End" << std::endl;
 						return;
 					} else if (cptTimeRanges == 0) {
 						// une fois qu'on a ajouté tous les Time Range,
