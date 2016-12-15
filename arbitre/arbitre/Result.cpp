@@ -11,21 +11,35 @@
 
 
 unsigned int Result::FigureOutScore(std::string &input_file){
+	std::cout << "[SCORE] Function starts" << std::endl;
 	/*
 	 * TODO
 	 * 
-	 *		1) verifier que les photos sont atteignables par le satellite
-	 *		2) verifier que le satellite peut effectuer la rotation entre 2 photos
-	 *		3) stocker les photos bonnes dans les collection
-	 *		4) calculer le score final par rapport aux collections completees
+	 * array < set < ResultShoot, 
+	 *
+	 *
+	 *
+	 *
+	 *
+	 *
 	 */
 
 	this->parse(input_file);
+	std::cout << "\t[PARSING] done" << std::endl;
 	// Test sort
 	std::sort(m_results.begin(), m_results.end(), less_than_key());
-	// std::cout << *this;
+	std::cout << "\t[SORTING] done" << std::endl;
+	//std::cout << *this << std::endl;
 	std::string a("./arbitre/arbitre/data/constellation.in");
 	Simulation sim(a);
+	
+	//std::cout << sim.getNumberSatellites() << std::endl;
+	std::vector<std::set<ResultShoot>> michael;
+	michael.reserve(sim.getNumberSatellites());
+	for(auto &it : m_results) {
+		michael[it.m_id_satellite].insert(ResultShoot(it.m_latitude, it.m_longitude, it.m_moment));
+	}
+
 
 	
 	return 0;
