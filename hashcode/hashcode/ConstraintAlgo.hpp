@@ -87,6 +87,11 @@ using ConstraintIndex = multi_index_container<
 	>
 >;
 
+struct ShootNode {
+	Shoot&           shoot;			// current shoot
+	std::set<Shoot*> shootTested;	// children already tested
+};
+
 class ConstraintAlgo: public Algorithm {
 
 	Simulation* simulation;
@@ -97,6 +102,8 @@ class ConstraintAlgo: public Algorithm {
 	ConstraintIndex constraints;
 
 	std::set<Photograph*> photosDone;
+
+	std::list<ShootNode>  branch;
 
 	/**
 	 * 1.
@@ -121,6 +128,11 @@ class ConstraintAlgo: public Algorithm {
 	 * Init constraints
 	 * */
 	void initConstraints();
+
+	/**
+	 * 5.
+	 */
+	void findGoodBranch();
 
 	public:
 		void solve(Simulation*);
