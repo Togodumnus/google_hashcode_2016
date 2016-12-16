@@ -80,7 +80,7 @@ int Simulation::write_results(const char* OUTPUT)
 	return 0;
 }
 
-Photograph* Simulation::getPhotographs(LocationUnit lat, LocationUnit lng) {
+Photograph* Simulation::getPhotograph(LocationUnit lat, LocationUnit lng) {
 	auto lat_its = this->photographsByLat.equal_range(lat);
 
 	for (auto it = lat_its.first; it != lat_its.second; it++) {

@@ -92,7 +92,7 @@ class Simulation {
 			return this->m_shoots.size();
 		}
 
-		Photograph* getPhotographs(LocationUnit, LocationUnit);
+		Photograph* getPhotograph(LocationUnit, LocationUnit);
 
 		//void solve();
 
