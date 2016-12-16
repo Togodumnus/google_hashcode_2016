@@ -21,7 +21,7 @@ Shoot::Shoot(const Shoot & shoot)
 
 std::ostream& operator<<(std::ostream& o, const Shoot& s) {
 	o << "Shoot[time=" << s.m_t
-		<< " satellite=" << s.m_satellite->getId()
+		<< " satellite=" << *s.m_satellite
 		<< " photo=" << *(s.m_photograph)
 		<< " collection=" << *(s.m_collection)
 		<< "]";

@@ -77,11 +77,7 @@ struct Constraint {
 using ConstraintIndex = multi_index_container<
 	Constraint,
 	indexed_by<
-		ordered_non_unique<identity<Constraint>>,
-		ordered_unique<
-			tag<PhotoIndex>,
-			member<Constraint, Photograph*, &Constraint::m_photograph>
-		>
+		ordered_non_unique<identity<Constraint>>
 	>
 >;
 
@@ -89,6 +85,8 @@ struct ShootNode {
 	explicit ShootNode(const Shoot* s): shoot(s) {};
 	const Shoot*           shoot;		// current shoot
 	std::set<const Shoot*> shootTested;	// children already tested
+	unsigned int numberOfBack = 0;		// number of time we passed here going
+										// back
 };
 
 
@@ -117,6 +115,11 @@ class NoSolutionException: std::exception {
 		const char* what() const noexcept {
 			return "No solution";
 		}
+};
+
+class NoPhotoLeft: std::exception {
+	public:
+		NoPhotoLeft() {};
 };
 
 class ConstraintAlgo: public Algorithm {
@@ -170,6 +173,10 @@ class ConstraintAlgo: public Algorithm {
 
 	void removeNode();
 	void addNode(const Shoot*);
+
+	bool findNextPhotographAndShoot();
+
+	void logChaine(int);
 
 	public:
 		void solve(Simulation*);

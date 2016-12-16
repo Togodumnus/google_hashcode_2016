@@ -28,7 +28,7 @@ int main(int argc, char* argv[]){
 
 		s.solve();
 
-		// s.write_results(OUTPUT);
+		s.write_results(OUTPUT);
 
 	} catch (ReadException& e) {
 		std::cerr << "Error : " << e.what() << std::endl;
