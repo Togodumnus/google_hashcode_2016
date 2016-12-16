@@ -12,7 +12,9 @@
 
 unsigned int Result::FigureOutScore(std::string &input_file){
 
+	std::cout << "AVANT PARSE" << std::endl;
 	this->parse(input_file);
+	std::cout << "APRES PARSE" << std::endl;
 
 	// Only for the tests
 	std::string a("./arbitre/arbitre/data/constellation.in");
@@ -80,11 +82,31 @@ unsigned int Result::FigureOutScore(std::string &input_file){
 		}
 
 	}
+	std::cout << "APRES VERIF" << std::endl;
 	// BUILD map<Collection*, int>
 	std::map<Collection *, int> map_collections;
 	for(auto &ite : sim.getCollections()) {
 		map_collections[ite]=0;
 	}
+
+	std::cout << "AVANT FILL COLLECTIONS" << std::endl;
+	// FILL map<Collection*,int> when there is a photo
+	for(unsigned int i=0; i<sim.getNumberSatellites(); i++) {
+		for(auto ind : map_res[i]){
+			for(auto iterator : sim.getPhotograph(ind.getLatitude(), ind.getLongitude())->getCollections()){
+				map_collections[iterator]++;
+			}
+		}
+	}
+	std::cout << "AVANT PARCOURS COLLECTIONS" << std::endl;
+	unsigned int score;
+	for(auto &ite : sim.getCollections()) {
+		if (map_collections[ite] == ite->getValue()) {
+			score+=ite->getValue();
+		}
+	}
+
+	std::cout << "SCORE : " << score << std::endl;
 
 	return 0;
 }
