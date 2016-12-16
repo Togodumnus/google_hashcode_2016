@@ -6,7 +6,6 @@
 #include "listFiles.hpp"
 #include "utils.hpp"
 
-using namespace std;
 //#include <listFiles.hpp>
 
 // J'laisse ça là pour au cas ou j'ai cassé des trucs
@@ -51,13 +50,13 @@ int main(int argc, const char* argv[]) {
                    //std::cout << " it = " << *it << std::endl;
 
                    //(programme->getInput()).push_back(*it);
-                    std::string commande = *it; // nom de l'exe                
+                    std::string commande = *it; // nom de l'exe
                     std::string input = *it2; // nom du fichier d'entrée
                     std::string output = input; // création du nom du fichier de sortie
                     replaceString(output,"in","out"); // on change le .in en .out
                     replaceString(output,"IN","OUT"); // on créer un dossier dataOUT dans le même dossier que dataIN
 
-                    commande += " " + input + " " + output;  // la commande totale a éxécuté 
+                    commande += " " + input + " " + output;  // la commande totale a éxécuté
 
                     //std::cout << commande << std::endl;
 
@@ -72,7 +71,7 @@ int main(int argc, const char* argv[]) {
                 std::cout << " it = " << *it << std::endl;
 
                 (programme->m_input).push_back()
-                
+
                 //programme->duration();
             }
         }
@@ -83,8 +82,11 @@ int main(int argc, const char* argv[]) {
     }
 	*/
     //listFiles* listFile = new listFiles(argv[1]);
-	Result res;
-	std::string a("./arbitre/arbitre/sortie/results_constellation.out");
-	res.FigureOutScore(a);
-	
+	Result res(
+		std::string("./arbitre/arbitre/data/constellation.in"),
+		std::string("./arbitre/arbitre/sortie/results_constellation.txt"),
+		0
+	);
+	res.FigureOutScore();
+
 }
