@@ -64,9 +64,9 @@ struct Constraint {
 	Photograph* m_photograph;
 
 	Constraint(unsigned int v, Photograph* p): m_value(v), m_photograph(p) {}
+	// Constraint(Constraint&& c):
+	//     m_value(c.m_value), m_photograph(c.m_photograph) {}
 	Constraint(const Constraint& c):
-		m_value(c.m_value), m_photograph(c.m_photograph) {}
-	Constraint(Constraint&& c):
 		m_value(c.m_value), m_photograph(c.m_photograph) {}
 
 	bool operator<(const Constraint& c) const {
@@ -77,14 +77,19 @@ struct Constraint {
 using ConstraintIndex = multi_index_container<
 	Constraint,
 	indexed_by<
-		ordered_non_unique<identity<Constraint>>
+		ordered_non_unique<identity<Constraint>>,
+		ordered_non_unique<
+			tag<PhotoIndex>,
+			member<Constraint, Photograph*, &Constraint::m_photograph>
+		>
 	>
 >;
 
 struct ShootNode {
-	explicit ShootNode(const Shoot* s): shoot(s) {};
+	explicit ShootNode(const Shoot* s, unsigned int d): shoot(s), depth(d) {};
 	const Shoot*           shoot;		// current shoot
 	std::set<const Shoot*> shootTested;	// children already tested
+	unsigned int depth = 0;
 	unsigned int numberOfBack = 0;		// number of time we passed here going
 										// back
 };
@@ -177,6 +182,8 @@ class ConstraintAlgo: public Algorithm {
 	bool findNextPhotographAndShoot();
 
 	void logChaine(int);
+
+	void updateConstraintsAfterShoot(const Shoot*, const int);
 
 	public:
 		void solve(Simulation*);

@@ -2,6 +2,7 @@
 
 #include <vector>
 #include <unordered_set>
+#include <algorithm>
 
 typedef GeoPhotographIndex::index<PhotoLat>::type    Photos_by_lat;
 typedef ShootMutliIndex::index<ColIndex>::type       Shoots_by_col;
@@ -12,7 +13,8 @@ typedef ShootDoneMutliIndex::index<SatelliteTimeIndex>::type
 
 const double LOG_INTERVAL = .01; // 1%
 const double MAX_FREQ = 2000; //TODO optimize
-const double MAX_NUMBER_OF_BACK = 10; //TODO optimize
+const double FREQ_MULT = 10; //TODO optimize
+const double MAX_NUMBER_OF_BACK = 0.2; //TODO optimize
 
 void ConstraintAlgo::buildPhotographIndex() {
 
@@ -113,7 +115,8 @@ void ConstraintAlgo::initConstraints() {
 
 	for (const std::pair<Photograph*, unsigned int>& p : freq) {
 		this->constraints.insert(Constraint(
-			p.first->getValue() + MAX_FREQ - p.second, p.first
+			p.first->getValue(), p.first
+			// p.first->getValue() + (MAX_FREQ - p.second * FREQ_MULT), p.first
 		));
 	}
 
@@ -187,14 +190,62 @@ struct ShootAllocator {
 	}
 };
 
+void ConstraintAlgo::updateConstraintsAfterShoot(
+	const Shoot* s,
+	const int offset
+) {
+
+	Shoots_by_satellite_time& shootsIndex =
+		this->shootsDone.get<SatelliteTimeIndex>();
+
+	// look for previous / next shoot to test if they are reachable
+	ConstraintIndex::index<PhotoIndex>::type& constraintsIndex =
+		this->constraints.get<PhotoIndex>();
+
+	auto li = shootsIndex.lower_bound(
+			boost::make_tuple(s->m_satellite, s->m_t)
+			);
+
+	auto ui = li;
+	ui++;
+
+	//after shoots
+	while (ui != shootsIndex.end() && !this->canGoFromShootToShoot(*s, *ui)) {
+		auto constraint_it = constraintsIndex.find((*ui).m_photograph);
+		constraintsIndex.replace(
+				constraint_it,
+				Constraint(
+					constraint_it->m_value + offset,
+					constraint_it->m_photograph
+					)
+				);
+		ui++;
+	}
+
+	//before shoots
+	while (li != shootsIndex.begin()  && !this->canGoFromShootToShoot(*s, *li)) {
+		auto constraint_it = constraintsIndex.find((*li).m_photograph);
+		constraintsIndex.replace(
+				constraint_it,
+				Constraint(
+					constraint_it->m_value + offset,
+					constraint_it->m_photograph
+					)
+				);
+		li--;
+	}
+}
+
 void ConstraintAlgo::removeNode() {
-	ShootNode n =*(this->branch.rbegin());
+	ShootNode n = *(this->branch.rbegin());
 	this->branch.pop_back();
 	this->shootsDone.erase(*(n.shoot));
-	//TODO baisser contrainte
+
+	// lower constraints
+	//this->updateConstraintsAfterShoot(n.shoot, -FREQ_MULT);
 
 	ShootNode& parent = *(this->branch.rbegin());
-	if (parent.numberOfBack > MAX_NUMBER_OF_BACK) {
+	if (parent.numberOfBack > std::max(1, int(MAX_NUMBER_OF_BACK * parent.depth))) {
 		this->removeNode();
 	} else {
 		parent.numberOfBack++;
@@ -203,10 +254,18 @@ void ConstraintAlgo::removeNode() {
 }
 
 void ConstraintAlgo::addNode(const Shoot* s) {
-	this->branch.push_back(ShootNode(s));
+	auto parent = this->branch.rbegin();
+	unsigned int depth = 0;
+	if (parent != this->branch.rend()) {
+		depth = parent->depth;
+	} else {
+		depth = 0;
+	}
+	this->branch.push_back(ShootNode(s, depth + 1));
 	this->shootsDone.insert(*s);
 
-	//TODO augmenter contrainte
+	// increase constraints
+	// this->updateConstraintsAfterShoot(s, FREQ_MULT);
 }
 
 void ConstraintAlgo::findShoot(Photograph* photo) {
@@ -285,22 +344,17 @@ void ConstraintAlgo::findGoodBranch() {
 
 	bool found = false;
 
-	int c = 0;
-
 	do {
 
 		found = this->findNextPhotographAndShoot();
 
-		// if (c > 1)
-			// break;
+		// this->logChaine(21);
+		// std::cout << this->branch.size() << std::endl;
 
-		// c++;
-
-		this->logChaine(2);
-		std::cout << this->branch.size() << std::endl;
-		// if (this->branch.size() == 12) {
-			// break;
-		// }
+		// can't go further for forever_alone for now
+		if (this->branch.size() == 27) {
+			break;
+		}
 
 	} while(found);
 
@@ -335,13 +389,6 @@ void ConstraintAlgo::solve(Simulation* s) {
 	for (ShootNode& n: this->branch) {
 		this->simulation->addShoot(n.shoot);
 	}
-
-	// auto it = this->branch.begin();
-	// std::advance(it, 7);
-
-	// std::cout << *((*it).shoot)  << std::endl;
-	// it++;
-	// std::cout << *((*it).shoot)  << std::endl;
 
 	std::cout << "end" << std::endl;
 
