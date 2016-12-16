@@ -8,7 +8,7 @@ listFiles::listFiles(const char* INPUT){
        #ifdef _WIN32
         //define something for Windows
 
-			std::cout << " on est bien sur windows " << std::endl;
+			std::cout << " System windows " << std::endl;
             HANDLE hFind;
 			WIN32_FIND_DATA data;
 
@@ -31,7 +31,7 @@ listFiles::listFiles(const char* INPUT){
  
         #else
           //define it for a Unix machine
-		std::cout << " on est bien sur unix " << std::endl;
+		std::cout << " System unix " << std::endl;
 
         this->dossier = std::string(INPUT);
         DIR *pDIR;
