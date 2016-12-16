@@ -89,4 +89,6 @@ int main(int argc, const char* argv[]) {
 	);
 	res.FigureOutScore();
 
+	std::cout << res << std::endl;
+
 }

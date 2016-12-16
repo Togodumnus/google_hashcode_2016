@@ -23,7 +23,6 @@ private:
 	std::vector<std::string> m_input;
 	std::vector<std::string> m_output;
 
-
 	// duration of the solution
 	unsigned int m_duration;
 
@@ -37,10 +36,7 @@ public:
 	Exec(std::string fichier);
 	~Exec();
 
-
 	void duration(std::string);
-	friend std::ostream& operator<<(std::ostream&, const Exec&);
-
 
 	inline std::vector<std::string> getInput(){
 		return m_input;

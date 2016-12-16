@@ -47,8 +47,4 @@ void Exec::duration(std::string INPUT){
 
 }
 
-std::ostream& operator<<(std::ostream& of, const Exec& exec){
-	of << exec.m_executable << "," << exec.m_duration << "," << exec.m_score << "," << exec.m_jeu;
-	return of;
-}
 

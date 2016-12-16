@@ -35,6 +35,8 @@ private:
 	// stocke les Shoot par satellite
 	std::map<int, std::set<ResultShoot>> map_res;
 
+	friend std::ostream& operator<<(std::ostream&, const Result&);
+
 public:
 	Result(std::string input, std::string output, unsigned int t):
 		input(input), output(output), time(t) {};

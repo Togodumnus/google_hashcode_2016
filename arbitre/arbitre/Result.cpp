@@ -158,3 +158,10 @@ void Result::FigureOutScore(){
 	this->m_score = score;
 }
 
+std::ostream& operator<<(std::ostream& of, const Result& result) {
+	of << result.output << "," //TODO change for exec name
+		<< result.time << ","
+		<< result.m_score << ","
+		<< result.input;
+	return of;
+}
