@@ -1,10 +1,39 @@
-#include <listFiles.hpp>
-#include <utils.hpp>
+#include <windows.h>
+#include <tchar.h> 
+#include <stdio.h>
+#include <strsafe.h>
+#pragma comment(lib, "User32.lib")
+
+#include "listFiles.hpp"
+#include "utils.hpp"	
 
 listFiles::listFiles(const char* INPUT){
 		
+
+       #ifdef _WIN32
+        //define something for Windows
+
+			std::cout << " on est bien sur windows " << std::endl;
+
+            HANDLE hFind;
+			WIN32_FIND_DATA data;
+
+			hFind = FindFirstFile("c:\\*.*", &data);
+			if (hFind != INVALID_HANDLE_VALUE) {
+			  do {
+				printf("%s\n", data.cFileName);
+			  } while (FindNextFile(hFind, &data));
+			  FindClose(hFind);
+			}
+
+ 
+        #else
+          //define it for a Unix machine
+		std::cout << " on est bien sur unix " << std::endl;
+
         this->dossier = std::string(INPUT);
         DIR *pDIR;
+
 
         if(pDIR=opendir(INPUT)){
 
@@ -12,11 +41,13 @@ listFiles::listFiles(const char* INPUT){
                 while(auto entry = readdir(pDIR)){
                         if(strcmp(entry->d_name, ".") != 0 && strcmp(entry->d_name, "..") != 0 ){
                             std::string fichier = concat(INPUT, entry->d_name);
-                	        fichiers.push_back(fichier);
+                            fichiers.push_back(fichier);
                     }
                 }
                 closedir(pDIR);
         }
+        #endif
+
 }
 
 listFiles::~listFiles(){

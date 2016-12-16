@@ -74,6 +74,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -110,7 +111,33 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Exec.cpp" />
+    <ClCompile Include="hashcode\BasicAlgo.cpp" />
+    <ClCompile Include="hashcode\Collection.cpp" />
+    <ClCompile Include="hashcode\Location.cpp" />
+    <ClCompile Include="hashcode\parsing.cpp" />
+    <ClCompile Include="hashcode\Photograph.cpp" />
+    <ClCompile Include="hashcode\Satellite.cpp" />
+    <ClCompile Include="hashcode\Shoot.cpp" />
+    <ClCompile Include="hashcode\Simulation.cpp" />
+    <ClCompile Include="listFiles.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Result.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="exec.hpp" />
+    <ClInclude Include="hashcode\Algorithm.hpp" />
+    <ClInclude Include="hashcode\BasicAlgo.hpp" />
+    <ClInclude Include="hashcode\Collection.hpp" />
+    <ClInclude Include="hashcode\Location.hpp" />
+    <ClInclude Include="hashcode\Photograph.hpp" />
+    <ClInclude Include="hashcode\Satellite.hpp" />
+    <ClInclude Include="hashcode\Shoot.hpp" />
+    <ClInclude Include="hashcode\Simulation.hpp" />
+    <ClInclude Include="hashcode\utils.hpp" />
+    <ClInclude Include="listFiles.hpp" />
+    <ClInclude Include="Result.hpp" />
+    <ClInclude Include="utils.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

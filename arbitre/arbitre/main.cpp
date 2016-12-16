@@ -1,3 +1,4 @@
+
 #include <string>
 #include <iostream>
 
@@ -6,18 +7,16 @@
 #include "listFiles.hpp"
 #include "utils.hpp"
 
-using namespace std;
-
 
 int main(int argc, const char* argv[]) {
 
     if (argc > 1) { // on a un argument
 
 
-            listFiles* listFile = new listFiles(argv[1]); // nom du dossier contenant les executables
-            listFiles* listInput = new listFiles("arbitre/arbitre/dataTEST"); // nom des fichiers d'entrées
+			listFiles* listFile = new listFiles(argv[1]); // nom du dossier contenant les executables
+            listFiles* listInput = new listFiles("arbitre/arbitre/dataTEST"); // nom des fichiers dentrees
 
-
+			/*
             for (std::vector<std::string>::const_iterator it = listFile->getFiles().begin(); it != listFile->getFiles().end(); it++) {
 
                 // it = nom de l'éxécutable
@@ -43,7 +42,7 @@ int main(int argc, const char* argv[]) {
 
                     std::cout << *result << std::endl;
                 }
-            }
+            }*/
         }
 
 

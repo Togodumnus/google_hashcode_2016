@@ -1,13 +1,23 @@
 #pragma once
 
-#include <vector>
-#include <stdio.h>
-#include <cstdlib>
-#include <iostream>
-#include <string.h>
-#include <fstream>
-#include <sys/types.h>
-#include <dirent.h>
+#ifdef _WIN32
+	#include <vector>
+	#include <stdio.h>
+	#include <cstdlib>
+	#include <iostream>
+	#include <string.h>
+	#include <fstream>
+	#include <sys/types.h>
+#else
+	#include <vector>
+	#include <stdio.h>
+	#include <cstdlib>
+	#include <iostream>
+	#include <string.h>
+	#include <fstream>
+	#include <sys/types.h>
+	#include <dirent.h>
+#endif
 
 
 class listFiles {

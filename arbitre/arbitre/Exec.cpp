@@ -1,3 +1,4 @@
+#define _CRT_SECURE_NO_WARNINGS
 #include "Exec.hpp"
 
 Exec::Exec(std::string fichier){
@@ -27,7 +28,7 @@ unsigned int Exec::duration(std::string INPUT){
               
 }
 
-std::ofstream& operator<<(std::ofstream& of, const Exec& exec){
+std::ostream& operator<<(std::ostream& of, const Exec& exec){
 	of << exec.m_executable << "," << exec.m_duration << "," << exec.m_score << "," << exec.m_jeu;
 	return of;
 }

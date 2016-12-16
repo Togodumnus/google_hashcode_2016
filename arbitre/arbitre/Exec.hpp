@@ -7,7 +7,7 @@
 #include <iostream>
 #include <string>
 #include <fstream>
-#include <dirent.h>
+//#include <dirent.h>
 #include <vector>
 #include "listFiles.hpp"
 
@@ -39,7 +39,7 @@ public:
 	
 
 	unsigned int duration(std::string);
-	friend std::ofstream& operator<<(std::ofstream&, const Exec&);
+	friend std::ostream& operator<<(std::ostream&, const Exec&);
 
 
 	inline std::vector<std::string> getInput(){
