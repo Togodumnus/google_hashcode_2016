@@ -11,6 +11,8 @@
 #include "Algorithm.hpp"
 #include "Shoot.hpp"
 
+using LocationUnitIndex = std::map<LocationUnit, Photograph*>;
+
 class Satellite;
 
 /*class ReadException : std::exception {
@@ -31,6 +33,10 @@ class Simulation {
 	friend std::ostream& operator<<(std::ostream&, const Simulation&);
 
 	private:
+
+		LocationUnitIndex photographsByLat;
+		LocationUnitIndex photographsByLng;
+
 		unsigned long int m_duration;
 		unsigned int	  m_number_of_satellites;
 		unsigned int	  m_number_of_collections;
@@ -85,6 +91,8 @@ class Simulation {
 		inline int countShoots() const {
 			return this->m_shoots.size();
 		}
+
+		Photograph* getPhotographs(LocationUnit, LocationUnit);
 
 		//void solve();
 
