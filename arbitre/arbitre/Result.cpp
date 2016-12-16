@@ -2,50 +2,26 @@
 #include <sstream>
 #include <algorithm>
 #include <iostream>
+#include <cmath>
 
 #include "Result.hpp"
 #include "utils.hpp"
 #include "hashcode/Simulation.hpp"
-
-
-unsigned int Result::FigureOutScore(std::string &input_file){
-	/*
-	 * TODO
-	 * 
-	 *		1) verifier que les photos sont atteignables par le satellite
-	 *		2) verifier que le satellite peut effectuer la rotation entre 2 photos
-	 *		3) stocker les photos bonnes dans les collection
-	 *		4) calculer le score final par rapport aux collections completees
-	 */
-
-	this->parse(input_file);
-	// Test sort
-	std::sort(m_results.begin(), m_results.end(), less_than_key());
-	// std::cout << *this;
-	std::string a("./arbitre/arbitre/data/constellation.in");
-	Simulation sim(a);
-
-	
-	return 0;
-}
 
 enum class ReadState {
 	NumberOfPictures,
 	TypicalLine,
 };
 
-Result::Result(std::string input, std::string output, unsigned int time): m_input(input), m_output(output), m_time(time){
-
-}
-
 void Result::parse(std::string &input_file){
 
-	std::ifstream input(input_file); // on crée un buffer de stream
+	std::ifstream input(input_file);
 	if (input.fail() || input.bad()) {
 		throw ReadException(input_file);
-	}   
-	std::string line; // ligne actuelle
-	ReadState t = ReadState::NumberOfPictures;
+	}
+
+	std::string line;
+	ReadState state = ReadState::NumberOfPictures;
 
 	while (std::getline(input, line)){
 		std::istringstream iss(line);
@@ -53,46 +29,139 @@ void Result::parse(std::string &input_file){
 		std::string result;
 		std::string result2;
 		if (std::getline(iss, result, '\n')){
-			// deuxième buffer pour parser a l'intérieur des lignes
 			std::istringstream iss2(result);
-			switch(t) {
+			switch(state) {
+
 				case ReadState::NumberOfPictures:
 					m_number_of_pictures=std::stoi(result);
-					m_results.reserve(m_number_of_pictures);
-					t = ReadState::TypicalLine;
+					state = ReadState::TypicalLine;
 					break;
+
 				case ReadState::TypicalLine:
-					int i=0;
-					execution_result res;
+					int i = 0;
+
+					LocationUnit lat, lng;
+					unsigned int t, sat_id;
 					while (std::getline(iss2, result2, ' ')) {
-						if (i==0)
-							res.m_latitude = std::stoi(result2);
-						else if (i==1)
-							res.m_longitude = std::stoi(result2);
-						else if (i==2)
-							res.m_moment = std::stoi(result2);
-						else if (i==3)
-							res.m_id_satellite = std::stoi(result2);
+						switch(i) {
+							case 0:
+								lat = std::stoi(result2);
+								break;
+							case 1:
+								lng = std::stoi(result2);
+								break;
+							case 2:
+								t = std::stoi(result2);
+								break;
+							case 3:
+								sat_id = std::stoi(result2);
+							default:
+								break;
+						}
 						i++;
 					}
-					m_results.push_back(res);
+
+					map_res[sat_id]
+						.insert(ResultShoot(lat, lng, t));
+
 					break;
 			}
 		}
 	}
 }
 
-std::ostream& operator<<(std::ostream& o, const Result& s) {
-	o << " input : " << s.m_input << "\n ";
-	o << "output : "<< s.m_output << "\n ";
-	o << "time : " << s.m_time << "\n ";
+void Result::FigureOutScore(){
 
+	// parse result file
+	this->parse(this->m_output);
 
-	/*o 	<< "NB of pics : " << s.m_number_of_pictures << "\n";
-	for(auto &it : s.m_results) {
-		o 	<< it.m_latitude << " " << it.m_longitude << " "
-			<< it.m_moment << " " << it.m_id_satellite << " ";
-		o << "\n";
-	}*/
-	return o;
+	Simulation sim(this->m_input);
+
+	int orientationValue, orientationSpeed, camSpeed=0;
+	unsigned int timeB4 = 0; // t-1
+	long lat, longi, latCam, longiCam,
+		 latCamB4 = 0, longiCamB4 = 0; // camera t-1
+
+	// for each satellite
+	for (unsigned int i=0; i < sim.getNumberSatellites(); i++) {
+
+		orientationSpeed = sim.getSatelliteN(i)->getOrientationMaxVelocity();
+		orientationValue = sim.getSatelliteN(i)->getOrientationMaxValue();
+
+		// for each ResultShoot
+		for(auto ind : map_res[i]){
+
+			lat = sim.getSatelliteN(i)->getLatitudeT(ind.m_time);
+			longi = sim.getSatelliteN(i)->getLongitudeT(ind.m_time);
+
+			// CHECK on the satellite's shot window
+			if ( 	ind.getLatitude()  > ( lat + orientationValue   )||
+					ind.getLatitude()  < ( lat - orientationValue   )||
+					ind.getLongitude() > ( longi + orientationValue )||
+					ind.getLongitude() < ( longi - orientationValue )){
+				this->m_score = 0;
+				return;
+			}
+
+			// Get lat cam at current t
+			latCam = std::abs(ind.getLatitude() - lat);
+			longiCam = std::abs(ind.getLongitude() - longi);
+
+			// CHECK if lat cam speed isn't too high
+			camSpeed = std::abs(latCam - latCamB4) / (ind.m_time - timeB4);
+			if (camSpeed >= orientationSpeed) {
+				this->m_score = 0;
+				return;
+			}
+
+			// CHECK if longi cam speed isn't too high
+			camSpeed = std::abs(longiCam - longiCamB4) / (ind.m_time - timeB4);
+			if (camSpeed >= orientationSpeed) {
+				this->m_score = 0;
+				return;
+			}
+
+			latCamB4 = latCam;
+			longiCamB4 = longiCam;
+			timeB4 = ind.m_time;
+
+		}
+
+	}
+
+	// BUILD map<Collection*, int>
+	std::map<Collection *, int> map_collections;
+	for(auto &ite : sim.getCollections()) {
+		map_collections[ite]=0;
+	}
+
+	// FILL map<Collection*,int> when there is a photo
+	for(unsigned int i=0; i<sim.getNumberSatellites(); i++) {
+		for(auto ind : map_res[i]){
+			Photograph* p = sim.getPhotograph(
+				ind.getLatitude(),
+				ind.getLongitude()
+			);
+			for(auto iterator: p->getCollections()){
+				map_collections[iterator]++;
+			}
+		}
+	}
+
+	unsigned int score = 0;
+	for(auto &ite : sim.getCollections()) {
+		if (map_collections[ite] == ite->getPhotographs().size()) {
+			score+=ite->getValue();
+		}
+	}
+
+	this->m_score = score;
+}
+
+std::ostream& operator<<(std::ostream& of, const Result& result) {
+	of << result.m_output << "," //TODO change for exec name
+		<< result.m_time << ","
+		<< result.m_score << ","
+		<< result.m_input;
+	return of;
 }

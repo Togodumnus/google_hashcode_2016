@@ -1,5 +1,7 @@
 #include "Simulation.hpp"
 
+#include <stdexcept>
+
 Simulation::Simulation(std::string& input_file)
 {
 	parseInput(input_file);
@@ -16,8 +18,6 @@ Simulation::~Simulation()
 		delete (*it);
 	}
 	m_collections.clear();
-
-	// TODO delete all Shoot
 }
 
 Simulation& Simulation::operator=(const Simulation& simulation)
@@ -50,30 +50,14 @@ std::ostream& operator<<(std::ostream& os, const Simulation& simu){
 	return os;
 }
 
-int Simulation::write_results(const char* OUTPUT)
-{
-
-	std::sort(
-		m_shoots.begin(),
-		m_shoots.end(),
-		[](const Shoot* s1, const Shoot* s2) {
-			return *s1 < *s1;
+Photograph* Simulation::getPhotograph(LocationUnit lat, LocationUnit lng) {
+	auto lat_its = this->photographsByLat.equal_range(lat);
+	for (auto it = lat_its.first; it != lat_its.second; it++) {
+		if (it->second->getLongitude() == lng) {
+			return it->second;
 		}
-	);
-
-	std::ofstream file(OUTPUT, std::ios::out | std::ios::trunc);
-	if (file)
-	{
-		file << m_shoots.size() << "\n"; // write number of taken photos
-		for(auto &it:m_shoots){
-			std::cout << *it << std::endl;
-			file << *it;
-			file << "\n";
-		}
-		file.close();
 	}
-	else
-		std::cerr << "Erreur à l'ouverture !" << std::endl;
 
-	return 0;
+	throw std::range_error("Bad latitude or longitude");
 }
+

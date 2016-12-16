@@ -50,4 +50,8 @@ class Photograph : public Location {
 		}
 
 		bool isInTimeRanges(unsigned long int);
+
+		std::vector<Collection*>& getCollections() {
+	        return m_collections;
+	    }
 };

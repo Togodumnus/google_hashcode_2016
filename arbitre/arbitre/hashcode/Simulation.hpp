@@ -6,14 +6,15 @@
 #include <memory>
 #include <algorithm>
 #include <string>
+#include <map>
 
 #include "Collection.hpp"
-#include "Algorithm.hpp"
-#include "Shoot.hpp"
+#include "Location.hpp"
+#include "Satellite.hpp"
 
-class Satellite;
+using LocationUnitIndex = std::multimap<LocationUnit, Photograph*>;
 
-/*class ReadException : std::exception {
+class ReadException : std::exception {
 	std::string file;
 	public:
 		inline ReadException(std::string f) {
@@ -24,22 +25,22 @@ class Satellite;
 			m += file;
 			return m.c_str();
 		};
-};*/
+};
 
 class Simulation {
 
 	friend std::ostream& operator<<(std::ostream&, const Simulation&);
 
 	private:
+
+		LocationUnitIndex photographsByLat;
+
 		unsigned long int m_duration;
 		unsigned int	  m_number_of_satellites;
 		unsigned int	  m_number_of_collections;
 
 		std::vector<Satellite*>  m_satellites;
 		std::vector<Collection*> m_collections;
-		std::vector<Shoot*>      m_shoots;
-
-		//std::unique_ptr<Algorithm>& m_algo;
 
 		void parseInput(std::string& input_file);
 
@@ -78,15 +79,6 @@ class Simulation {
 			return this->m_satellites;
 		}
 
-		inline void addShoot(Shoot* s) {
-			this->m_shoots.push_back(s);
-		}
+		Photograph* getPhotograph(LocationUnit, LocationUnit);
 
-		inline int countShoots() const {
-			return this->m_shoots.size();
-		}
-
-		//void solve();
-
-		int write_results(const char* OUTPUT);
 };
