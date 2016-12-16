@@ -2,6 +2,9 @@
 
 #include <map>
 #include <set>
+#include <mutex>
+#include <future>
+
 #include <boost/multi_index_container.hpp>
 #include <boost/multi_index/ordered_index.hpp>
 #include <boost/multi_index/composite_key.hpp>
@@ -19,7 +22,6 @@
 
 using namespace ::boost;
 using namespace ::boost::multi_index;
-
 
 struct PhotoId {};
 struct PhotoLat {};
@@ -45,12 +47,10 @@ struct Offset {
 	int o_lng;
 	unsigned int t;
 
-	Offset() {};
+	Offset(): o_lat(0), o_lng(0), t(0) {};
 	Offset(int lat, int lng, unsigned int t): o_lat(lat), o_lng(lng), t(t) {}
 	Offset(const Offset& o): o_lat(o.o_lat), o_lng(o.o_lng), t(o.t) {}
 };
-
-using CameraOffsets = std::map<Satellite*, Offset>;
 
 struct WindowPhotographAllocator {
 	bool operator()(const Photograph* p1, const Photograph* p2) const {
@@ -60,12 +60,9 @@ struct WindowPhotographAllocator {
 
 class GloutonAlgo : public Algorithm {
 
-	private:
-
+	public:
 		Simulation* simulation;
 		GeoPhotographIndex photosIndex;
-
-		CameraOffsets cameraOffsets;
 
 		std::map<Photograph*, Shoot> photosTaken;
 
@@ -73,16 +70,40 @@ class GloutonAlgo : public Algorithm {
 
 		void initCameraOffsets();
 
-		bool canReach(Satellite*, Photograph*, unsigned int);
+		bool canReach(Satellite*, Photograph*, unsigned int, Offset& camera);
 
-		void findWindowOfSatellite(
-			Satellite* satellite,
-			unsigned long int t,
-			std::set<Photograph*, WindowPhotographAllocator>& photographs
+		std::mutex mutexShoots;
+		std::mutex mutexPhotosIndex;
+
+		void insertShoot(
+			Photograph*,
+			Satellite*,
+			unsigned int t
 		);
 
-		void findPhotosOfSatellite(Satellite*);
+		void updateCamera(
+			Satellite*,
+			Offset&&
+		);
+
+		bool isPhotoTaken(Photograph*);
+
+		void solve(Simulation*);
+
+};
+
+class Worker {
+	private:
+		GloutonAlgo& algo;
+		Satellite& satellite;
+
+		Offset offset;
+
+		void findWindowOfSatellite(
+			unsigned long int,
+			std::set<Photograph*, WindowPhotographAllocator>&
+		);
 
 	public:
-		void solve(Simulation*);
+		Worker(GloutonAlgo&, Satellite&, unsigned long int);
 };

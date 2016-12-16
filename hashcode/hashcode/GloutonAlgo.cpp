@@ -19,16 +19,12 @@ void GloutonAlgo::buildPhotographIndex() {
 	}
 }
 
-void GloutonAlgo::initCameraOffsets() {
-	for (Satellite* s: this->simulation->getSatellites()) {
-		cameraOffsets.insert(std::make_pair(s, Offset(0, 0, 0)));
-	}
-}
-
-bool GloutonAlgo::canReach(Satellite* sat, Photograph* p, unsigned int t) {
-
-	std::pair<Satellite*, Offset> sat_cam_pos = *(this->cameraOffsets.find(sat));
-	Offset& camera = sat_cam_pos.second;
+bool GloutonAlgo::canReach(
+	Satellite* sat,
+	Photograph* p,
+	unsigned int t,
+	Offset& camera
+) {
 
 	std::pair<LocationUnit, LocationUnit> new_camera(
 		p->getLatitude()  - sat->getLatitudeT(t),
@@ -48,18 +44,32 @@ bool GloutonAlgo::canReach(Satellite* sat, Photograph* p, unsigned int t) {
 		&& w_long < sat->getOrientationMaxVelocity();
 }
 
-void GloutonAlgo::findWindowOfSatellite(
-		Satellite* satellite,
+void GloutonAlgo::insertShoot(
+	Photograph* p,
+	Satellite* satellite,
+	unsigned int t
+) {
+
+	std::unique_lock<std::mutex> lock(mutexShoots);
+	this->photosTaken.insert(std::make_pair(p, Shoot(p, satellite, t)));
+}
+
+bool GloutonAlgo::isPhotoTaken(Photograph* p) {
+	std::unique_lock<std::mutex> lock(this->mutexShoots);
+	return this->photosTaken.find(p) != this->photosTaken.end();
+}
+
+void Worker::findWindowOfSatellite(
 		unsigned long int t,
 		std::set<Photograph*, WindowPhotographAllocator>& photographs
 	) {
 
 	SatellitePosition position = std::make_pair(
-		satellite->getLatitudeT(t),
-		satellite->getLongitudeT(t)
+		this->satellite.getLatitudeT(t),
+		this->satellite.getLongitudeT(t)
 	);
 
-	int d = satellite->getOrientationMaxValue();
+	int d = this->satellite.getOrientationMaxValue();
 
 	//TODO handle max latitude
 	std::pair<LocationUnit, LocationUnit>
@@ -69,7 +79,8 @@ void GloutonAlgo::findWindowOfSatellite(
 	std::pair<LocationUnit, LocationUnit>
 		long_bounds(position.second - d, position.second + d);
 
-	PhotosByLat& latitudeIndex = this->photosIndex.get<PhotoLat>();
+	std::unique_lock<std::mutex> lock(algo.mutexPhotosIndex);
+	PhotosByLat& latitudeIndex = algo.photosIndex.get<PhotoLat>();
 
 	// photo we can reach in latitude
 	PhotosByLat::iterator
@@ -95,12 +106,12 @@ void GloutonAlgo::findWindowOfSatellite(
 		}
 
 		//if not reachable by camera
-		if (!this->canReach(satellite, p, t)) {
+		if (!algo.canReach(&satellite, p, t, this->offset)) {
 			continue;
 		}
 
 		//already taken
-		if (this->photosTaken.find(p) != this->photosTaken.end()) {
+		if (algo.isPhotoTaken(p)) {
 			continue;
 		}
 
@@ -108,14 +119,17 @@ void GloutonAlgo::findWindowOfSatellite(
 	}
 }
 
-void GloutonAlgo::findPhotosOfSatellite(Satellite* satellite) {
+Worker::Worker(
+		GloutonAlgo& g,
+		Satellite& s,
+		unsigned long int maxDuration
+	): algo(g), satellite(s) {
 
-	for (unsigned long int t = 0; t < this->simulation->getDuration(); t++) {
+	for (unsigned long int t = 0; t < maxDuration; t++) {
 
 		// Photos we can take
 		std::set<Photograph*, WindowPhotographAllocator> window;
 		this->findWindowOfSatellite(
-			satellite,
 			t,
 			window
 		);
@@ -127,14 +141,14 @@ void GloutonAlgo::findPhotosOfSatellite(Satellite* satellite) {
 
 		//save photo
 		Photograph* p = *it;
-		this->photosTaken.insert(std::make_pair(p, Shoot(p, satellite, t)));
+		algo.insertShoot(p, &satellite, t);
 
 		//save camera pos
 		std::pair<LocationUnit, LocationUnit> new_camera(
-			p->getLatitude()  - satellite->getLatitudeT(t),
-			p->getLongitude() - satellite->getLongitudeT(t)
+			p->getLatitude()  - this->satellite.getLatitudeT(t),
+			p->getLongitude() - this->satellite.getLongitudeT(t)
 		);
-		this->cameraOffsets[satellite] = Offset(
+		this->offset = Offset(
 			new_camera.first,
 			new_camera.second,
 			t
@@ -152,14 +166,21 @@ void GloutonAlgo::solve(Simulation* s) {
 	this->buildPhotographIndex();
 	std::cout << "End building photographs index" << std::endl;
 
-	std::cout << "Init cameras offsets" << std::endl;
-	this->initCameraOffsets();
-	std::cout << "End" << std::endl;
-
 	std::cout << "Find photo each satellite can take" << std::endl;
 
+	GloutonAlgo& algo = *this;
+	std::vector<std::future<void>> workers;
+
+	unsigned long int maxDuration = this->simulation->getDuration();
 	for (Satellite* sat : this->simulation->getSatellites()) {
-		this->findPhotosOfSatellite(sat);
+		// this->findPhotosOfSatellite(sat);
+		workers.push_back(std::async([maxDuration, &algo](Satellite* s) {
+			Worker(algo, *s, maxDuration);
+		}, sat));
+	}
+
+	for(auto &w : workers) {
+		w.get();
 	}
 
 	std::cout << "End photos" << std::endl;
