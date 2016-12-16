@@ -84,7 +84,7 @@ int main(int argc, const char* argv[]) {
 	*/
     //listFiles* listFile = new listFiles(argv[1]);
 	Result res;
-	std::string a("./arbitre/arbitre/sortie/forever_alone.out");
+	std::string a("./arbitre/arbitre/sortie/results_constellation.out");
 	res.FigureOutScore(a);
 	
 }
