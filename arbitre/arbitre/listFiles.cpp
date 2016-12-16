@@ -1,8 +1,3 @@
-#include <windows.h>
-#include <tchar.h> 
-#include <stdio.h>
-#include <strsafe.h>
-#pragma comment(lib, "User32.lib")
 
 #include "listFiles.hpp"
 #include "utils.hpp"	

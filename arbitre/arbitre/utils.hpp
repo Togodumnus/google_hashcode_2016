@@ -2,7 +2,10 @@
 
 #include <iostream>
 #include <string>
-#include <windows.h>
+
+#ifdef _WIN32
+	#include <windows.h>
+
 
 
 inline std::string ExePath() {
@@ -11,6 +14,8 @@ inline std::string ExePath() {
 	std::string::size_type pos = std::string(buffer).find_last_of("\\/");
 	return std::string(buffer).substr(0, pos);
 }
+
+#endif 
 
 inline std::string concat(const char* c1, const char* c2){
 	

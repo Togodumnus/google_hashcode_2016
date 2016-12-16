@@ -66,6 +66,8 @@ int main(int argc, const char* argv[]) {
 				Result* result = new Result(input, output, programme->duration(commande));
 
 				std::cout << *result << std::endl;
+            }
+        }
 
 #else // UNIX
 
@@ -88,7 +90,7 @@ int main(int argc, const char* argv[]) {
 				replaceString(output, "in", "out"); // on change le .in en .out
 				replaceString(output, "IN", "OUT"); // on créer un dossier dataOUT dans le même dossier que dataIN
 
-				commande += " " + input + " " + output /*+ " >> /dev/null" */;  // la commande totale à éxécuter
+				commande += " " + input + " " + output + " >> /dev/null" ;  // la commande totale à éxécuter
 																			// redirection du flux de sortie 
 																			// vers /dev/null pour ne pas être
 																			// parasité par la sortie de l'éxécutable
@@ -100,13 +102,12 @@ int main(int argc, const char* argv[]) {
 
 			}
 		}
-
 #endif	
 			}
-		}
-	}
 	else {
 	std::cout << " Fournissez un dossier à traiter " << std::endl;
 		}
-	}
+    }
+
+	
 
