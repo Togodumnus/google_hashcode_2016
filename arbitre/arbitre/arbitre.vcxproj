@@ -139,6 +139,13 @@
     <ClInclude Include="Result.hpp" />
     <ClInclude Include="utils.hpp" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="dataIN\constellation.in" />
+    <None Include="dataIN\forever_alone.in" />
+    <None Include="dataIN\overlap.in" />
+    <None Include="dataIN\toy.in" />
+    <None Include="dataIN\weekend.in" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

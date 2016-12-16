@@ -20,7 +20,7 @@ listFiles::listFiles(const char* INPUT){
 			std::string dossier;
 			dossier = concatWindows(INPUT, "*.*");
 			//std::cout << 
-			std::cout << (dossier).c_str() << std::endl;
+			std::cout << " dossier = " << (dossier).c_str() << std::endl;
 			hFind = FindFirstFile((dossier).c_str(), &data);
 			if (hFind != INVALID_HANDLE_VALUE) {
 			  do {

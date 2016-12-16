@@ -2,6 +2,15 @@
 
 #include <iostream>
 #include <string>
+#include <windows.h>
+
+
+inline std::string ExePath() {
+	char buffer[MAX_PATH];
+	GetModuleFileName(NULL, buffer, MAX_PATH);
+	std::string::size_type pos = std::string(buffer).find_last_of("\\/");
+	return std::string(buffer).substr(0, pos);
+}
 
 inline std::string concat(const char* c1, const char* c2){
 	
