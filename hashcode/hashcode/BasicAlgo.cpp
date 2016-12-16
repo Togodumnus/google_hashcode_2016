@@ -31,8 +31,6 @@ void BasicAlgo::solve(Simulation* s) {
 	// one index for each satellite
 	std::map<Satellite*, SatelliteIndex> photosToTakeIndex;
 
-	std::cout << "Start building photographs index" << std::endl;
-
 	/**
 	 * 1.
 	 * Build latitude / longitude index on Photographs
@@ -47,14 +45,10 @@ void BasicAlgo::solve(Simulation* s) {
 		}
 	}
 
-	std::cout << "End building photographs index" << std::endl;
-
 	/**
 	 * 2.
 	 * For each turn, for each satellite, select photo we can reach
 	 */
-
-	std::cout << "Start looking for photo we can shoot" << std::endl;
 
 	// for each turn, for each satellite, find photographs it can reach
 	for (unsigned int t = 0; t < s->getDuration(); t++) {
@@ -136,8 +130,6 @@ void BasicAlgo::solve(Simulation* s) {
 		}
 	}
 
-	std::cout << "Photographs to take" << photosToTake.size() << std::endl;
-
 	// construct time index by satellite
 	for (auto photo_it: photosToTake) {
 		Shoot* shoot = photo_it->getShoot();
@@ -149,16 +141,11 @@ void BasicAlgo::solve(Simulation* s) {
 	// TODO on voit que deux photos peuvent être attribuées au même satellite
 	// au même tour
 	// faire un index sur le tour pour savoir si le satellite est occupé ?
-	// TODO c'est toujours vrai ?
-
-	std::cout << "End looking for photo we can shoot" << std::endl;
 
 	/**
 	 * 3.
 	 * Infer collections we can't complete
 	 */
-
-	std::cout << "Remove collections we can't complete" << std::endl;
 
 	for (auto col_it: s->getCollections()) {
 		std::vector<Photograph*>& colPhotographs = col_it->getPhotographs();
@@ -173,22 +160,16 @@ void BasicAlgo::solve(Simulation* s) {
 		);
 
 		if (missingPhoto) {
-			std::cout << "Removing all photo of collection"
-				<< col_it->getId() << std::endl;
 			for (auto p_it: colPhotographs) {
 				photosToTake.erase(p_it);
 			}
 		}
 	}
 
-	std::cout << "Photographs to take :" << photosToTake.size() << std::endl;
-
 	/**
 	 * 4.
 	 * Play simulation
 	 */
-
-	std::cout << std::endl;
 
 	// for each satellite, check photograph in chronological order
 	for (std::pair<Satellite*, SatelliteIndex> it: photosToTakeIndex) {
@@ -224,23 +205,22 @@ void BasicAlgo::solve(Simulation* s) {
 
 				s->addShoot(p->getShoot());
 
-			} else { //log pb
-				std::cout << "pb -----------" << std::endl;
-				if (w_lat >= sat->getOrientationMaxVelocity()) {
-					std::cout <<
-						"sat " << sat->getId() << " turn " << t <<
-						" w_lat " << w_lat << " >= " << sat->getOrientationMaxVelocity()
-						<< std::endl;
-				}
-				if (w_long >= sat->getOrientationMaxVelocity()) {
-					std::cout <<
-						"sat " << sat->getId() << " turn " << t <<
-						" w_long " << w_long << " >= " << sat->getOrientationMaxVelocity()
-						<< std::endl;
-				}
 			}
+			// else { //log pb
+			//     std::cout << "pb -----------" << std::endl;
+			//     if (w_lat >= sat->getOrientationMaxVelocity()) {
+			//         std::cout <<
+			//             "sat " << sat->getId() << " turn " << t <<
+			//             " w_lat " << w_lat << " >= " << sat->getOrientationMaxVelocity()
+			//             << std::endl;
+			//     }
+			//     if (w_long >= sat->getOrientationMaxVelocity()) {
+			//         std::cout <<
+			//             "sat " << sat->getId() << " turn " << t <<
+			//             " w_long " << w_long << " >= " << sat->getOrientationMaxVelocity()
+			//             << std::endl;
+			//     }
+			// }
 		}
 	}
-
-	std::cout << "Photographs taken :" << s->countShoots() << std::endl;
 }

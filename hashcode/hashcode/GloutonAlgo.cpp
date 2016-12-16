@@ -148,21 +148,13 @@ void GloutonAlgo::solve(Simulation* s) {
 
 	this->simulation = s;
 
-	std::cout << "Start building photographs index" << std::endl;
 	this->buildPhotographIndex();
-	std::cout << "End building photographs index" << std::endl;
 
-	std::cout << "Init cameras offsets" << std::endl;
 	this->initCameraOffsets();
-	std::cout << "End" << std::endl;
-
-	std::cout << "Find photo each satellite can take" << std::endl;
 
 	for (Satellite* sat : this->simulation->getSatellites()) {
 		this->findPhotosOfSatellite(sat);
 	}
-
-	std::cout << "End photos" << std::endl;
 
 	for (auto& taken: this->photosTaken) {
 		this->simulation->addShoot(&taken.second);

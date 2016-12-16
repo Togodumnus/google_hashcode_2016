@@ -11,10 +11,12 @@ typedef ShootMutliIndex::index<PhotoIndex>::type     Shoots_by_photo;
 typedef ShootDoneMutliIndex::index<SatelliteTimeIndex>::type
 	Shoots_by_satellite_time;
 
-const double LOG_INTERVAL = .01; // 1%
-const double MAX_FREQ = 2000; //TODO optimize
-const double FREQ_MULT = 10; //TODO optimize
-const double MAX_NUMBER_OF_BACK = 0.2; //TODO optimize
+// const double LOG_INTERVAL = .01; // 1%
+
+//TODO optimize
+// const double MAX_FREQ = 2000;
+const double FREQ_MULT = 10;
+const double MAX_NUMBER_OF_BACK = 0.2;
 
 void ConstraintAlgo::buildPhotographIndex() {
 
@@ -38,9 +40,9 @@ void ConstraintAlgo::generateShoots() { // TODO paralléliser ça
 	for (unsigned int t = 0; t < s->getDuration(); t++) {
 
 		// log progression
-		if (t % int(s->getDuration() * LOG_INTERVAL) == 0) {
-			std::cout << t * 100 / s->getDuration() << "%" << std::endl;
-		}
+		// if (t % int(s->getDuration() * LOG_INTERVAL) == 0) {
+		//     std::cout << t * 100 / s->getDuration() << "%" << std::endl;
+		// }
 
 		for (auto sat = satellites.begin(); sat != satellites.end(); sat++) {
 
@@ -95,7 +97,6 @@ void ConstraintAlgo::cleanCollections() {
 
 		// missing photographs
 		if (col->getNumberOfPhotographs() > photos_in_col.size()) {
-			std::cout << "Remove " << *col << std::endl;
 			shootsIndex.erase(p.first, p.second);
 		}
 
@@ -124,11 +125,6 @@ void ConstraintAlgo::initConstraints() {
 
 bool ConstraintAlgo::canGoFromShootToShoot(const Shoot& s1, const Shoot& s2) {
 
-	// std::cout << s1 << std::endl;
-	// std::cout << s1.m_satellite->getLatitudeT(s1.m_t) << std::endl;
-	// std::cout << s2 << std::endl;
-	// std::cout << s2.m_satellite->getLatitudeT(s2.m_t) << std::endl;
-
 	std::pair<LocationUnit, LocationUnit> CameraMove1(
 		s1.m_satellite->getLatitudeT(s1.m_t) - s1.m_photograph->getLatitude(),
 		s1.m_satellite->getLongitudeT(s1.m_t) - s1.m_photograph->getLongitude()
@@ -138,9 +134,6 @@ bool ConstraintAlgo::canGoFromShootToShoot(const Shoot& s1, const Shoot& s2) {
 		s2.m_satellite->getLatitudeT(s2.m_t) - s2.m_photograph->getLatitude(),
 		s2.m_satellite->getLongitudeT(s2.m_t) - s2.m_photograph->getLongitude()
 	);
-
-	// std::cout << "a "<< CameraMove1.first << " " << CameraMove2.first << std::endl;
-	// std::cout << "t "<< double(s1.m_t - s2.m_t)  << std::endl;
 
 	double w_lat = std::abs(
 		(CameraMove1.first - CameraMove2.first)
@@ -242,7 +235,7 @@ void ConstraintAlgo::removeNode() {
 	this->shootsDone.erase(*(n.shoot));
 
 	// lower constraints
-	//this->updateConstraintsAfterShoot(n.shoot, -FREQ_MULT);
+	this->updateConstraintsAfterShoot(n.shoot, -FREQ_MULT);
 
 	ShootNode& parent = *(this->branch.rbegin());
 	if (parent.numberOfBack > std::max(1, int(MAX_NUMBER_OF_BACK * parent.depth))) {
@@ -265,7 +258,7 @@ void ConstraintAlgo::addNode(const Shoot* s) {
 	this->shootsDone.insert(*s);
 
 	// increase constraints
-	// this->updateConstraintsAfterShoot(s, FREQ_MULT);
+	this->updateConstraintsAfterShoot(s, FREQ_MULT);
 }
 
 void ConstraintAlgo::findShoot(Photograph* photo) {
@@ -294,9 +287,6 @@ void ConstraintAlgo::findShoot(Photograph* photo) {
 
 	if (photo_shoots.size() > 0) {
 		this->addNode(*photo_shoots.begin());
-		// std::cout << *(*photo_shoots.begin()) << std::endl;
-		// std::cout << (*photo_shoots.begin())->m_satellite->getLatitudeT((*photo_shoots.begin())->m_t) << std::endl;
-		// std::cout << (*photo_shoots.begin())->m_satellite->getLongitudeT((*photo_shoots.begin())->m_t) << std::endl;
 	} else {
 		this->removeNode();
 	}
@@ -364,32 +354,18 @@ void ConstraintAlgo::solve(Simulation* s) {
 
 	this->simulation = s;
 
-	std::cout << "hello world" << std::endl;
-
-	std::cout << "Start building photographs index" << std::endl;
 	this->buildPhotographIndex();
-	std::cout << "End building photographs index" << std::endl;
 
-	std::cout << "Start looking for photo we can shoot" << std::endl;
 	this->generateShoots();
-	std::cout << "End looking for photo we can shoot" << std::endl;
 
-	std::cout << "Remove collections we can not complete" << std::endl;
 	this->cleanCollections();
-	std::cout << "End collections removal" << std::endl;
 
-	std::cout << "Init constraints" << std::endl;
 	this->initConstraints();
-	std::cout << "End constraints init" << std::endl;
 
-	std::cout << "Find solution" << std::endl;
 	this->findGoodBranch();
-	std::cout << "End solution" << std::endl;
 
 	for (ShootNode& n: this->branch) {
 		this->simulation->addShoot(n.shoot);
 	}
-
-	std::cout << "end" << std::endl;
 
 }

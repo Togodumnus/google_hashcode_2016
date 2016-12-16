@@ -64,8 +64,6 @@ struct Constraint {
 	Photograph* m_photograph;
 
 	Constraint(unsigned int v, Photograph* p): m_value(v), m_photograph(p) {}
-	// Constraint(Constraint&& c):
-	//     m_value(c.m_value), m_photograph(c.m_photograph) {}
 	Constraint(const Constraint& c):
 		m_value(c.m_value), m_photograph(c.m_photograph) {}
 

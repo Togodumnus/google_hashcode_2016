@@ -25,6 +25,14 @@ class ReadException : std::exception {
 		};
 };
 
+class NoOutputFile : std::exception {
+	public:
+		NoOutputFile() {};
+		inline const char* what() const noexcept {
+			return "Can't open output file";
+		};
+};
+
 class Simulation {
 
 	friend std::ostream& operator<<(std::ostream&, const Simulation&);

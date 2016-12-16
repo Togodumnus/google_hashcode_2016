@@ -18,8 +18,6 @@ class Collection{
 		unsigned short m_number_of_locations;
 		unsigned short m_number_of_time_ranges;
 
-		// TODO : optimized with an array  by passing number of photograph to
-		// constructor
 		std::vector<Photograph*> m_photographs;
 
 		/**

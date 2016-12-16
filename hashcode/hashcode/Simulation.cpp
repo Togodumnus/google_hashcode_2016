@@ -69,14 +69,14 @@ int Simulation::write_results(const char* OUTPUT)
 	{
 		file << m_shoots.size() << "\n"; // write number of taken photos
 		for(auto &it:m_shoots){
-			std::cout << *it << std::endl;
 			file << *it;
 			file << "\n";
 		}
 		file.close();
 	}
-	else
-		std::cerr << "Erreur à l'ouverture !" << std::endl;
+	else {
+		throw NoOutputFile();
+	}
 
 	return 0;
 }

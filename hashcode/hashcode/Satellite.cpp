@@ -66,7 +66,7 @@ bool Satellite::sideT(unsigned int t) {
 	return modulo((getLatitude() + (t * m_velocity) + 324000) / 648000, 2) == 1;
 }
 
-LocationUnit Satellite::getLatitudeT(unsigned long int time) { // TODO test
+LocationUnit Satellite::getLatitudeT(unsigned long int time) {
 	/*
 	 * In degrees :
 		abs( ((posInit + vitesse * temps - 90) %% 360) - 180 ) - 90
@@ -80,7 +80,7 @@ LocationUnit Satellite::getLatitudeT(unsigned long int time) { // TODO test
 	) - 324000;
 }
 
-LocationUnit Satellite::getLongitudeT(unsigned long int time) { // TODO test
+LocationUnit Satellite::getLongitudeT(unsigned long int time) {
 	/*
 	 * Longitude if satellite never go up
 	 *

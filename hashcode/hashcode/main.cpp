@@ -26,9 +26,11 @@ int main(int argc, char* argv[]){
 		Simulation s = Simulation(INPUT, a);
 		std::cout << s << std::endl;
 
+		std::cout << "Solving ..." << std::endl;
 		s.solve();
 
 		s.write_results(OUTPUT);
+		std::cout << "Results written to " << OUTPUT << std::endl;
 
 	} catch (ReadException& e) {
 		std::cerr << "Error : " << e.what() << std::endl;
