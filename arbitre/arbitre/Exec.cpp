@@ -21,7 +21,7 @@ Exec::~Exec(){
 
 }
 
-/*bool Exec::replace(std::string& str, const std::string& from, const std::string& to) {  // fonction qui prend un string 
+/*bool Exec::replace(std::string& str, const std::string& from, const std::string& to) {  // fonction qui prend un string
                                                                                         //et remplace le from par le to
     size_t start_pos = str.find(from);
     if(start_pos == std::string::npos)
@@ -37,17 +37,17 @@ void Exec::duration(std::string INPUT){
     //system("../bin/hashcode ../hashcode/hashcode/data/forever_alone.in ../hashcode/hashcode/data/forever_alone.out");
     system((INPUT).c_str()); // on fait string -> char* pour que system fonctionne
     end = std::chrono::system_clock::now();
- 
+
     int elapsed_seconds = std::chrono::duration_cast<std::chrono::seconds>
                              (end-start).count();
     std::time_t end_time = std::chrono::system_clock::to_time_t(end);
- 
+
     std::cout << "finished computation at " << std::ctime(&end_time)
               << "elapsed time: " << elapsed_seconds << "s\n";
-              
+
 }
 
-std::ofstream& operator<<(std::ofstream& of, const Exec& exec){
+std::ostream& operator<<(std::ostream& of, const Exec& exec){
 	of << exec.m_executable << "," << exec.m_duration << "," << exec.m_score << "," << exec.m_jeu;
 	return of;
 }
