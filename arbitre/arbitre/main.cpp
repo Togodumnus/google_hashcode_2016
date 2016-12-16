@@ -1,33 +1,45 @@
 
 #include <string>
 #include <iostream>
+#include <fstream>
+#include <vector>
 
 #include "Exec.hpp"
 #include "Result.hpp"
 #include "listFiles.hpp"
 #include "utils.hpp"
 
+class NoOutputFile: std::exception {
+	public:
+		NoOutputFile() {};
+		const char* what() const noexcept {
+			return "No output file";
+		}
+};
+
+void write_result(const char* OUTPUT, std::vector<Result>& results) {
+
+	std::ofstream file(OUTPUT, std::ios::out | std::ios::trunc);
+	if (file) {
+		file << "Exec;Time;Score;Dataset" << "\n";
+		for(Result& r: results) {
+			file << r << "\n";
+		}
+		file.close();
+	} else {
+		throw NoOutputFile();
+	}
+}
 
 int main(int argc, const char* argv[]) {
 
-	if (argc > 1) { // on a un argument
+	std::vector<Result> results;
+
+	if (argc > 2) { // on a un argument
 
 #ifdef _WIN32
-		//listFiles* listFile = new listFiles("../../testDirWindows/*.*"); // nom du dossier contenant les executables
 		listFiles* listFile = new listFiles(argv[1]); // nom du dossier contenant les executables
-		//std::string path = ExePath();
-		//path +=
-		//listFiles* listFile = new listFiles("C:\\Cours\\Projets\\google_hashcode_2016\\testDirWindows"); // nom du dossier contenant les executables
-		//listFiles* listFile = new listFiles("C:\\Cours\\Projets\\google_hashcode_2016\\testDirWindows"); // nom du dossier contenant les executables
-
-
-
-		//system("dir");
-		//listFiles* listInput = new listFiles("C:\\Cours\\Projets\\google_hashcode_2016\\arbitre\\arbitre\\dataTEST"); // nom des fichiers dentrees
 		listFiles* listInput = new listFiles("..\\dataTEST"); // nom des fichiers dentrees
-
-		//int i = 0;
-		//std::cin >> i;
 
 		for (std::vector<std::string>::const_iterator it = listFile->getFiles().begin(); it != listFile->getFiles().end(); it++) {
 
@@ -38,15 +50,10 @@ int main(int argc, const char* argv[]) {
 				// it = nom de l'éxécutable
 				// it2 = nom du fichier d'entrée
 
-				//std::string path = ExePath();
-
-				//std::cout << " EXEPATH : " << ExePath() << std::endl;
-				//std::string commande = "C:\\Cours\\Projets\\google_hashcode_2016\\testDirWindows\\";
 				std::string commande = argv[1];
-				//std::string commande = *it;
 
 				commande += "\\" + *it; // nom de l'exe
-				//std::string input = "C:\\Cours\\Projets\\google_hashcode_2016\\arbitre\\arbitre\\dataTEST\\";
+
 				std::string input = "..\\dataTEST\\";
 				input += *it2; // nom du fichier d'entrée
 				std::string output = input; // création du nom du fichier de sortie
@@ -60,10 +67,9 @@ int main(int argc, const char* argv[]) {
 																				// parasité par la sortie de l'éxécutable
 
 				std::cout << commande << std::endl;
-				Result result(input, output, programme.duration(commande));
-
-				std::cout << *result << std::endl;
-
+				results.push_back(Result(
+					input, output, programme.duration(commande)
+				));
 			}
 		}
 #else // UNIX
@@ -94,13 +100,22 @@ int main(int argc, const char* argv[]) {
 
 				std::cout << commande << std::endl;
 
-				Result result(input, output, programme.duration(commande));
-				std::cout << result << std::endl;
-
+				results.push_back(Result(
+					input, output, programme.duration(commande)
+				));
 			}
 		}
 #endif
+
+		for (Result& r: results) {
+			r.FigureOutScore();
+		}
+
+		write_result(argv[2], results);
+
 	} else {
-		std::cout << " Fournissez un dossier à traiter " << std::endl;
+		std::cout
+			<< "usage: arbitre <binaries folder> <output file>"
+			<< std::endl;
 	}
 }

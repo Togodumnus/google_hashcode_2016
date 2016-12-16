@@ -159,9 +159,9 @@ void Result::FigureOutScore(){
 }
 
 std::ostream& operator<<(std::ostream& of, const Result& result) {
-	of << result.m_output << "," //TODO change for exec name
-		<< result.m_time << ","
-		<< result.m_score << ","
+	of << result.m_output << ";" //TODO change for exec name
+		<< result.m_time << ";"
+		<< result.m_score << ";"
 		<< result.m_input;
 	return of;
 }
