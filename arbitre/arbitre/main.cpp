@@ -93,7 +93,7 @@ int main(int argc, const char* argv[]) {
 				commande += " " + input + " " + output + " >> /dev/null" ;  // la commande totale à éxécuter
 																			// redirection du flux de sortie 
 																			// vers /dev/null pour ne pas être
-																			// parasité par la sortie de l'éxécutable
+																			// parasité par la sortie texte de l'éxécutable
 
 				std::cout << commande << std::endl;
 				Result* result = new Result(input, output, programme->duration(commande));
