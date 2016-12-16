@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="BasicAlgo.cpp" />
     <ClCompile Include="Collection.cpp" />
     <ClCompile Include="Location.cpp" />
     <ClCompile Include="main.cpp" />
@@ -29,6 +30,7 @@
     <ClCompile Include="Simulation.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BasicAlgo.hpp" />
     <ClInclude Include="Collection.hpp" />
     <ClInclude Include="Location.hpp" />
     <ClInclude Include="Photograph.hpp" />
