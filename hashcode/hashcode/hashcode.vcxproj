@@ -27,7 +27,6 @@
     <ClCompile Include="Satellite.cpp" />
     <ClCompile Include="Shoot.cpp" />
     <ClCompile Include="Simulation.cpp" />
-    <ClCompile Include="TimeRange.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Collection.hpp" />
@@ -36,7 +35,6 @@
     <ClInclude Include="Satellite.hpp" />
     <ClInclude Include="Shoot.hpp" />
     <ClInclude Include="Simulation.hpp" />
-    <ClInclude Include="TimeRange.hpp" />
     <ClInclude Include="utils.hpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

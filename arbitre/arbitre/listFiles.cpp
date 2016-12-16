@@ -14,14 +14,20 @@ listFiles::listFiles(const char* INPUT){
         //define something for Windows
 
 			std::cout << " on est bien sur windows " << std::endl;
-
             HANDLE hFind;
 			WIN32_FIND_DATA data;
 
-			hFind = FindFirstFile("c:\\*.*", &data);
+			//std::string dossier;
+			//dossier = concat(INPUT, "*.*");
+			//std::cout << 
+			//std::cout << (dossier).c_str() << std::endl;
+			hFind = FindFirstFile(INPUT, &data);
 			if (hFind != INVALID_HANDLE_VALUE) {
 			  do {
-				printf("%s\n", data.cFileName);
+				  if (strcmp(data.cFileName, ".") != 0 && strcmp(data.cFileName, "..") != 0) {
+					  printf("%s\n", data.cFileName);
+					  fichiers.push_back(data.cFileName);
+				  }
 			  } while (FindNextFile(hFind, &data));
 			  FindClose(hFind);
 			}
