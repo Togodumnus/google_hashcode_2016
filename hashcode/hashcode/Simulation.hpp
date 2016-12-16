@@ -34,9 +34,9 @@ class Simulation {
 		unsigned int	  m_number_of_satellites;
 		unsigned int	  m_number_of_collections;
 
-		std::vector<Satellite*>  m_satellites;
-		std::vector<Collection*> m_collections;
-		std::vector<Shoot*>      m_shoots;
+		std::vector<Satellite*>   m_satellites;
+		std::vector<Collection*>  m_collections;
+		std::vector<const Shoot*> m_shoots;
 
 		std::unique_ptr<Algorithm>& m_algo;
 
@@ -77,7 +77,7 @@ class Simulation {
 			return this->m_satellites;
 		}
 
-		inline void addShoot(Shoot* s) {
+		inline void addShoot(const Shoot* s) {
 			this->m_shoots.push_back(s);
 		}
 
