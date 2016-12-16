@@ -56,4 +56,8 @@ class Collection{
 		void add_timeRange(TimeRange);
 
 		bool isInTimeRanges(unsigned long int);
+
+		inline unsigned short getValue() {
+			return m_value;
+		}
 };
