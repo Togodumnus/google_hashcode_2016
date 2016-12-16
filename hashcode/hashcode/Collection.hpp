@@ -52,6 +52,10 @@ class Collection{
 			return m_photographs;
 		}
 
+		inline unsigned short getValue() {
+			return m_value;
+		}
+
 		void add_photograph(Photograph*);
 		void add_timeRange(TimeRange);
 

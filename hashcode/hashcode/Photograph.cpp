@@ -6,16 +6,14 @@ Photograph::Photograph(int id, PhotographLine photographLine):
 	Location(std::stol(photographLine[0]), std::stol(photographLine[1])),
 	m_id(id) {}
 
-Photograph::Photograph(LocationUnit latitude, LocationUnit longitude):
-	Location(latitude, longitude) { }
+Photograph::Photograph(const Photograph& p):
+	Location(p.m_latitude, p.m_longitude),
+	m_id(p.m_id) {
+	m_collections = p.m_collections; // copy
+}
 
 Photograph::~Photograph() { }
 
-Photograph::Photograph(const Photograph& photograph)
-	: Location(photograph.m_latitude, photograph.m_longitude)
-{
-	m_collections = photograph.m_collections; // copy
-}
 
 Photograph& Photograph::operator=(const Photograph& photograph)
 {
@@ -45,4 +43,12 @@ std::ostream& operator<<(std::ostream& o, const Photograph& p) {
 		<< "lat=" << p.m_latitude << " "
 		<< "long=" << p.m_longitude << ""
 		<< ")";
+}
+
+LocationUnit Photograph::getLatitude() const {
+	return this->m_latitude;
+}
+
+LocationUnit Photograph::getLongitude() const {
+	return this->m_longitude;
 }

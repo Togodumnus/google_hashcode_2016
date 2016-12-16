@@ -60,7 +60,7 @@ int Simulation::write_results(const char* OUTPUT)
 		m_shoots.begin(),
 		m_shoots.end(),
 		[](const Shoot* s1, const Shoot* s2) {
-			return *s1 < *s1;
+			return s1->m_t < s2->m_t;
 		}
 	);
 

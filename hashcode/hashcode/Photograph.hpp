@@ -4,6 +4,7 @@
 #include <vector>
 #include <array>
 #include <ostream>
+#include <numeric>
 
 #include "Location.hpp"
 #include "Collection.hpp"
@@ -30,12 +31,15 @@ class Photograph : public Location {
 
 	public:
 		explicit Photograph(int, PhotographLine);
-		explicit Photograph(LocationUnit latitude, LocationUnit longitude);
 		virtual ~Photograph();
 		Photograph& operator=(const Photograph& photograph);
-		Photograph(const Photograph& photograph);
+		explicit Photograph(const Photograph&);
 
 		bool addToCollection(Collection*);
+
+		std::vector<Collection*>& getCollections() {
+			return m_collections;
+		}
 
 		inline int getId() const {
 			return m_id;
@@ -49,5 +53,20 @@ class Photograph : public Location {
 			m_shoot = shoot;
 		}
 
+		inline unsigned int getValue() {
+			return std::accumulate(
+				m_collections.begin(), m_collections.end(),
+				0,
+				[](unsigned int s, Collection* c) {
+					return s + c->getValue();
+				}
+			);
+		}
+
 		bool isInTimeRanges(unsigned long int);
+
+		// need to copy this for multiindex
+		LocationUnit getLatitude() const;
+		LocationUnit getLongitude() const;
+
 };
