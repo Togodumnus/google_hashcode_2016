@@ -80,6 +80,12 @@ unsigned int Result::FigureOutScore(std::string &input_file){
 		}
 
 	}
+	// BUILD map<Collection*, int>
+	std::map<Collection *, int> map_collections;
+	for(auto &ite : sim.getCollections()) {
+		map_collections[ite]=0;
+	}
+
 	return 0;
 }
 
