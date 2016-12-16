@@ -4,12 +4,15 @@
 #include <iostream>
 #include <map>
 #include <set>
+#include <cmath>
 
 #include "Result.hpp"
 #include "utils.hpp"
 #include "hashcode/Simulation.hpp"
 
-
+/**
+ * @return score
+ */
 unsigned int Result::FigureOutScore(std::string &input_file){
 
 	std::cout << "AVANT PARSE" << std::endl;
@@ -19,24 +22,27 @@ unsigned int Result::FigureOutScore(std::string &input_file){
 	// Only for the tests
 	std::string a("./arbitre/arbitre/data/constellation.in");
 	Simulation sim(a);
-	
+
+	// stocke les Shoot par satellite
 	std::map<int, std::set<ResultShoot>> map_res;
 
 	for(auto &it : m_results) {
-		map_res[it.m_id_satellite].insert(ResultShoot(it.m_latitude, it.m_longitude, it.m_moment));
+		map_res[it.m_id_satellite]
+			.insert(ResultShoot(it.m_latitude, it.m_longitude, it.m_moment));
 	}
 
-	long lat, longi, latCam, longiCam, latCamB4, longiCamB4;
-	unsigned int timeB4;
+	unsigned int timeB4 = 0; // t-1
+	long lat, longi, latCam, longiCam,
+		 latCamB4 = 0, longiCamB4 = 0; // camera t-1
 	int orientationValue, orientationSpeed, camSpeed=0;
 
-	// unsigned to remove warning
-	for(unsigned int i=0; i<sim.getNumberSatellites(); i++) {
+	// for each satellite
+	for (unsigned int i=0; i < sim.getNumberSatellites(); i++) {
 
-		int k=0;
 		orientationSpeed = sim.getSatelliteN(i)->getOrientationMaxVelocity();
 		orientationValue = sim.getSatelliteN(i)->getOrientationMaxValue();
 
+		// for each ResultShoot
 		for(auto ind : map_res[i]){
 
 			lat = sim.getSatelliteN(i)->getLatitudeT(ind.m_time);
@@ -50,39 +56,32 @@ unsigned int Result::FigureOutScore(std::string &input_file){
 				return 0;
 			}
 
-			// CHECK if we aren't at the first pic
-			if(k>0){
-				// Get lat cam at current t
-				latCam = abs(ind.getLatitude() - lat);
-				longiCam = abs(ind.getLongitude() - longi);
-				
-				// CHECK if lat cam speed isn't too high
-				camSpeed = abs(latCam - latCamB4) / (ind.m_time - timeB4);
-				if (camSpeed > orientationSpeed) {
-					return 0;
-				}
+			// Get lat cam at current t
+			latCam = std::abs(ind.getLatitude() - lat);
+			longiCam = std::abs(ind.getLongitude() - longi);
 
-				// CHECK if longi cam speed isn't too high
-				camSpeed = abs(longiCam - longiCamB4) / (ind.m_time - timeB4);
-				if (camSpeed > orientationSpeed) {
-					return 0;
-				}
-
-				latCamB4 = latCam;
-				longiCamB4 = longiCam;
-				timeB4 = ind.m_time; 
-			} else {
-				// If first moment we just take the pos
-				latCamB4 = abs(ind.getLatitude() - lat);
-				longiCamB4 = abs(ind.getLongitude() - longi);
-				timeB4 = ind.m_time;
+			// CHECK if lat cam speed isn't too high
+			camSpeed = std::abs(latCam - latCamB4) / (ind.m_time - timeB4);
+			if (camSpeed >= orientationSpeed) {
+				return 0;
 			}
-			
-			k++;
+
+			// CHECK if longi cam speed isn't too high
+			camSpeed = std::abs(longiCam - longiCamB4) / (ind.m_time - timeB4);
+			if (camSpeed >= orientationSpeed) {
+				return 0;
+			}
+
+			latCamB4 = latCam;
+			longiCamB4 = longiCam;
+			timeB4 = ind.m_time;
+
 		}
 
 	}
+
 	std::cout << "APRES VERIF" << std::endl;
+
 	// BUILD map<Collection*, int>
 	std::map<Collection *, int> map_collections;
 	for(auto &ite : sim.getCollections()) {
@@ -93,22 +92,27 @@ unsigned int Result::FigureOutScore(std::string &input_file){
 	// FILL map<Collection*,int> when there is a photo
 	for(unsigned int i=0; i<sim.getNumberSatellites(); i++) {
 		for(auto ind : map_res[i]){
-			for(auto iterator : sim.getPhotograph(ind.getLatitude(), ind.getLongitude())->getCollections()){
+			Photograph* p = sim.getPhotograph(
+				ind.getLatitude(),
+				ind.getLongitude()
+			);
+			for(auto iterator: p->getCollections()){
 				map_collections[iterator]++;
 			}
 		}
 	}
 	std::cout << "AVANT PARCOURS COLLECTIONS" << std::endl;
-	unsigned int score;
+	unsigned int score = 0;
 	for(auto &ite : sim.getCollections()) {
-		if (map_collections[ite] == ite->getValue()) {
+		std::cout << *ite << std::endl;
+		if (map_collections[ite] == ite->getPhotographs().size()) {
 			score+=ite->getValue();
 		}
 	}
 
 	std::cout << "SCORE : " << score << std::endl;
 
-	return 0;
+	return score;
 }
 
 enum class ReadState {
@@ -121,7 +125,7 @@ void Result::parse(std::string &input_file){
 	std::ifstream input(input_file);
 	if (input.fail() || input.bad()) {
 		throw ReadException(input_file);
-	}   
+	}
 	std::string line;
 	ReadState t = ReadState::NumberOfPictures;
 
