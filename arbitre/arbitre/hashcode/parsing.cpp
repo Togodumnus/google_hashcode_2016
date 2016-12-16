@@ -183,10 +183,6 @@ void Simulation::parseInput(std::string& input_file) {
 						p->getLatitude(), p
 					));
 
-					this->photographsByLng.insert(std::make_pair(
-						p->getLongitude(), p
-					));
-
 					//std::cout << "[parsing]\t" << "added to collection"
 					//	<< collectionIndex << std::endl;
 

@@ -82,7 +82,6 @@ int Simulation::write_results(const char* OUTPUT)
 
 Photograph* Simulation::getPhotograph(LocationUnit lat, LocationUnit lng) {
 	auto lat_its = this->photographsByLat.equal_range(lat);
-	std::cout << "lat : " << lat << ", longi : " << lng << std::endl;
 	for (auto it = lat_its.first; it != lat_its.second; it++) {
 		if (it->second->getLongitude() == lng) {
 			return it->second;

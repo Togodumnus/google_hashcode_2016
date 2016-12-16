@@ -6,12 +6,13 @@
 #include <memory>
 #include <algorithm>
 #include <string>
+#include <map>
 
 #include "Collection.hpp"
 #include "Algorithm.hpp"
 #include "Shoot.hpp"
 
-using LocationUnitIndex = std::map<LocationUnit, Photograph*>;
+using LocationUnitIndex = std::multimap<LocationUnit, Photograph*>;
 
 class Satellite;
 
@@ -35,7 +36,6 @@ class Simulation {
 	private:
 
 		LocationUnitIndex photographsByLat;
-		LocationUnitIndex photographsByLng;
 
 		unsigned long int m_duration;
 		unsigned int	  m_number_of_satellites;
