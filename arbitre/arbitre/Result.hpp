@@ -9,6 +9,7 @@
 #include "hashcode/Location.hpp"
 #include "hashcode/Satellite.hpp"
 #include "hashcode/Photograph.hpp"
+#include "hashcode/Simulation.hpp"
 
 struct ResultShoot : public Location {
 	unsigned int m_time;
