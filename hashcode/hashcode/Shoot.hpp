@@ -16,6 +16,12 @@ struct Shoot {
 	unsigned long int m_t;
 
 	Shoot(
+		Photograph* photograph,
+		Satellite*  satellite,
+		unsigned long int t
+	);
+
+	Shoot(
 		Collection* collection,
 		Photograph* photograph,
 		Satellite*  satellite,

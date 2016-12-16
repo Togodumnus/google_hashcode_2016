@@ -5,7 +5,7 @@
 
 #include "Simulation.hpp"
 #include "Algorithm.hpp"
-#include "ConstraintAlgo.hpp"
+#include "GloutonAlgo.hpp"
 
 using namespace std;
 
@@ -22,7 +22,7 @@ int main(int argc, char* argv[]){
 	std::cout << "Reading file " << INPUT << std::endl;
 
 	try {
-		std::unique_ptr<Algorithm> a(new ConstraintAlgo());
+		std::unique_ptr<Algorithm> a(new GloutonAlgo());
 		Simulation s = Simulation(INPUT, a);
 		std::cout << s << std::endl;
 

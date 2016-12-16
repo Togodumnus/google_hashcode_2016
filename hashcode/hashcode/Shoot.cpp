@@ -1,6 +1,16 @@
 #include "Shoot.hpp"
 
 Shoot::Shoot(
+	Photograph* photograph,
+	Satellite*  satellite,
+	unsigned long int t
+) :
+	m_collection(nullptr),
+	m_photograph(photograph),
+	m_satellite(satellite),
+	m_t(t) {};
+
+Shoot::Shoot(
 	Collection* collection,
 	Photograph* photograph,
 	Satellite*  satellite,
