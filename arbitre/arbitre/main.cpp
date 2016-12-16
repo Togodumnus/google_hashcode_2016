@@ -14,12 +14,13 @@ int main(int argc, const char* argv[]) {
 
 
 #ifdef _WIN32
-	listFiles* listFile = new listFiles("../../testDir/*.*"); // nom du dossier contenant les executables
-	listFiles* listInput = new listFiles("./dataTEST/*.*"); // nom des fichiers dentrees
+	//listFiles* listFile = new listFiles("../../testDirWindows/*.*"); // nom du dossier contenant les executables
+	listFiles* listFile = new listFiles("C:\\Cours\\Projets\\google_hashcode_2016\\testDirWindows"); // nom du dossier contenant les executables
+	listFiles* listInput = new listFiles("./dataTEST/"); // nom des fichiers dentrees
 
 	//int i = 0;
 	//std::cin >> i;
-	for (std::vector<std::string>::const_iterator it = listFile->getFiles().begin(); it != listFile->getFiles().end(); it++) {
+	/*for (std::vector<std::string>::const_iterator it = listFile->getFiles().begin(); it != listFile->getFiles().end(); it++) {
 
 		// it = nom de l'éxécutable
 
@@ -29,22 +30,25 @@ int main(int argc, const char* argv[]) {
 
 			// it2 = nom du fichier d'entrée
 
-			std::string commande = *it; // nom de l'exe                
-			std::string input = *it2; // nom du fichier d'entrée
+
+			std::string commande = "../../testDirWindows/";
+			commande += *it; // nom de l'exe
+			std::string input = "./dataTEST/";
+			input += *it2; // nom du fichier d'entrée
 			std::string output = input; // création du nom du fichier de sortie
 			replaceString(output, "in", "out"); // on change le .in en .out
 			replaceString(output, "IN", "OUT"); // on créer un dossier dataOUT dans le même dossier que dataIN
 
-			commande += " " + input + " " + output /*+ " >> /dev/null" */;  // la commande totale à éxécuter
+			commande += " " + input + " " + output /*+ " >> /dev/null" ;  // la commande totale à éxécuter
 																			// redirection du flux de sortie 
 																			// vers /dev/null pour ne pas être
 																			// parasité par la sortie de l'éxécutable
-
+			
 			std::cout << commande << std::endl;
-			Result* result = new Result(input, output, programme->duration(commande));
+			//Result* result = new Result(input, output, programme->duration(commande));
 
 			//std::cout << *result << std::endl;
-
+			*/
 			int i = 0;
 			std::cin >> i;
 
@@ -87,6 +91,3 @@ int main(int argc, const char* argv[]) {
 	//else {
 	std::cout << " Fournissez un dossier à traiter " << std::endl;
 		}
-
-	}
-}

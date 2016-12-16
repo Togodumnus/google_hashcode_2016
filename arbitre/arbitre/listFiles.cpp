@@ -17,11 +17,11 @@ listFiles::listFiles(const char* INPUT){
             HANDLE hFind;
 			WIN32_FIND_DATA data;
 
-			//std::string dossier;
-			//dossier = concat(INPUT, "*.*");
+			std::string dossier;
+			dossier = concatWindows(INPUT, "*.*");
 			//std::cout << 
-			//std::cout << (dossier).c_str() << std::endl;
-			hFind = FindFirstFile(INPUT, &data);
+			std::cout << (dossier).c_str() << std::endl;
+			hFind = FindFirstFile((dossier).c_str(), &data);
 			if (hFind != INVALID_HANDLE_VALUE) {
 			  do {
 				  if (strcmp(data.cFileName, ".") != 0 && strcmp(data.cFileName, "..") != 0) {

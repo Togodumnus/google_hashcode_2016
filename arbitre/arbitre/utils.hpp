@@ -13,6 +13,16 @@ inline std::string concat(const char* c1, const char* c2){
 	return s3;
 }
 
+inline std::string concatWindows(const char* c1, const char* c2) {
+
+	std::string s1(c1);
+	std::string s2(c2);
+
+	std::string s3(s1 + "\\" + s2);
+
+	return s3;
+}
+
 inline bool replaceString(std::string& str, const std::string& from, const std::string& to) {  	// fonction qui prend un std::string 
                                                                                         		//et remplace le from par le to
     size_t start_pos = str.find(from);
