@@ -112,13 +112,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Exec.cpp" />
-    <ClCompile Include="hashcode\BasicAlgo.cpp" />
     <ClCompile Include="hashcode\Collection.cpp" />
     <ClCompile Include="hashcode\Location.cpp" />
     <ClCompile Include="hashcode\parsing.cpp" />
     <ClCompile Include="hashcode\Photograph.cpp" />
     <ClCompile Include="hashcode\Satellite.cpp" />
-    <ClCompile Include="hashcode\Shoot.cpp" />
     <ClCompile Include="hashcode\Simulation.cpp" />
     <ClCompile Include="listFiles.cpp" />
     <ClCompile Include="main.cpp" />
@@ -126,13 +124,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="exec.hpp" />
-    <ClInclude Include="hashcode\Algorithm.hpp" />
-    <ClInclude Include="hashcode\BasicAlgo.hpp" />
     <ClInclude Include="hashcode\Collection.hpp" />
     <ClInclude Include="hashcode\Location.hpp" />
     <ClInclude Include="hashcode\Photograph.hpp" />
     <ClInclude Include="hashcode\Satellite.hpp" />
-    <ClInclude Include="hashcode\Shoot.hpp" />
     <ClInclude Include="hashcode\Simulation.hpp" />
     <ClInclude Include="hashcode\utils.hpp" />
     <ClInclude Include="listFiles.hpp" />
@@ -141,7 +136,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="dataIN\constellation.in" />
-    <None Include="dataIN\forever_alone.in" />
+    <Text Include="dataIN\forever_alone.in">
+      <FileType>Document</FileType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DeploymentContent>
+    </Text>
     <None Include="dataIN\overlap.in" />
     <None Include="dataIN\toy.in" />
     <None Include="dataIN\weekend.in" />

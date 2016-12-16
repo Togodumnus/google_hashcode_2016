@@ -14,6 +14,7 @@ listFiles::listFiles(const char* INPUT){
 
 			std::string dossier;
 			dossier = concatWindows(INPUT, "*.*");
+			//system("dir");
 			//std::cout << 
 			std::cout << " dossier = " << (dossier).c_str() << std::endl;
 			hFind = FindFirstFile((dossier).c_str(), &data);

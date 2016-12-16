@@ -39,7 +39,7 @@ int main(int argc, const char* argv[]) {
 
 #ifdef _WIN32
 		listFiles* listFile = new listFiles(argv[1]); // nom du dossier contenant les executables
-		listFiles* listInput = new listFiles("..\\dataTEST"); // nom des fichiers dentrees
+		listFiles* listInput = new listFiles("..\\..\\..\\arbitre\\arbitre\\dataIN\\"); // nom des fichiers dentrees
 
 		for (std::vector<std::string>::const_iterator it = listFile->getFiles().begin(); it != listFile->getFiles().end(); it++) {
 
@@ -54,14 +54,14 @@ int main(int argc, const char* argv[]) {
 
 				commande += "\\" + *it; // nom de l'exe
 
-				std::string input = "..\\dataTEST\\";
+				std::string input = "..\\..\\..\\arbitre\\arbitre\\dataIN\\";
 				input += *it2; // nom du fichier d'entrée
 				std::string output = input; // création du nom du fichier de sortie
 				replaceString(output, "in", "out"); // on change le .in en .out
 				replaceString(output, "IN", "OUT"); // on créer un dossier dataOUT dans le même dossier que dataIN
 
 
-				commande += " " + input + " " + output + " >> NUL " ;  // la commande totale à éxécuter
+				commande += " " + input + " " + output /*+ " >> NUL " */;  // la commande totale à éxécuter
 																				// redirection du flux de sortie
 																				// vers /dev/null pour ne pas être
 																				// parasité par la sortie de l'éxécutable
@@ -75,7 +75,7 @@ int main(int argc, const char* argv[]) {
 #else // UNIX
 
 		listFiles* listFile = new listFiles(argv[1]); // nom du dossier contenant les executables
-		listFiles* listInput = new listFiles("arbitre/arbitre/dataTEST"); // nom des fichiers dentrees
+		listFiles* listInput = new listFiles("arbitre/arbitre/dataIN"); // nom des fichiers dentrees
 
 		for (std::vector<std::string>::const_iterator it = listFile->getFiles().begin(); it != listFile->getFiles().end(); it++) {
 

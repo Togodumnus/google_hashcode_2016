@@ -21,6 +21,8 @@
   <ItemGroup>
     <ClCompile Include="BasicAlgo.cpp" />
     <ClCompile Include="Collection.cpp" />
+    <ClCompile Include="ConstraintAlgo.cpp" />
+    <ClCompile Include="GloutonAlgo.cpp" />
     <ClCompile Include="Location.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="parsing.cpp" />
@@ -32,6 +34,8 @@
   <ItemGroup>
     <ClInclude Include="BasicAlgo.hpp" />
     <ClInclude Include="Collection.hpp" />
+    <ClInclude Include="ConstraintAlgo.hpp" />
+    <ClInclude Include="GloutonAlgo.hpp" />
     <ClInclude Include="Location.hpp" />
     <ClInclude Include="Photograph.hpp" />
     <ClInclude Include="Satellite.hpp" />
@@ -62,7 +66,7 @@
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v140</PlatformToolset>
-    <CharacterSet>MultiByte</CharacterSet>
+    <CharacterSet>NotSet</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -105,9 +109,11 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>C:\Users\Cokral\Documents\boost_1_62_0</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <RegisterOutput>true</RegisterOutput>
+      <AdditionalLibraryDirectories>C:\Users\Cokral\Documents\boost_1_62_0\stage\lib</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -130,10 +136,14 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
+      <AdditionalUsingDirectories>
+      </AdditionalUsingDirectories>
+      <AdditionalIncludeDirectories>C:\Users\Cokral\Documents\boost_1_62_0</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>C:\Users\Cokral\Documents\boost_1_62_0\libs;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
