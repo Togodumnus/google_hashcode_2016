@@ -83,6 +83,11 @@ void GloutonAlgo::findWindowOfSatellite(
 	for (auto it = lat_lower; it != lat_upper; it++) {
 		Photograph* p = *it;
 
+		// if can't be taken now
+		if (!p->isInTimeRanges(t)) {
+			continue;
+		}
+
 		// if not in window
 		if (long_bounds.first >= p->getLongitude()
 				|| long_bounds.second <= p->getLongitude()) {
